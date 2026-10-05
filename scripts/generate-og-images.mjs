@@ -14,15 +14,15 @@ const OG_PAGES = [
     filename: "home.png",
     eyebrow: "TECHIITFLY · PUNE, INDIA",
     headline: "We build websites that prove themselves.",
-    subline: "Fast, mobile-friendly websites for growing businesses — fixed prices from ₹9,999, live in 7 days, guaranteed.",
+    subline: "Fast, mobile-friendly websites for growing businesses — fixed prices from ₹12,999, live in 7 days, guaranteed.",
     badge: "Live in 7 Days",
   },
   {
     filename: "pricing.png",
     eyebrow: "TRANSPARENT PRICING · TECHIITFLY",
     headline: "Fixed-Scope Website & App Packages",
-    subline: "Transparent pricing starting from ₹9,999. Live in 7 days, zero surprises, and free support included.",
-    badge: "From ₹9,999",
+    subline: "Transparent pricing starting from ₹12,999. Live in 7 days, zero surprises, and free support included.",
+    badge: "From ₹12,999",
   },
   {
     filename: "mathsy-for-institutes.png",

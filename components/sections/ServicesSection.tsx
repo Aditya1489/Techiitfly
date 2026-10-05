@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SITE } from "@/content/site";
-import { WEB_PLANS, APP_PLANS, IT_PLANS } from "@/content/pricing";
+import { WEB_PLANS, APP_PLANS, IT_PLANS, PRICING_CONFIG, getWebPlans } from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
 
 export default function ServicesSection() {
@@ -11,7 +11,7 @@ export default function ServicesSection() {
   const WHATSAPP = SITE.phoneRaw.replace(/[^0-9]/g, "");
 
   const currentPlans =
-    activeTab === "web" ? WEB_PLANS : activeTab === "app" ? APP_PLANS : IT_PLANS;
+    activeTab === "web" ? getWebPlans() : activeTab === "app" ? APP_PLANS : IT_PLANS;
   const currentCategory =
     activeTab === "web" ? "Website" : activeTab === "app" ? "App" : "IT Services";
 
@@ -228,28 +228,69 @@ export default function ServicesSection() {
                     marginBottom: "20px",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-geist-sans)",
-                        fontSize: "0.82rem",
-                        color: "var(--muted)",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {plan.priceNote ? `${plan.priceNote} ` : "Starting at "}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-geist-sans)",
-                        fontSize: "1.8rem",
-                        fontWeight: 800,
-                        color: "var(--text)",
-                        letterSpacing: "-0.03em",
-                      }}
-                    >
-                      {plan.price}
-                    </span>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                    {plan.originalPrice ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-geist-mono)",
+                            fontSize: "0.95rem",
+                            color: "var(--muted)",
+                            textDecoration: "line-through",
+                          }}
+                        >
+                          {plan.originalPrice}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-geist-sans)",
+                            fontSize: "1.8rem",
+                            fontWeight: 800,
+                            color: "var(--accent)",
+                            letterSpacing: "-0.03em",
+                          }}
+                        >
+                          {plan.price}
+                        </span>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-geist-sans)",
+                            fontSize: "0.82rem",
+                            color: "var(--muted)",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {plan.priceNote ? `${plan.priceNote} ` : "Starting at "}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-geist-sans)",
+                            fontSize: "1.8rem",
+                            fontWeight: 800,
+                            color: "var(--text)",
+                            letterSpacing: "-0.03em",
+                          }}
+                        >
+                          {plan.price}
+                        </span>
+                      </div>
+                    )}
+
+                    {plan.launchOfferNotice && (
+                      <span
+                        style={{
+                          fontFamily: "var(--font-geist-mono)",
+                          fontSize: "0.74rem",
+                          fontWeight: 700,
+                          color: "var(--accent)",
+                        }}
+                      >
+                        {plan.launchOfferNotice}
+                      </span>
+                    )}
                   </div>
                   <div
                     style={{
@@ -425,6 +466,20 @@ export default function ServicesSection() {
           })}
         </div>
 
+        {/* Small comparison note */}
+        <p
+          style={{
+            textAlign: "center",
+            fontFamily: "var(--font-geist-sans)",
+            fontSize: "0.85rem",
+            color: "var(--muted)",
+            maxWidth: "680px",
+            margin: "0 auto 28px",
+            lineHeight: 1.5,
+          }}
+        >
+          {PRICING_CONFIG.comparisonNote}
+        </p>
 
         {/* Link to /pricing */}
         <div style={{ textAlign: "center" }}>

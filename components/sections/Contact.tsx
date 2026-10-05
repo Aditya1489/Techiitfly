@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import Link from "next/link";
 import { SITE, getConsultUrl } from "@/content/site";
 import { getWhatsAppHref, trackEvent } from "@/lib/tracking";
+import { STARTER_PRICE_FORMATTED } from "@/content/pricing";
 
 export default function Contact() {
   const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
@@ -112,7 +113,7 @@ export default function Contact() {
               margin: "0 auto",
             }}
           >
-            Fast, mobile-friendly websites for growing businesses — fixed prices from ₹9,999, live in 7 days, guaranteed.
+            Fast, mobile-friendly websites for growing businesses — fixed prices from {STARTER_PRICE_FORMATTED}, live in 7 days, guaranteed.
           </p>
         </div>
 

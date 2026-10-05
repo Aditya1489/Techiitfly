@@ -1,221 +1,424 @@
 export type FeatureItem = { text: string; included: boolean };
 
+export interface LaunchOfferConfig {
+  enabled: boolean;
+  package: "starter" | "business" | "premium";
+  price: number;
+  endsOn: string; // ISO date format "YYYY-MM-DD" e.g. "2026-10-31"
+}
+
 export interface Plan {
+  id: "starter" | "business" | "premium" | string;
   name: string;
   for: string;
   price: string;
   priceNote: string;
+  priceAmount: number;
+  originalPrice?: string;
+  advance: number;
+  advanceFormatted: string;
   timeline: string;
   popular?: boolean;
   features: FeatureItem[];
   homeBullets?: string[];
   cta: string;
   waLabel: string;
+  revisions: string;
+  support: string;
+  launchOfferNotice?: string;
+  note?: string;
 }
 
-export const WEB_PLANS: Plan[] = [
-  {
-    name: "Starter",
-    for: "A clean online presence for a new or small business.",
-    price: "₹9,999",
-    priceNote: "starting from",
-    timeline: "Live in 5–7 days",
-    homeBullets: [
-      "Up to 5 mobile-friendly pages",
-      "WhatsApp booking + contact form",
-      "Basic SEO setup & Google Maps",
-      "Launch live on your domain with 7 days support",
-    ],
-    features: [
-      { text: "Up to 5 pages", included: true },
-      { text: "Template-based design", included: true },
-      { text: "Mobile friendly", included: true },
-      { text: "Contact form + WhatsApp button", included: true },
-      { text: "Basic SEO setup", included: true },
-      { text: "7 days free support", included: true },
-    ],
-    cta: "Get Starter",
-    waLabel: "Website – Starter",
-  },
-  {
-    name: "Business",
-    for: "For companies that want to look premium and rank on Google.",
-    price: "₹24,999",
-    priceNote: "starting from",
-    timeline: "Live in 7–10 days",
-    popular: true,
-    homeBullets: [
-      "Up to 10 custom-designed pages",
-      "Mobile-first responsive architecture",
-      "Admin panel to edit your content anytime",
-      "Google Analytics, Maps & 30 days support",
-    ],
-    features: [
-      { text: "Up to 10 pages", included: true },
-      { text: "Custom design", included: true },
-      { text: "Mobile friendly", included: true },
-      { text: "Basic SEO setup", included: true },
-      { text: "Admin panel to edit content", included: true },
-      { text: "Google Analytics + Maps", included: true },
-      { text: "30 days free support", included: true },
-    ],
-    cta: "Get Business",
-    waLabel: "Website – Business",
-  },
-  {
-    name: "Premium",
-    for: "E-commerce, booking or fully custom web platforms.",
-    price: "₹49,999",
-    priceNote: "starting from",
-    timeline: "Live in 14–21 days",
-    popular: false,
-    homeBullets: [
-      "15+ pages or full product / course catalog",
-      "Online payments, booking or member areas",
-      "Advanced SEO & speed/security hardening",
-      "Admin dashboard + 90 days VIP support",
-    ],
-    features: [
-      { text: "15+ pages or online store", included: true },
-      { text: "Custom design + animations", included: true },
-      { text: "Payment gateway / booking", included: true },
-      { text: "Advanced SEO", included: true },
-      { text: "Admin dashboard", included: true },
-      { text: "Speed + security hardening", included: true },
-      { text: "90 days free support", included: true },
-    ],
-    cta: "Get Premium",
-    waLabel: "Website – Premium",
-  },
-];
+export interface AddonItem {
+  label: string;
+  price: string;
+  note?: string;
+}
 
+export interface InstitutesPricing {
+  headline: string;
+  priceText: string;
+  startingPrice: number;
+  cardPriceLine: string;
+  bullets: string[];
+  primaryCtaText: string;
+  secondaryCtaText: string;
+}
+
+export interface MeetPricing {
+  meetMonthly: number;
+  priceText: string;
+  cardPriceLine: string;
+  freeTrialDays: number;
+  meetUnlimitedClasses: boolean;
+  bullets: string[];
+  primaryCtaText: string;
+  trialCtaText: string;
+}
+
+export interface PricingConfig {
+  launchOffer: LaunchOfferConfig;
+  comparisonNote: string;
+  addons: AddonItem[];
+  institutes: InstitutesPricing;
+  meet: MeetPricing;
+}
+
+// ─── Central Pricing Configuration ───────────────────────────────────────────
+export const PRICING_CONFIG: PricingConfig = {
+  launchOffer: {
+    enabled: false,
+    package: "starter",
+    price: 9999,
+    endsOn: "",
+  },
+  comparisonNote:
+    "Prices in INR, excluding GST. Many agencies charge ₹15,000–₹25,000 for a 5-page website — ours is live in 7 days, guaranteed.",
+  addons: [
+    { label: "Extra page", price: "₹1,500" },
+    {
+      label: "Basic logo design",
+      price: "₹3,000",
+      note: "2 concepts, 1 revision, files for web and print",
+    },
+    {
+      label: "Domain + hosting (1 year)",
+      price: "₹4,000",
+      note: "Business email not included — ₹1,500 per mailbox per year",
+    },
+    {
+      label: "Business email (per mailbox, 1 year)",
+      price: "₹1,500",
+    },
+    { label: "Monthly website maintenance", price: "₹2,500" },
+    { label: "Express delivery", price: "+30%" },
+    {
+      label: "Content writing (standard page, up to ~600 words)",
+      price: "₹800",
+    },
+    {
+      label: "Content writing (home or landing page)",
+      price: "₹2,000",
+    },
+  ],
+  institutes: {
+    headline: "Simple yearly licence. No revenue share.",
+    priceText: "From ₹35,000 / year + one-time setup (quoted after your demo).",
+    startingPrice: 35000,
+    cardPriceLine: "From ₹35,000/year",
+    bullets: [
+      "No cut of your fees or course sales",
+      "Price based on student count and customisation",
+      "Includes your branding, domain and onboarding training",
+    ],
+    primaryCtaText: "Book a free demo (30 min)",
+    secondaryCtaText: "Get a quote on WhatsApp",
+  },
+  meet: {
+    meetMonthly: 999,
+    priceText: "₹999 / month per tutor",
+    cardPriceLine: "₹999/month per tutor",
+    freeTrialDays: 0,
+    meetUnlimitedClasses: false,
+    bullets: [
+      "Built-in compass, protractor, ruler and set-square",
+      "Polls, hand-raise queue and automatic PDF notes",
+    ],
+    primaryCtaText: "Book a free walkthrough",
+    trialCtaText: "Start your free trial",
+  },
+};
+
+/**
+ * Returns true if launchOffer is enabled AND endsOn is a valid future date.
+ * Never returns true without a valid end date in the future.
+ */
+export function isLaunchOfferActive(
+  offer: LaunchOfferConfig = PRICING_CONFIG.launchOffer
+): boolean {
+  if (!offer.enabled || !offer.endsOn) return false;
+  const endDate = new Date(offer.endsOn);
+  if (isNaN(endDate.getTime())) return false;
+  // End of day in local time
+  endDate.setHours(23, 59, 59, 999);
+  return Date.now() <= endDate.getTime();
+}
+
+/**
+ * Returns dynamic website packages, reflecting launch offer if currently active.
+ */
+export function getWebPlans(): Plan[] {
+  const launchActive = isLaunchOfferActive();
+  const isStarterOffer = launchActive && PRICING_CONFIG.launchOffer.package === "starter";
+
+  return [
+    {
+      id: "starter",
+      name: "Starter",
+      for: "A clean online presence for a new or small business.",
+      price: isStarterOffer ? `₹${PRICING_CONFIG.launchOffer.price.toLocaleString("en-IN")}` : "₹12,999",
+      priceNote: "Starting at",
+      priceAmount: isStarterOffer ? PRICING_CONFIG.launchOffer.price : 12999,
+      originalPrice: isStarterOffer ? "₹12,999" : undefined,
+      advance: isStarterOffer ? 5000 : 6500,
+      advanceFormatted: isStarterOffer ? "₹5,000" : "₹6,500",
+      timeline: "Live in 7 days",
+      revisions: "1 round of design changes",
+      support: "7 days free support",
+      launchOfferNotice: isStarterOffer ? `Launch offer ends ${PRICING_CONFIG.launchOffer.endsOn}` : undefined,
+      homeBullets: [
+        "Up to 5 pages · Template-based design",
+        "Mobile friendly & WhatsApp button",
+        "Basic SEO setup & Google Maps",
+        "1 round of design changes · 7 days free support",
+      ],
+      features: [
+        { text: "Up to 5 pages", included: true },
+        { text: "Template-based design", included: true },
+        { text: "Mobile friendly", included: true },
+        { text: "Contact form + WhatsApp button", included: true },
+        { text: "Basic SEO setup", included: true },
+        { text: "Google Maps", included: true },
+        { text: "1 round of design changes", included: true },
+        { text: "7 days free support", included: true },
+      ],
+      cta: "Get Starter",
+      waLabel: "Website – Starter",
+    },
+    {
+      id: "business",
+      name: "Business",
+      for: "For companies that want to look premium and rank on Google.",
+      price: "₹29,999",
+      priceNote: "Starting at",
+      priceAmount: 29999,
+      advance: 15000,
+      advanceFormatted: "₹15,000",
+      timeline: "Live in 7–10 days",
+      popular: true,
+      revisions: "2 rounds of design changes",
+      support: "30 days free support",
+      homeBullets: [
+        "Up to 10 pages · Custom design",
+        "Mobile friendly · Basic SEO setup",
+        "Admin panel to edit content anytime",
+        "Google Analytics + Maps · 30 days free support",
+      ],
+      features: [
+        { text: "Up to 10 pages", included: true },
+        { text: "Custom design", included: true },
+        { text: "Mobile friendly", included: true },
+        { text: "Basic SEO setup", included: true },
+        { text: "Admin panel to edit content", included: true },
+        { text: "Google Analytics + Maps", included: true },
+        { text: "2 rounds of design changes", included: true },
+        { text: "30 days free support", included: true },
+      ],
+      cta: "Get Business",
+      waLabel: "Website – Business",
+    },
+    {
+      id: "premium",
+      name: "Premium",
+      for: "E-commerce, booking or fully custom web platforms.",
+      price: "₹59,999",
+      priceNote: "Starting at",
+      priceAmount: 59999,
+      advance: 30000,
+      advanceFormatted: "₹30,000",
+      timeline: "Live in 14–21 days",
+      popular: false,
+      revisions: "2 rounds of design changes",
+      support: "90 days free support",
+      homeBullets: [
+        "15+ pages or online store",
+        "Custom design + animations & payments",
+        "Advanced SEO & admin dashboard",
+        "Speed + security hardening · 90 days support",
+      ],
+      features: [
+        { text: "15+ pages or online store", included: true },
+        { text: "Custom design + animations", included: true },
+        { text: "Payment gateway / booking", included: true },
+        { text: "Advanced SEO", included: true },
+        { text: "Admin dashboard", included: true },
+        { text: "Speed + security hardening", included: true },
+        { text: "2 rounds of design changes", included: true },
+        { text: "90 days free support", included: true },
+      ],
+      cta: "Get Premium",
+      waLabel: "Website – Premium",
+    },
+  ];
+}
+
+export const WEB_PLANS: Plan[] = getWebPlans();
+
+// ─── Mobile App Plans (Quote-first, showAppServices: false) ───────────────────
 export const APP_PLANS: Plan[] = [
   {
+    id: "app-mvp",
     name: "MVP",
-    for: "Test your idea fast with the core features only.",
-    price: "₹49,999",
-    priceNote: "starting from",
-    timeline: "Ready in 2–3 weeks",
+    for: "Test your idea fast with core features only.",
+    price: "₹99,999",
+    priceNote: "Starting at",
+    priceAmount: 99999,
+    advance: 50000,
+    advanceFormatted: "Quote on request",
+    timeline: "Ready in 4–6 weeks",
+    revisions: "Included in scope",
+    support: "15 days free support",
     homeBullets: [
-      "Android or iOS native experience",
-      "3–5 core user journeys & features",
-      "Secure login & fast cloud backend",
-      "Play Store or App Store publishing",
+      "Android or iOS (cross-platform)",
+      "3–5 core features",
+      "Login + basic backend",
+      "Store publishing · 15 days free support",
     ],
     features: [
-      { text: "Android or iOS", included: true },
+      { text: "Android or iOS (cross-platform)", included: true },
       { text: "3–5 core features", included: true },
       { text: "Login + basic backend", included: true },
-      { text: "Play Store / App Store publishing", included: true },
-      { text: "Admin panel", included: false },
+      { text: "Store publishing", included: true },
       { text: "15 days free support", included: true },
     ],
-    cta: "Get MVP",
+    cta: "Get a quote",
     waLabel: "App – MVP",
   },
   {
+    id: "app-standard",
     name: "Standard App",
     for: "One app for both platforms, ready for real customers.",
-    price: "₹1,49,999",
-    priceNote: "starting from",
-    timeline: "Ready in 4–6 weeks",
+    price: "₹2,49,999",
+    priceNote: "Starting at",
+    priceAmount: 249999,
+    advance: 125000,
+    advanceFormatted: "Quote on request",
+    timeline: "Ready in 8–12 weeks",
     popular: true,
+    revisions: "Included in scope",
+    support: "60 days free support",
     homeBullets: [
-      "Android + iOS cross-platform apps",
-      "Authentication, payments & push alerts",
-      "Custom brand UI & admin dashboard",
-      "Store approval & 60 days warranty",
+      "Android + iOS cross-platform",
+      "Login, payments, notifications",
+      "Custom UI & admin panel",
+      "Store publishing · 60 days free support",
     ],
     features: [
-      { text: "Android + iOS together", included: true },
+      { text: "Android + iOS", included: true },
       { text: "Login, payments, notifications", included: true },
-      { text: "Custom UI design", included: true },
+      { text: "Custom UI", included: true },
       { text: "Admin panel", included: true },
-      { text: "Store publishing included", included: true },
+      { text: "Store publishing", included: true },
       { text: "60 days free support", included: true },
     ],
-    cta: "Get Standard",
+    cta: "Get a quote",
     waLabel: "App – Standard",
   },
   {
+    id: "app-advanced",
     name: "Advanced",
-    for: "Complex apps with custom backend and integrations.",
-    price: "₹3,00,000+",
+    for: "Complex apps with custom backend and cloud integrations.",
+    price: "From ₹5,00,000",
     priceNote: "custom quote",
-    timeline: "8+ weeks",
+    priceAmount: 500000,
+    advance: 250000,
+    advanceFormatted: "Quote on request",
+    timeline: "12+ weeks",
+    revisions: "Custom scope",
+    support: "90 days free support",
     homeBullets: [
-      "Mobile apps + web management dashboard",
-      "Custom microservices & database architecture",
-      "Enterprise third-party API integrations",
-      "High-scale cloud infra + 90 days VIP care",
+      "Android + iOS + web dashboard",
+      "Custom backend + APIs",
+      "Integrations & analytics",
+      "Scalable cloud setup · 90 days free support",
     ],
     features: [
       { text: "Android + iOS + web dashboard", included: true },
       { text: "Custom backend + APIs", included: true },
-      { text: "Third-party integrations", included: true },
-      { text: "Analytics + reporting", included: true },
+      { text: "Integrations", included: true },
+      { text: "Analytics", included: true },
       { text: "Scalable cloud setup", included: true },
       { text: "90 days free support", included: true },
     ],
-    cta: "Request a quote",
+    cta: "Get a quote",
     waLabel: "App – Advanced",
   },
 ];
 
+// ─── Managed IT Plans (Quote-first, showItServices: false) ─────────────────────
 export const IT_PLANS: Plan[] = [
   {
+    id: "it-essential",
     name: "Essential",
     for: "Basic IT care for small offices.",
-    price: "₹9,999",
-    priceNote: "/ month",
-    timeline: "Response within 24 hours",
+    price: "₹4,999 / month",
+    priceNote: "",
+    priceAmount: 4999,
+    advance: 4999,
+    advanceFormatted: "Monthly billing",
+    timeline: "Response within 24 hours (Mon–Sat, 10am–7pm)",
+    revisions: "Continuous support",
+    support: "Monthly health check included",
+    note: "Spare parts and on-site visits not included; on-site visits quoted separately.",
     homeBullets: [
-      "Up to 10 office workstations & laptops",
-      "Remote helpdesk & troubleshooting",
-      "Domain email & endpoint security setup",
-      "Monthly preventative health checkup",
+      "Up to 10 devices",
+      "Remote helpdesk",
+      "Response within 24 hours (Mon–Sat, 10am–7pm)",
+      "Email + antivirus setup · Monthly health check",
     ],
     features: [
       { text: "Up to 10 devices", included: true },
-      { text: "Remote helpdesk support", included: true },
+      { text: "Remote helpdesk", included: true },
+      { text: "Response within 24 hours (Mon–Sat, 10am–7pm)", included: true },
       { text: "Email + antivirus setup", included: true },
       { text: "Monthly health check", included: true },
-      { text: "On-site visits", included: false },
-      { text: "Server management", included: false },
     ],
-    cta: "Get Essential",
+    cta: "Book a free IT assessment",
     waLabel: "IT Services – Essential",
   },
   {
+    id: "it-business",
     name: "Business Care",
     for: "We run your IT so your team can focus on work.",
-    price: "₹24,999",
-    priceNote: "/ month",
-    timeline: "Response within 4 hours",
+    price: "₹24,999 / month",
+    priceNote: "",
+    priceAmount: 24999,
+    advance: 24999,
+    advanceFormatted: "Monthly billing",
+    timeline: "Response within 4 hours (business hours)",
     popular: true,
+    revisions: "Continuous support",
+    support: "Monthly report included",
     homeBullets: [
-      "Up to 30 computers, printers & routers",
-      "Priority remote + on-site technician visits",
-      "Server, firewall & local network tuning",
-      "Automated cloud backup & security scans",
+      "Up to 30 devices",
+      "Remote + on-site support",
+      "Response within 4 hours (business hours)",
+      "Server + network management · Cloud backups · Security monitoring",
     ],
     features: [
       { text: "Up to 30 devices", included: true },
       { text: "Remote + on-site support", included: true },
+      { text: "Response within 4 hours (business hours)", included: true },
       { text: "Server + network management", included: true },
       { text: "Cloud backups", included: true },
       { text: "Security monitoring", included: true },
       { text: "Monthly report", included: true },
     ],
-    cta: "Get Business Care",
+    cta: "Book a free IT assessment",
     waLabel: "IT Services – Business Care",
   },
   {
+    id: "it-enterprise",
     name: "Enterprise",
-    for: "A dedicated IT team for larger companies.",
-    price: "Custom",
-    priceNote: "quote",
+    for: "A dedicated IT infrastructure team for larger companies.",
+    price: "Custom quote",
+    priceNote: "",
+    priceAmount: 0,
+    advance: 0,
+    advanceFormatted: "Quote on request",
     timeline: "Response within 1 hour",
+    revisions: "Custom SLA",
+    support: "24×7 dedicated engineering",
     homeBullets: [
       "Unlimited systems, servers & branches",
       "Dedicated senior network/systems engineer",
@@ -223,23 +426,68 @@ export const IT_PLANS: Plan[] = [
       "Compliance audit & zero-downtime SLA",
     ],
     features: [
-      { text: "Unlimited devices", included: true },
       { text: "Dedicated IT engineer", included: true },
       { text: "24×7 monitoring", included: true },
-      { text: "Compliance + audits", included: true },
+      { text: "Server & network tuning", included: true },
       { text: "Cloud migration", included: true },
       { text: "Custom SLA", included: true },
     ],
-    cta: "Request a quote",
+    cta: "Book a free IT assessment",
     waLabel: "IT Services – Enterprise",
   },
 ];
 
-export const ADDONS = [
-  { label: "Extra page", price: "₹1,500" },
-  { label: "Logo design", price: "₹3,000" },
-  { label: "Domain + hosting (1 year)", price: "₹4,000" },
-  { label: "Monthly website maintenance", price: "₹2,500" },
-  { label: "Express delivery", price: "+30%" },
-  { label: "Content writing (per page)", price: "₹800" },
+export const ADDONS: AddonItem[] = PRICING_CONFIG.addons;
+
+// ─── FAQ Definitions ──────────────────────────────────────────────────────────
+export interface PricingFaq {
+  q: string;
+  a: string;
+}
+
+export const PRICING_FAQS: PricingFaq[] = [
+  {
+    q: "Can you really deliver a website in one week?",
+    a: "Yes — Starter websites (up to 5 pages) go live in 7 days once we receive your content. Business websites take 7–10 days, and Premium takes 14–21 days.",
+  },
+  {
+    q: "How many revisions are included?",
+    a: "Starter package includes one round of design changes. Business and Premium packages include two rounds of design changes. Extra rounds can be added separately.",
+  },
+  {
+    q: "How does payment work?",
+    a: "50% advance to confirm your kickoff date, and the remaining 50% on final delivery once you are satisfied and ready to launch.",
+  },
+  {
+    q: "Do I own the source code?",
+    a: "Yes. After the final payment, the complete code, assets, and design files are 100% yours.",
+  },
+  {
+    q: "Do you offer support after launch?",
+    a: "Starter includes 7 days free support, Business includes 30 days, and Premium includes 90 days. After that, you can continue with our monthly maintenance plan (₹2,500/month).",
+  },
 ];
+
+// ─── JSON-LD Offer Generator ──────────────────────────────────────────────────
+export function getPricingJsonLdOffers() {
+  const plans = getWebPlans();
+  return plans.map((plan) => ({
+    "@type": "Offer",
+    name: `${plan.name} Website Package`,
+    price: plan.priceAmount.toString(),
+    priceCurrency: "INR",
+    priceValidUntil: "2027-12-31",
+    availability: "https://schema.org/InStock",
+    url: `https://techiitfly.com/checkout/${plan.id}`,
+    description: `${plan.name} website package: ${plan.timeline}, ${plan.revisions}, ${plan.support}. Starting at ${plan.price}.`,
+  }));
+}
+
+// ─── Helper for single package lookup ──────────────────────────────────────────
+export function getWebPackageById(slug: string): Plan | undefined {
+  const plans = getWebPlans();
+  return plans.find((p) => p.id === slug.toLowerCase()) || plans.find((p) => p.name.toLowerCase() === slug.toLowerCase());
+}
+
+export const STARTER_PRICE_FORMATTED = "₹12,999";
+export const STARTING_PRICE_NUMERIC = 12999;

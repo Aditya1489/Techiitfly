@@ -34,7 +34,15 @@ function TechiitflyLogo({ size = 36 }: { size?: number }) {
 }
 
 import { SITE, getConsultUrl } from "@/content/site";
-import { Plan, WEB_PLANS, APP_PLANS, IT_PLANS, ADDONS } from "@/content/pricing";
+import {
+  Plan,
+  APP_PLANS,
+  IT_PLANS,
+  ADDONS,
+  PRICING_CONFIG,
+  PRICING_FAQS,
+  getWebPlans,
+} from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
 
 // ─── WhatsApp number ──────────────────────────────────────────────────────────
@@ -68,28 +76,7 @@ const STEPS: { title: string; desc: React.ReactNode }[] = [
   { title: "Launch and support", desc: "Pay the rest on delivery. Free support is included." },
 ];
 
-const FAQS = [
-  {
-    q: "Can you really deliver a website in one week?",
-    a: "Yes — Starter websites (up to 5 pages) go live in 7 days once we receive your content. Business websites take 7–10 days.",
-  },
-  {
-    q: "How many revisions are included?",
-    a: "Starter package includes one round of design changes. Business and Premium packages include two rounds of revisions. Extra rounds are charged separately.",
-  },
-  {
-    q: "How does payment work?",
-    a: "50% advance to start, 50% on delivery once you are 100% satisfied with the result.",
-  },
-  {
-    q: "Do I own the source code?",
-    a: "Yes. After the final payment, the code and design files are yours.",
-  },
-  {
-    q: "Do you offer support after launch?",
-    a: "Every package has free support for a set period. After that you can choose a monthly maintenance plan.",
-  },
-];
+const FAQS = PRICING_FAQS;
 
 type Tab = "web" | "app" | "it";
 
@@ -100,7 +87,7 @@ const TABS: { id: Tab; label: string }[] = [
 ];
 
 const PLAN_MAP: Record<Tab, Plan[]> = {
-  web: WEB_PLANS,
+  web: getWebPlans(),
   app: APP_PLANS,
   it: IT_PLANS,
 };
@@ -176,15 +163,51 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
       <div
         style={{
           fontFamily: "var(--font-geist-sans)",
-          fontSize: "1.9rem",
-          fontWeight: 800,
           color: "var(--text)",
           letterSpacing: "-0.03em",
           lineHeight: 1.1,
         }}
       >
-        {plan.priceNote === "starting from" ? (
-          <>
+        {plan.originalPrice ? (
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "1rem",
+                  color: "var(--muted)",
+                  textDecoration: "line-through",
+                }}
+              >
+                {plan.originalPrice}
+              </span>
+              <span
+                style={{
+                  fontSize: "1.9rem",
+                  fontWeight: 800,
+                  color: "var(--accent)",
+                }}
+              >
+                {plan.price}
+              </span>
+            </div>
+            {plan.launchOfferNotice && (
+              <span
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  color: "var(--accent)",
+                  display: "block",
+                  marginTop: "4px",
+                }}
+              >
+                {plan.launchOfferNotice}
+              </span>
+            )}
+          </div>
+        ) : plan.priceNote ? (
+          <div style={{ fontSize: "1.9rem", fontWeight: 800 }}>
             <span
               style={{
                 fontSize: "0.92rem",
@@ -194,19 +217,14 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
                 letterSpacing: 0,
               }}
             >
-              Starting at
-            </span>
-            {plan.price}
-          </>
-        ) : (
-          <>
-            {plan.price}{" "}
-            <span
-              style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--muted)", letterSpacing: 0 }}
-            >
               {plan.priceNote}
             </span>
-          </>
+            {plan.price}
+          </div>
+        ) : (
+          <div style={{ fontSize: "1.9rem", fontWeight: 800 }}>
+            {plan.price}
+          </div>
         )}
       </div>
 
@@ -225,6 +243,20 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
       >
         {plan.timeline}
       </div>
+
+      {plan.note && (
+        <p
+          style={{
+            fontFamily: "var(--font-geist-sans)",
+            fontSize: "0.76rem",
+            color: "var(--muted)",
+            lineHeight: 1.4,
+            margin: "10px 0 0",
+          }}
+        >
+          {plan.note}
+        </p>
+      )}
 
       {/* Feature list */}
       <ul
@@ -538,10 +570,21 @@ export default function PricingClient() {
               letterSpacing: "-0.02em",
             }}
           >
-            Websites &amp; learning platforms.{" "}
-            <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
-              Delivered in days, not months.
-            </em>
+            {!SITE.showAppServices && !SITE.showItServices ? (
+              <>
+                Websites that bring you customers.{" "}
+                <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
+                  Live in 7 days.
+                </em>
+              </>
+            ) : (
+              <>
+                Websites &amp; learning platforms.{" "}
+                <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
+                  Delivered in days, not months.
+                </em>
+              </>
+            )}
           </motion.h1>
 
           <motion.p
@@ -765,12 +808,13 @@ export default function PricingClient() {
           style={{
             textAlign: "center",
             fontFamily: "var(--font-geist-sans)",
-            fontSize: "0.8rem",
+            fontSize: "0.85rem",
             color: "var(--muted)",
             marginTop: "20px",
+            lineHeight: 1.5,
           }}
         >
-          Prices are starting prices in INR and exclude GST. Final quote depends on your requirements.
+          {PRICING_CONFIG.comparisonNote}
         </p>
 
         {/* ── Add-ons ──────────────────────────────────────────────────── */}
@@ -815,15 +859,29 @@ export default function PricingClient() {
                   transition: "border-color 0.2s",
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.88rem",
-                    color: "var(--text)",
-                  }}
-                >
-                  {a.label}
-                </span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.88rem",
+                      color: "var(--text)",
+                    }}
+                  >
+                    {a.label}
+                  </span>
+                  {a.note && (
+                    <span
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.75rem",
+                        color: "var(--muted)",
+                        lineHeight: 1.35,
+                      }}
+                    >
+                      {a.note}
+                    </span>
+                  )}
+                </div>
                 <strong
                   style={{
                     fontFamily: "var(--font-geist-mono)",

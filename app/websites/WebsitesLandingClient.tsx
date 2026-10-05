@@ -6,6 +6,7 @@ import Link from "next/link";
 import { SITE, getConsultUrl } from "@/content/site";
 import { trackEvent, getWhatsAppHref } from "@/lib/tracking";
 import Testimonials from "@/components/sections/Testimonials";
+import { getWebPlans, PRICING_FAQS, STARTER_PRICE_FORMATTED } from "@/content/pricing";
 
 // Minimal Logo
 function MinimalLogo() {
@@ -57,53 +58,10 @@ function MinimalLogo() {
   );
 }
 
-const PACKAGES = [
-  {
-    name: "Starter",
-    for: "A clean, fast online presence for a local or emerging business.",
-    price: "₹9,999",
-    timeline: "Live in 5–7 days",
-    popular: false,
-    features: [
-      "Up to 5 custom-styled pages",
-      "Mobile-optimised & WhatsApp click-to-chat ready",
-      "Fast page load & SEO foundational setup",
-      "SSL certificate & custom domain launch",
-      "7 days post-launch support included",
-    ],
-    waLabel: "Starter Website",
-  },
-  {
-    name: "Business",
-    for: "For brands and institutes that need higher credibility and Google rankings.",
-    price: "₹24,999",
-    timeline: "Live in 7–10 days",
-    popular: true,
-    features: [
-      "Up to 10 responsive pages",
-      "Custom layout tailored to your brand colours",
-      "Full local SEO setup & Google Analytics integration",
-      "Admin panel to easily edit content & text",
-      "30 days post-launch maintenance & support",
-    ],
-    waLabel: "Business Website",
-  },
-  {
-    name: "Premium",
-    for: "Advanced platforms, course portals, or booking systems.",
-    price: "₹49,999",
-    timeline: "Live in 14–21 days",
-    popular: false,
-    features: [
-      "15+ pages or full service catalog",
-      "Payment gateway integration & booking engine",
-      "Interactive widgets & custom animation",
-      "Advanced performance hardening & security",
-      "90 days post-launch VIP maintenance",
-    ],
-    waLabel: "Premium Website",
-  },
-];
+const PACKAGES = getWebPlans().map((p) => ({
+  ...p,
+  features: p.features.map((f) => f.text),
+}));
 
 const PROOF_CARDS = [
   {
@@ -132,28 +90,7 @@ const PROOF_CARDS = [
   },
 ];
 
-const FAQS = [
-  {
-    q: "Can you really deliver a website in one week?",
-    a: "Yes — Starter websites (up to 5 pages) go live in 7 days once we receive your content. Business websites take 7–10 days.",
-  },
-  {
-    q: "How many revisions are included?",
-    a: "Starter package includes one round of design changes. Business and Premium packages include two rounds of revisions. Extra rounds are charged separately.",
-  },
-  {
-    q: "How does payment work?",
-    a: "50% advance to start, 50% on delivery. For monthly IT services, billing is monthly.",
-  },
-  {
-    q: "Do I own the source code?",
-    a: "Yes. After the final payment, the code and design files are yours.",
-  },
-  {
-    q: "Do you offer support after launch?",
-    a: "Every package has free support for a set period. After that you can choose a monthly maintenance plan.",
-  },
-];
+const FAQS = PRICING_FAQS;
 
 export default function WebsitesLandingClient() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -244,7 +181,7 @@ export default function WebsitesLandingClient() {
               margin: "0 auto 32px",
             }}
           >
-            Fixed prices from ₹9,999. Mobile-friendly, WhatsApp-ready, launched on your domain.
+            Fixed prices from {STARTER_PRICE_FORMATTED}. Mobile-friendly, WhatsApp-ready, launched on your domain.
           </p>
 
           {/* Primary Buttons */}
@@ -574,17 +511,48 @@ export default function WebsitesLandingClient() {
                     lineHeight: 1.1,
                   }}
                 >
-                  <span
-                    style={{
-                      fontSize: "0.92rem",
-                      fontWeight: 600,
-                      color: "var(--muted)",
-                      marginRight: "6px",
-                    }}
-                  >
-                    Starting at
-                  </span>
-                  {pkg.price}
+                  {pkg.originalPrice ? (
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "8px", flexWrap: "wrap" }}>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-geist-mono)",
+                          fontSize: "1.1rem",
+                          color: "var(--muted)",
+                          textDecoration: "line-through",
+                        }}
+                      >
+                        {pkg.originalPrice}
+                      </span>
+                      <span style={{ color: "var(--accent)" }}>{pkg.price}</span>
+                    </div>
+                  ) : (
+                    <>
+                      <span
+                        style={{
+                          fontSize: "0.92rem",
+                          fontWeight: 600,
+                          color: "var(--muted)",
+                          marginRight: "6px",
+                        }}
+                      >
+                        Starting at
+                      </span>
+                      {pkg.price}
+                    </>
+                  )}
+                  {pkg.launchOfferNotice && (
+                    <div
+                      style={{
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: "0.72rem",
+                        fontWeight: 700,
+                        color: "var(--accent)",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {pkg.launchOfferNotice}
+                    </div>
+                  )}
                 </div>
 
                 <div

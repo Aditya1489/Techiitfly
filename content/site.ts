@@ -56,21 +56,21 @@ export const SITE: SiteConfig = {
   googleReviewsUrl: "", // Optional Google Reviews link; hidden if empty
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://techiitfly.vercel.app",
   metaDescription:
-    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹12,999, live in 7 days, guaranteed. Free 15-minute consultation.",
   showIitClaim: false,
-  showAppServices: true,
+  showAppServices: false,
   showItServices: false,
-  mathsyInstitutesPrice: "",
-  mathsyMeetPrice: "",
+  mathsyInstitutesPrice: "From ₹35,000 / year",
+  mathsyMeetPrice: "₹999 / month per tutor",
   legalEntityType: "",
   registeredAddress: "",
   gstin: "",
   gstApplicable: false,
   termsVersion: "2026-10-05",
   payments: {
-    starter: { advance: 5000, razorpayButtonId: "" },
-    business: { advance: 12500, razorpayButtonId: "" },
-    premium: { advance: 25000, razorpayButtonId: "" },
+    starter: { advance: 6500, razorpayButtonId: "" },
+    business: { advance: 15000, razorpayButtonId: "" },
+    premium: { advance: 30000, razorpayButtonId: "" },
     payQuoteUrl: "", // Razorpay Payment Page URL for custom quotes
   },
 };

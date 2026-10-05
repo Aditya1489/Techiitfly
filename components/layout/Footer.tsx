@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { SITE, getConsultUrl } from "@/content/site";
 import { trackEvent } from "@/lib/tracking";
+import { STARTER_PRICE_FORMATTED } from "@/content/pricing";
 
 export default function Footer() {
   return (
@@ -74,7 +75,7 @@ export default function Footer() {
               marginTop: "10px",
             }}
           >
-            Fixed prices from ₹9,999 · Pune, India
+            Fixed prices from {STARTER_PRICE_FORMATTED} · Pune, India
           </p>
         </div>
 
@@ -148,6 +149,12 @@ export default function Footer() {
             style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--text)", textDecoration: "none" }}
           >
             Mathsy Meet
+          </Link>
+          <Link
+            href="/mathsy-for-institutes"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--text)", textDecoration: "none" }}
+          >
+            Mathsy for Institutes
           </Link>
           <span style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.78rem", color: "var(--muted)", marginTop: "4px" }}>
             Software we build and run ourselves.

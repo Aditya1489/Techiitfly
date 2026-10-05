@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SITE, getConsultUrl } from "@/content/site";
-import { WEB_PLANS } from "@/content/pricing";
+import { getWebPackageById, getWebPlans } from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
 import PolicyModal from "@/components/legal/PolicyModal";
 import RazorpayButtonLoader from "@/components/checkout/RazorpayButtonLoader";
@@ -13,8 +13,7 @@ interface CheckoutClientProps {
 }
 
 export default function CheckoutClient({ packageSlug }: CheckoutClientProps) {
-  const planIndex = packageSlug === "starter" ? 0 : packageSlug === "business" ? 1 : 2;
-  const plan = WEB_PLANS[planIndex] || WEB_PLANS[0];
+  const plan = getWebPackageById(packageSlug) || getWebPlans()[0];
   const paymentConfig =
     packageSlug === "starter"
       ? SITE.payments.starter
@@ -28,11 +27,11 @@ export default function CheckoutClient({ packageSlug }: CheckoutClientProps) {
   // Fire begin_checkout once on mount
   useEffect(() => {
     trackEvent("begin_checkout", `checkout_${packageSlug}`, {
-      value: paymentConfig.advance,
+      value: plan.advance,
       currency: "INR",
       item_name: `Website – ${plan.name}`,
     });
-  }, [packageSlug, paymentConfig.advance, plan.name]);
+  }, [packageSlug, plan.advance, plan.name]);
 
   function handleConsentChange(checked: boolean) {
     setHasConsented(checked);
@@ -56,7 +55,7 @@ export default function CheckoutClient({ packageSlug }: CheckoutClientProps) {
     }
   }
 
-  const advanceFormatted = `₹${paymentConfig.advance.toLocaleString("en-IN")}`;
+  const advanceFormatted = plan.advanceFormatted;
   const whatsappUrl = `https://wa.me/${SITE.phoneRaw.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
     `Hi techiitfly, I'd like to book the ${plan.name} package and pay the advance of ${advanceFormatted}.`
   )}`;

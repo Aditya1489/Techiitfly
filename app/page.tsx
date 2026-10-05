@@ -16,20 +16,17 @@ import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "techiitfly — Website Development in Pune | Live in 7 Days",
-  description:
-    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+  description: SITE.metaDescription,
   openGraph: {
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
-    description:
-      "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+    description: SITE.metaDescription,
     url: SITE.siteUrl,
     images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
-    description:
-      "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+    description: SITE.metaDescription,
     images: ["/og/home.png"],
   },
 };
