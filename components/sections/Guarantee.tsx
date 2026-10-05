@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { nextStartDate, isStartDateValid } from "@/content/availability";
 import { SITE } from "@/content/site";
+import { trackEvent } from "@/lib/tracking";
 
 export default function Guarantee() {
   const showCapacity = isStartDateValid();
@@ -382,12 +384,11 @@ export default function Guarantee() {
             </div>
           </div>
 
-          {/* WhatsApp CTA Button */}
-          <div style={{ textAlign: "center", marginBottom: "24px" }}>
-            <a
-              href={SITE.whatsappProjectUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+          {/* Checkout CTA Button */}
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <Link
+              href="/checkout/starter"
+              onClick={() => trackEvent("begin_checkout", "guarantee_starter")}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -398,13 +399,26 @@ export default function Guarantee() {
                 color: "#0e0d0b",
                 fontFamily: "var(--font-geist-sans)",
                 fontSize: "1rem",
-                fontWeight: 600,
+                fontWeight: 700,
                 textDecoration: "none",
                 boxShadow: "0 4px 16px rgba(245,158,11,0.3)",
               }}
             >
               <span>Book a 7-day project →</span>
-            </a>
+            </Link>
+            <p
+              style={{
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: "0.72rem",
+                color: "var(--muted)",
+                margin: "8px 0 0",
+              }}
+            >
+              By booking, you agree to our{" "}
+              <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>
+                Terms
+              </Link>
+            </p>
           </div>
 
           {/* Fine Print */}

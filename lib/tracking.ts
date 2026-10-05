@@ -6,7 +6,10 @@ export type TrackingEventType =
   | "whatsapp_click"
   | "call_click"
   | "email_click"
-  | "consult_click";
+  | "consult_click"
+  | "begin_checkout"
+  | "terms_accepted"
+  | "purchase";
 
 export function getStoredUtmSource(): string | null {
   if (typeof window === "undefined") return null;
@@ -37,29 +40,75 @@ export function getWhatsAppHref(defaultMessage?: string): string {
 
 export function trackEvent(
   eventName: TrackingEventType,
-  buttonLocation: string = "general"
+  buttonLocation: string = "general",
+  extraData?: {
+    value?: number;
+    currency?: string;
+    transaction_id?: string;
+    item_name?: string;
+    terms_version?: string;
+  }
 ) {
   if (typeof window === "undefined") return;
 
   const pagePath = window.location.pathname;
   const utmSource = getStoredUtmSource() || "direct";
+  const currency = extraData?.currency || "INR";
 
   // Google Analytics / Google Ads gtag
   if (typeof (window as unknown as { gtag?: Function }).gtag === "function") {
-    (window as unknown as { gtag: Function }).gtag("event", eventName, {
-      event_category: "Conversion",
-      event_label: buttonLocation,
-      page_path: pagePath,
-      utm_source: utmSource,
-    });
+    const gtagFn = (window as unknown as { gtag: Function }).gtag;
+
+    if (eventName === "purchase") {
+      gtagFn("event", "purchase", {
+        transaction_id: extraData?.transaction_id || `TXN_${Date.now()}`,
+        value: extraData?.value || 0,
+        currency,
+        page_path: pagePath,
+        utm_source: utmSource,
+      });
+    } else if (eventName === "begin_checkout") {
+      gtagFn("event", "begin_checkout", {
+        value: extraData?.value,
+        currency,
+        items: extraData?.item_name ? [{ item_name: extraData.item_name }] : undefined,
+        page_path: pagePath,
+        utm_source: utmSource,
+      });
+    } else {
+      gtagFn("event", eventName, {
+        event_category: eventName === "terms_accepted" ? "Compliance" : "Conversion",
+        event_label: buttonLocation,
+        page_path: pagePath,
+        utm_source: utmSource,
+        terms_version: extraData?.terms_version,
+      });
+    }
   }
 
   // Meta Pixel
   if (typeof (window as unknown as { fbq?: Function }).fbq === "function") {
-    (window as unknown as { fbq: Function }).fbq("trackCustom", eventName, {
-      location: buttonLocation,
-      path: pagePath,
-      utm_source: utmSource,
-    });
+    const fbqFn = (window as unknown as { fbq: Function }).fbq;
+
+    if (eventName === "purchase") {
+      fbqFn("track", "Purchase", {
+        value: extraData?.value || 0,
+        currency,
+        content_name: extraData?.item_name || "Website Package Advance",
+      });
+    } else if (eventName === "begin_checkout") {
+      fbqFn("track", "InitiateCheckout", {
+        value: extraData?.value,
+        currency,
+        content_name: extraData?.item_name,
+      });
+    } else {
+      fbqFn("trackCustom", eventName, {
+        location: buttonLocation,
+        path: pagePath,
+        utm_source: utmSource,
+        terms_version: extraData?.terms_version,
+      });
+    }
   }
 }

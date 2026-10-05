@@ -629,27 +629,64 @@ export default function WebsitesLandingClient() {
                   ))}
                 </ul>
 
-                <a
-                  href={getWhatsAppHref(`Hi techiitfly, I'm interested in the ${pkg.waLabel}.`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent("whatsapp_click", `websites_package_${pkg.name.toLowerCase()}`)}
-                  style={{
-                    display: "block",
-                    textAlign: "center",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontWeight: 700,
-                    fontSize: "0.95rem",
-                    textDecoration: "none",
-                    padding: "13px 18px",
-                    borderRadius: "8px",
-                    background: pkg.popular ? "var(--accent)" : "transparent",
-                    border: pkg.popular ? "none" : "1.5px solid var(--border)",
-                    color: pkg.popular ? "var(--primary-btn-text)" : "var(--text)",
-                  }}
-                >
-                  Select {pkg.name} on WhatsApp
-                </a>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <Link
+                    href={`/checkout/${pkg.name.toLowerCase()}`}
+                    onClick={() => trackEvent("begin_checkout", `websites_landing_${pkg.name.toLowerCase()}`)}
+                    style={{
+                      display: "block",
+                      textAlign: "center",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontWeight: 700,
+                      fontSize: "0.92rem",
+                      textDecoration: "none",
+                      padding: "12px 16px",
+                      borderRadius: "8px",
+                      background: pkg.popular ? "var(--accent)" : "var(--surface)",
+                      border: pkg.popular ? "none" : "1.5px solid var(--border)",
+                      color: pkg.popular ? "var(--primary-btn-text)" : "var(--text)",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    Book &amp; pay advance →
+                  </Link>
+                  <a
+                    href={getWhatsAppHref(`Hi techiitfly, I'm interested in the ${pkg.waLabel}.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("whatsapp_click", `websites_package_quote_${pkg.name.toLowerCase()}`)}
+                    style={{
+                      display: "block",
+                      textAlign: "center",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontWeight: 600,
+                      fontSize: "0.85rem",
+                      textDecoration: "none",
+                      padding: "9px 14px",
+                      borderRadius: "8px",
+                      background: "transparent",
+                      border: "1px solid var(--border)",
+                      color: "var(--muted)",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    Get a quote first ↗
+                  </a>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.7rem",
+                      color: "var(--muted)",
+                      margin: "2px 0 0",
+                      textAlign: "center",
+                    }}
+                  >
+                    By booking, you agree to our{" "}
+                    <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>
+                      Terms
+                    </Link>
+                  </p>
+                </div>
               </div>
             ))}
           </div>

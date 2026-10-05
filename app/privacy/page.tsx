@@ -148,7 +148,7 @@ export default function PrivacyPage() {
                   <strong style={{ color: "var(--text)" }}>Phone calls:</strong> When you call our contact number, we receive caller ID information necessary to return your inquiry.
                 </li>
                 <li>
-                  <strong style={{ color: "var(--text)" }}>Email:</strong> When you write to{" "}
+                  <strong style={{ color: "var(--text)" }}>Email &amp; Contact Forms:</strong> When you write to{" "}
                   <a href={`mailto:${SITE.contactEmail}`} style={{ color: "var(--accent)" }}>
                     {SITE.contactEmail}
                   </a>
@@ -174,7 +174,37 @@ export default function PrivacyPage() {
                   marginBottom: "12px",
                 }}
               >
-                3. Analytics &amp; Advertising Cookies
+                3. Online Payments &amp; Razorpay Processing
+              </h2>
+              <p style={{ color: "var(--muted)", margin: "0 0 10px" }}>
+                Payments are processed by Razorpay; we receive only payment confirmation details (name, email, phone,
+                amount, transaction ID).
+              </p>
+              <p style={{ color: "var(--muted)", margin: 0 }}>
+                All sensitive financial data (such as credit/debit card numbers, CVVs, UPI credentials, and bank passwords)
+                are processed securely on Razorpay&apos;s PCI-DSS compliant infrastructure. techiitfly never has access
+                to, nor stores, your payment credentials.
+              </p>
+            </section>
+
+            <section
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-lg)",
+                padding: "28px 28px",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "1.25rem",
+                  fontWeight: 700,
+                  color: "var(--text)",
+                  marginBottom: "12px",
+                }}
+              >
+                4. Analytics &amp; Advertising Cookies
               </h2>
               <p style={{ color: "var(--muted)", marginBottom: "12px" }}>
                 To understand how visitors interact with our website and measure the performance of our advertising campaigns, we may load analytics scripts from Google (Google Analytics 4, Google Ads) and Meta (Meta Pixel).
@@ -201,7 +231,7 @@ export default function PrivacyPage() {
                   marginBottom: "12px",
                 }}
               >
-                4. No Sale of Personal Data
+                5. No Sale of Personal Data
               </h2>
               <p style={{ margin: 0, color: "var(--muted)" }}>
                 We do not sell, rent, license, or trade your contact information, phone numbers, email addresses, or client project scopes to any third-party marketing companies, broker networks, or list aggregators. Ever.
@@ -225,7 +255,7 @@ export default function PrivacyPage() {
                   marginBottom: "12px",
                 }}
               >
-                5. Data Requests &amp; Contact
+                6. Data Requests &amp; Contact
               </h2>
               <p style={{ color: "var(--muted)", marginBottom: "14px" }}>
                 You have the right to request access to the communication history we hold about you, request corrections, or request complete deletion of your contact records from our systems.

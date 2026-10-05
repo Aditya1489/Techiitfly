@@ -295,33 +295,102 @@ export default function ServicesSection() {
                   ))}
                 </ul>
 
-                {/* WhatsApp CTA Button */}
-                <a
-                  href={getWaHref(plan.name)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent("whatsapp_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    padding: "13px 20px",
-                    borderRadius: "8px",
-                    background: plan.popular ? "var(--accent)" : "var(--surface-2)",
-                    color: plan.popular ? "#0e0d0b" : "var(--text)",
-                    border: plan.popular ? "none" : "1px solid var(--border)",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.95rem",
-                    fontWeight: 600,
-                    textDecoration: "none",
-                    transition: "all 0.15s ease",
-                    textAlign: "center",
-                  }}
-                >
-                  <span>Choose {plan.name} on WhatsApp</span>
-                  <span>→</span>
-                </a>
+                {/* CTAs */}
+                {activeTab === "web" ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <Link
+                      href={`/checkout/${plan.name.toLowerCase()}`}
+                      onClick={() => trackEvent("begin_checkout", `services_${plan.name.toLowerCase()}`)}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "6px",
+                        padding: "12px 18px",
+                        borderRadius: "8px",
+                        background: plan.popular ? "var(--accent)" : "var(--surface-2)",
+                        color: plan.popular ? "#0e0d0b" : "var(--text)",
+                        border: plan.popular ? "none" : "1px solid var(--border)",
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.92rem",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                        transition: "all 0.15s ease",
+                        textAlign: "center",
+                      }}
+                    >
+                      <span>Book &amp; pay advance</span>
+                      <span>→</span>
+                    </Link>
+                    <a
+                      href={getWaHref(plan.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEvent("whatsapp_click", `services_quote_${plan.name.toLowerCase()}`)}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "6px",
+                        padding: "9px 14px",
+                        borderRadius: "8px",
+                        background: "transparent",
+                        border: "1px solid var(--border)",
+                        color: "var(--muted)",
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.85rem",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                        transition: "all 0.15s ease",
+                        textAlign: "center",
+                      }}
+                    >
+                      <span>Get a quote first</span>
+                      <span>↗</span>
+                    </a>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: "0.7rem",
+                        color: "var(--muted)",
+                        margin: "2px 0 0",
+                        textAlign: "center",
+                      }}
+                    >
+                      By booking, you agree to our{" "}
+                      <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>
+                        Terms
+                      </Link>
+                    </p>
+                  </div>
+                ) : (
+                  <a
+                    href={getWaHref(plan.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("whatsapp_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                      padding: "13px 20px",
+                      borderRadius: "8px",
+                      background: plan.popular ? "var(--accent)" : "var(--surface-2)",
+                      color: plan.popular ? "#0e0d0b" : "var(--text)",
+                      border: plan.popular ? "none" : "1px solid var(--border)",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.95rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      transition: "all 0.15s ease",
+                      textAlign: "center",
+                    }}
+                  >
+                    <span>Choose {plan.name} on WhatsApp</span>
+                    <span>→</span>
+                  </a>
+                )}
 
                 {/* Desktop (≥1024px) direct phone and email link beneath CTA */}
                 <div

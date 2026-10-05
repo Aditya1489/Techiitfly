@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Techiitfly Brand Logo ────────────────────────────────────────────────────
@@ -264,47 +265,98 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
         ))}
       </ul>
 
-      {/* CTA Button */}
-      <a
-        href={waLink(plan.waLabel)}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: "block",
-          textAlign: "center",
-          fontFamily: "var(--font-geist-sans)",
-          fontWeight: 700,
-          fontSize: "0.92rem",
-          textDecoration: "none",
-          padding: "13px 16px",
-          borderRadius: "10px",
-          background: plan.popular ? "var(--accent)" : "transparent",
-          border: plan.popular ? "none" : "1.5px solid var(--border)",
-          color: plan.popular ? "var(--primary-btn-text)" : "var(--text)",
-          transition: "background 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s",
-        }}
-        onMouseEnter={(e) => {
-          if (!plan.popular) {
-            e.currentTarget.style.background = "var(--surface-2)";
-            e.currentTarget.style.borderColor = "var(--accent)";
-            e.currentTarget.style.color = "var(--accent)";
-          } else {
-            e.currentTarget.style.opacity = "0.88";
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (!plan.popular) {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.borderColor = "var(--border)";
-            e.currentTarget.style.color = "var(--text)";
-          } else {
-            e.currentTarget.style.opacity = "1";
-          }
-        }}
-        onClick={() => trackEvent("whatsapp_click", `pricing_${plan.name.toLowerCase()}`)}
-      >
-        {plan.cta}
-      </a>
+      {/* CTA Buttons */}
+      {["Starter", "Business", "Premium"].includes(plan.name) ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <Link
+            href={`/checkout/${plan.name.toLowerCase()}`}
+            onClick={() => trackEvent("begin_checkout", `pricing_${plan.name.toLowerCase()}`)}
+            style={{
+              display: "block",
+              textAlign: "center",
+              fontFamily: "var(--font-geist-sans)",
+              fontWeight: 700,
+              fontSize: "0.92rem",
+              textDecoration: "none",
+              padding: "12px 16px",
+              borderRadius: "10px",
+              background: plan.popular ? "var(--accent)" : "var(--surface-2)",
+              border: plan.popular ? "none" : "1.5px solid var(--border)",
+              color: plan.popular ? "var(--primary-btn-text)" : "var(--text)",
+              transition: "all 0.2s ease",
+            }}
+          >
+            Book &amp; pay advance →
+          </Link>
+          <a
+            href={waLink(plan.waLabel)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("whatsapp_click", `pricing_quote_${plan.name.toLowerCase()}`)}
+            style={{
+              display: "block",
+              textAlign: "center",
+              fontFamily: "var(--font-geist-sans)",
+              fontWeight: 600,
+              fontSize: "0.85rem",
+              textDecoration: "none",
+              padding: "9px 14px",
+              borderRadius: "8px",
+              background: "transparent",
+              border: "1px solid var(--border)",
+              color: "var(--muted)",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--text)";
+              e.currentTarget.style.borderColor = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--muted)";
+              e.currentTarget.style.borderColor = "var(--border)";
+            }}
+          >
+            Get a quote first ↗
+          </a>
+          <p
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.7rem",
+              color: "var(--muted)",
+              margin: "2px 0 0",
+              textAlign: "center",
+            }}
+          >
+            By booking, you agree to our{" "}
+            <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>
+              Terms
+            </Link>
+          </p>
+        </div>
+      ) : (
+        <a
+          href={waLink(plan.waLabel)}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "block",
+            textAlign: "center",
+            fontFamily: "var(--font-geist-sans)",
+            fontWeight: 700,
+            fontSize: "0.92rem",
+            textDecoration: "none",
+            padding: "13px 16px",
+            borderRadius: "10px",
+            background: plan.popular ? "var(--accent)" : "transparent",
+            border: plan.popular ? "none" : "1.5px solid var(--border)",
+            color: plan.popular ? "var(--primary-btn-text)" : "var(--text)",
+            transition: "background 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s",
+          }}
+          onClick={() => trackEvent("whatsapp_click", `pricing_${plan.name.toLowerCase()}`)}
+        >
+          {plan.cta}
+        </a>
+      )}
 
       {/* Desktop (>=1024px) phone and email links */}
       <div

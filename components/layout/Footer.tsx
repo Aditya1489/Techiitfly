@@ -224,12 +224,40 @@ export default function Footer() {
         }}
       >
         <span>© 2026 techiitfly · Pune, India</span>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+          <Link
+            href="/terms"
+            style={{ color: "var(--muted)", textDecoration: "none", transition: "color 0.15s" }}
+          >
+            Terms &amp; Conditions
+          </Link>
+          <span>·</span>
           <Link
             href="/privacy"
-            style={{ color: "var(--muted)", textDecoration: "none" }}
+            style={{ color: "var(--muted)", textDecoration: "none", transition: "color 0.15s" }}
           >
             Privacy Policy
+          </Link>
+          <span>·</span>
+          <Link
+            href="/refund-policy"
+            style={{ color: "var(--muted)", textDecoration: "none", transition: "color 0.15s" }}
+          >
+            Refund &amp; Cancellation Policy
+          </Link>
+          <span>·</span>
+          <Link
+            href="/delivery-policy"
+            style={{ color: "var(--muted)", textDecoration: "none", transition: "color 0.15s" }}
+          >
+            Service Delivery Policy
+          </Link>
+          <span>·</span>
+          <Link
+            href="/contact"
+            style={{ color: "var(--muted)", textDecoration: "none", transition: "color 0.15s" }}
+          >
+            Contact
           </Link>
         </div>
       </div>

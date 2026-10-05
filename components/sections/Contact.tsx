@@ -116,6 +116,42 @@ export default function Contact() {
           </p>
         </div>
 
+        {/* Already have a quote link */}
+        <div
+          style={{
+            maxWidth: "760px",
+            margin: "0 auto 36px",
+            background: "var(--bg)",
+            border: "1px solid var(--border)",
+            borderRadius: "12px",
+            padding: "16px 22px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}
+        >
+          <span style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.92rem", color: "var(--text)" }}>
+            Already have a written quote from us?
+          </span>
+          <Link
+            href="/pay"
+            style={{
+              fontFamily: "var(--font-geist-sans)",
+              fontSize: "0.88rem",
+              fontWeight: 700,
+              color: "var(--accent)",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
+            }}
+          >
+            Pay securely →
+          </Link>
+        </div>
+
         {/* Direct Contact Cards */}
         <div
           style={{

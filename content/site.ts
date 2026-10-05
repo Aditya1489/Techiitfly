@@ -21,6 +21,17 @@ export interface SiteConfig {
   showItServices: boolean;
   mathsyInstitutesPrice: string;
   mathsyMeetPrice: string;
+  legalEntityType: string;
+  registeredAddress: string;
+  gstin: string;
+  gstApplicable: boolean;
+  termsVersion: string;
+  payments: {
+    starter: { advance: number; razorpayButtonId: string };
+    business: { advance: number; razorpayButtonId: string };
+    premium: { advance: number; razorpayButtonId: string };
+    payQuoteUrl: string;
+  };
 }
 
 export const SITE: SiteConfig = {
@@ -51,7 +62,44 @@ export const SITE: SiteConfig = {
   showItServices: false,
   mathsyInstitutesPrice: "",
   mathsyMeetPrice: "",
+  legalEntityType: "",
+  registeredAddress: "",
+  gstin: "",
+  gstApplicable: false,
+  termsVersion: "2026-10-05",
+  payments: {
+    starter: { advance: 5000, razorpayButtonId: "" },
+    business: { advance: 12500, razorpayButtonId: "" },
+    premium: { advance: 25000, razorpayButtonId: "" },
+    payQuoteUrl: "", // Razorpay Payment Page URL for custom quotes
+  },
 };
+
+export function getLegalNoticeText(): {
+  aboutSectionText: string;
+  contactAddressText: string;
+} {
+  const parts: string[] = ["techiitfly"];
+  if (SITE.legalEntityType && SITE.legalEntityType.trim()) {
+    parts.push(SITE.legalEntityType.trim());
+  }
+  if (SITE.registeredAddress && SITE.registeredAddress.trim()) {
+    parts.push(SITE.registeredAddress.trim());
+  } else {
+    parts.push("Pune, Maharashtra, India");
+  }
+  if (SITE.gstin && SITE.gstin.trim()) {
+    parts.push(`GSTIN ${SITE.gstin.trim()}`);
+  }
+
+  const aboutSectionText = parts.join(", ");
+  const contactAddressText =
+    SITE.registeredAddress && SITE.registeredAddress.trim()
+      ? `${SITE.registeredAddress.trim()}, Pune, Maharashtra, India`
+      : "Pune, Maharashtra, India";
+
+  return { aboutSectionText, contactAddressText };
+}
 
 export function getConsultUrl(): string {
   if (SITE.consultUrl && SITE.consultUrl.trim() !== "") {
