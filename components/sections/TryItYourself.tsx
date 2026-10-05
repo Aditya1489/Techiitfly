@@ -1,6 +1,15 @@
 import Link from "next/link";
+import receiptsData from "@/public/data/receipts.json";
 
 export default function TryItYourself() {
+  const hasReceiptsRun = Boolean(
+    receiptsData?.lastUpdated &&
+    receiptsData?.sites &&
+    Object.values(receiptsData.sites).some(
+      (s: unknown) => (s as { history?: unknown[] })?.history && (s as { history?: unknown[] }).history!.length > 0
+    )
+  );
+
   const tools = [
     {
       id: "xray",
@@ -18,14 +27,18 @@ export default function TryItYourself() {
       cta: "Launch whiteboard →",
       href: "/lab",
     },
-    {
-      id: "receipts",
-      title: "See live performance receipts",
-      desc: "Daily automated Google PageSpeed scores across our client sites.",
-      badge: "Daily Proof",
-      cta: "View audit logs →",
-      href: "/receipts",
-    },
+    ...(hasReceiptsRun
+      ? [
+          {
+            id: "receipts",
+            title: "See live performance receipts",
+            desc: "Daily automated Google PageSpeed scores across our client sites.",
+            badge: "Daily Proof",
+            cta: "View audit logs →",
+            href: "/receipts",
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -63,7 +76,7 @@ export default function TryItYourself() {
               margin: "0 auto",
             }}
           >
-            Explore live tools, run diagnostics, and inspect verified performance benchmarks.
+            Explore live tools, run diagnostics, and inspect performance benchmarks.
           </p>
         </div>
 

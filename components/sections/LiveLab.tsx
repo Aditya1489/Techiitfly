@@ -16,12 +16,14 @@ const WhiteboardCanvas = dynamic(() => import("@/components/lab/WhiteboardCanvas
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "var(--font-geist-mono)",
-        fontSize: "0.85rem",
+        fontFamily: "var(--font-geist-sans)",
+        fontSize: "0.95rem",
         color: "var(--muted)",
+        textAlign: "center",
+        padding: "20px",
       }}
     >
-      Initializing Mathsy Meet tools canvas...
+      The interactive tools need a desktop or tablet browser.
     </div>
   ),
 });

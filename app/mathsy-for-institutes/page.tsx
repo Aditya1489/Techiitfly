@@ -7,7 +7,7 @@ import ThemeCustomizerPreview from "@/components/institutes/ThemeCustomizerPrevi
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Mathsy for Institutes — Coaching Institute Management Software & LMS | techiitfly",
+  title: "Mathsy for Institutes — Coaching Institute Management Software & LMS",
   description:
     "White-label 4-portal LMS for coaching institutes, test-prep academies (NEET/JEE), and tutoring centres in India. Run student, tutor, parent, and admin portals under your own brand.",
   keywords: [
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
     "JEE NEET coaching platform software",
     "institute student portal tutor portal",
   ],
+  openGraph: {
+    title: "Mathsy for Institutes — Coaching Institute Management Software & LMS",
+    description:
+      "White-label 4-portal LMS for coaching institutes, test-prep academies (NEET/JEE), and tutoring centres in India.",
+    url: `${SITE.siteUrl}/mathsy-for-institutes`,
+    images: [{ url: "/screenshots/mathsy/mathsy-student-dashboard-desktop.webp", width: 1200, height: 750, alt: "Mathsy for Institutes" }],
+  },
 };
 
 // 4 Portals with confirmed screenshots & confirmed 3 features
@@ -25,6 +32,7 @@ const PORTALS = [
     role: "Student Portal",
     badge: "LEARNER EXPERIENCE",
     screenshot: "/screenshots/mathsy/mathsy-student-dashboard-desktop.webp",
+    screenshotLabel: "Student Dashboard",
     alt: "Mathsy Student Portal Dashboard with streak counter, attempt metrics, and curriculum topics",
     features: [
       "Streak counter, attempt metrics, and topic-wise mastery overview.",
@@ -35,8 +43,9 @@ const PORTALS = [
   {
     role: "Tutor Portal",
     badge: "FACULTY COCKPIT",
-    screenshot: "/screenshots/mathsy/mathsy-tutor-dashboard-desktop.webp",
-    alt: "Mathsy Tutor Mentorship Hub dashboard with student cohorts and quick actions",
+    screenshot: "/screenshots/mathsy/mathsy-tutor-exam-setup-desktop.webp",
+    screenshotLabel: "Exam setup",
+    alt: "Mathsy Tutor Portal — Exam setup",
     features: [
       "Tutor Mentorship Hub with cohort management and quick action deck.",
       "Live class interactive poll bank repository with pre-set poll launch.",
@@ -46,8 +55,9 @@ const PORTALS = [
   {
     role: "Admin Portal",
     badge: "INSTITUTE OPERATIONS",
-    screenshot: "/screenshots/mathsy/mathsy-tutor-exam-setup-desktop.webp",
-    alt: "Mathsy Admin portal exam setup and control deck",
+    screenshot: null,
+    screenshotLabel: null,
+    alt: "Mathsy Admin portal operations deck",
     features: [
       "Institute-wide cohort management and batch scheduling.",
       "Test series creation, scheduling, and exam control deck.",
@@ -57,7 +67,8 @@ const PORTALS = [
   {
     role: "Parent Portal",
     badge: "GUARDIAN VISIBILITY",
-    isFallback: true,
+    screenshot: null,
+    screenshotLabel: null,
     alt: "Parent Portal visibility deck",
     features: [
       "Real-time attendance logs and lecture participation overview.",
@@ -368,7 +379,9 @@ export default function MathsyForInstitutesPage() {
                   key={portal.role}
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                    gridTemplateColumns: portal.screenshot
+                      ? "repeat(auto-fit, minmax(320px, 1fr))"
+                      : "1fr",
                     gap: "40px",
                     alignItems: "center",
                     background: "var(--surface)",
@@ -378,19 +391,34 @@ export default function MathsyForInstitutesPage() {
                   }}
                 >
                   {/* Left: Content */}
-                  <div style={{ order: idx % 2 === 1 ? 2 : 1 }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "0.75rem",
-                        color: "var(--accent)",
-                        letterSpacing: "0.1em",
-                        display: "block",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      {portal.badge}
-                    </span>
+                  <div style={{ order: portal.screenshot && idx % 2 === 1 ? 2 : 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-geist-mono)",
+                          fontSize: "0.75rem",
+                          color: "var(--accent)",
+                          letterSpacing: "0.1em",
+                        }}
+                      >
+                        {portal.badge}
+                      </span>
+                      {portal.screenshotLabel && (
+                        <span
+                          style={{
+                            fontFamily: "var(--font-geist-mono)",
+                            fontSize: "0.7rem",
+                            color: "var(--muted)",
+                            background: "var(--surface-2)",
+                            padding: "2px 8px",
+                            borderRadius: "4px",
+                            border: "1px solid var(--border)",
+                          }}
+                        >
+                          {portal.screenshotLabel}
+                        </span>
+                      )}
+                    </div>
                     <h3
                       style={{
                         fontFamily: "var(--font-instrument-serif)",
@@ -434,9 +462,9 @@ export default function MathsyForInstitutesPage() {
                     </ul>
                   </div>
 
-                  {/* Right: Screenshot or Fallback */}
-                  <div style={{ order: idx % 2 === 1 ? 1 : 2 }}>
-                    {portal.screenshot ? (
+                  {/* Right: Screenshot (Rendered ONLY if real screenshot exists) */}
+                  {portal.screenshot && (
+                    <div style={{ order: idx % 2 === 1 ? 1 : 2 }}>
                       <div
                         style={{
                           position: "relative",
@@ -457,49 +485,8 @@ export default function MathsyForInstitutesPage() {
                           style={{ objectFit: "cover", objectPosition: "top center" }}
                         />
                       </div>
-                    ) : (
-                      <div
-                        style={{
-                          width: "100%",
-                          aspectRatio: "16 / 10",
-                          borderRadius: "8px",
-                          border: "1px dashed var(--border)",
-                          background: "var(--surface-2)",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          padding: "24px",
-                          textAlign: "center",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontFamily: "var(--font-geist-mono)",
-                            fontSize: "0.72rem",
-                            color: "var(--accent)",
-                            background: "rgba(245,158,11,0.1)",
-                            padding: "4px 8px",
-                            borderRadius: "4px",
-                            marginBottom: "12px",
-                          }}
-                        >
-                          [DEMO ACCOUNT SCREENSHOT PENDING — SAMPLE DATA ACCESS TO BE PROVIDED]
-                        </span>
-                        <p
-                          style={{
-                            fontFamily: "var(--font-geist-sans)",
-                            fontSize: "0.9rem",
-                            color: "var(--muted)",
-                            maxWidth: "340px",
-                            lineHeight: 1.4,
-                          }}
-                        >
-                          {portal.role} demo view with sample student data will be captured once demo institute access is provided.
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -780,18 +767,6 @@ export default function MathsyForInstitutesPage() {
                 </div>
               ))}
             </div>
-
-            <div
-              style={{
-                marginTop: "32px",
-                textAlign: "center",
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.78rem",
-                color: "var(--muted)",
-              }}
-            >
-              [Official step timelines and SLA options to be confirmed in LAUNCH_CHECKLIST.md]
-            </div>
           </div>
         </section>
 
@@ -862,123 +837,10 @@ export default function MathsyForInstitutesPage() {
               <span>Request a Quote on WhatsApp</span>
               <span>→</span>
             </a>
-
-            <p
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.75rem",
-                color: "var(--muted)",
-                marginTop: "20px",
-                marginBottom: 0,
-              }}
-            >
-              [Specific pricing tiers & annual licensing models to be confirmed in LAUNCH_CHECKLIST.md]
-            </p>
           </div>
         </section>
 
-        {/* ─── h) FAQ ─────────────────────────────────────────────────────── */}
-        <section
-          id="faq"
-          style={{
-            padding: "90px 24px",
-            borderBottom: "1px solid var(--border)",
-            background: "var(--surface)",
-          }}
-        >
-          <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
-              <span className="section-label">QUESTIONS & SPECIFICATIONS</span>
-              <h2
-                style={{
-                  fontFamily: "var(--font-instrument-serif)",
-                  fontSize: "clamp(2.3rem, 4.5vw, 3.6rem)",
-                  fontWeight: 400,
-                  color: "var(--text)",
-                  marginTop: "8px",
-                }}
-              >
-                Frequently asked questions.
-              </h2>
-            </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {[
-                {
-                  q: "Who owns our institute's student data?",
-                  status: "[TODO: Confirm detailed data ownership contract terms in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "How and where is the platform hosted?",
-                  status: "[TODO: Confirm production cloud infrastructure & hosting provider in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "Is there a limit on the number of students or concurrent batches?",
-                  status: "[TODO: Confirm scaling caps & tier thresholds in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "Can students and tutors access the platform smoothly on mobile devices?",
-                  status: "[TODO: Confirm supported mobile browser matrix in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "What training and technical support do you provide post-launch?",
-                  status: "[TODO: Confirm support SLA and direct assistance channels in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "How do we migrate our existing student rosters and question banks?",
-                  status: "[TODO: Confirm CSV / data import procedures in LAUNCH_CHECKLIST.md]",
-                },
-              ].map((faq, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "var(--bg)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "8px",
-                    padding: "24px 22px",
-                  }}
-                >
-                  <h4
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1.08rem",
-                      fontWeight: 600,
-                      color: "var(--text)",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {faq.q}
-                  </h4>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.9rem",
-                      color: "var(--muted)",
-                      lineHeight: 1.5,
-                      margin: 0,
-                    }}
-                  >
-                    Official answers for these questions will be confirmed shortly. In the interim, please contact Aditya directly on WhatsApp for full technical details.
-                  </p>
-                  <span
-                    style={{
-                      display: "inline-block",
-                      marginTop: "10px",
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.72rem",
-                      color: "var(--accent)",
-                      background: "rgba(245,158,11,0.08)",
-                      padding: "2px 8px",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    {faq.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ─── i) Proof ───────────────────────────────────────────────────── */}
         <section
@@ -1062,28 +924,51 @@ export default function MathsyForInstitutesPage() {
             >
               Schedule a live demonstration with founder Aditya Chavhan. We will walk you through the 4 portals and discuss your institute&apos;s custom deployment.
             </p>
-            <a
-              href={SITE.whatsappInstituteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: "var(--accent)",
-                color: "var(--primary-btn-text)",
-                padding: "16px 32px",
-                borderRadius: "8px",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "1.05rem",
-                fontWeight: 600,
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-                boxShadow: "0 0 32px rgba(245,158,11,0.3)",
-              }}
-            >
-              <span>Book a Demo on WhatsApp</span>
-              <span>→</span>
-            </a>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", alignItems: "center" }}>
+              <a
+                href={SITE.whatsappInstituteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background: "var(--accent)",
+                  color: "var(--primary-btn-text)",
+                  padding: "16px 32px",
+                  borderRadius: "8px",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "1.05rem",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  boxShadow: "0 0 32px rgba(245,158,11,0.3)",
+                }}
+              >
+                <span>Book a Demo on WhatsApp</span>
+                <span>→</span>
+              </a>
+              {SITE.contactEmail && (
+                <a
+                  href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent("Mathsy demo request")}`}
+                  style={{
+                    background: "var(--surface)",
+                    color: "var(--text)",
+                    border: "1px solid var(--border)",
+                    padding: "16px 28px",
+                    borderRadius: "8px",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "1.02rem",
+                    fontWeight: 500,
+                    textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <span>Prefer email? {SITE.contactEmail}</span>
+                </a>
+              )}
+            </div>
           </div>
         </section>
       </main>

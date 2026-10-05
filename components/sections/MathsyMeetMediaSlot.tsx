@@ -110,7 +110,7 @@ export default function MathsyMeetMediaSlot({
                 margin: 0,
               }}
             >
-              Mathsy Meet Virtual Classroom Slot
+              Mathsy Meet Virtual Classroom
             </p>
           </div>
         ) : hasVideoError ? (

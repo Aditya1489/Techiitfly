@@ -159,7 +159,7 @@ export default function ReceiptsClient() {
         <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.75rem", color: "var(--muted)" }}>
           Last automated audit:{" "}
           <strong style={{ color: "var(--text)" }}>
-            {data?.lastUpdated ? new Date(data.lastUpdated).toLocaleDateString() : "Pending first cron run"}
+            {data?.lastUpdated ? new Date(data.lastUpdated).toLocaleDateString() : "First automated audit runs soon"}
           </strong>
         </div>
       </div>
@@ -300,7 +300,7 @@ export default function ReceiptsClient() {
                 {latest ? (
                   <span>Checked: {new Date(latest.timestamp).toLocaleTimeString()}</span>
                 ) : (
-                  <span>Awaiting daily automated GitHub Actions cron audit</span>
+                  <span>First automated audit runs soon</span>
                 )}
               </div>
             </div>

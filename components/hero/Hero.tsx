@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getConsultUrl } from "@/content/site";
+import { trackEvent } from "@/lib/tracking";
 
 export default function Hero() {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -114,28 +116,56 @@ export default function Hero() {
 
           {/* CTAs */}
           <div style={{ marginBottom: "20px" }}>
-            {/* Primary Filled CTA */}
-            <a
-              href="#offers"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "14px 26px",
-                borderRadius: "8px",
-                background: "var(--accent)",
-                color: "#0e0d0b",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "1rem",
-                fontWeight: 600,
-                textDecoration: "none",
-                boxShadow: "0 4px 16px rgba(245,158,11,0.3)",
-                transition: "transform 0.15s ease, box-shadow 0.15s ease",
-              }}
-            >
-              <span>Get my website in 7 days</span>
-              <span>→</span>
-            </a>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+              {/* Primary Filled CTA */}
+              <a
+                href="#offers"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  padding: "14px 26px",
+                  borderRadius: "8px",
+                  background: "var(--accent)",
+                  color: "#0e0d0b",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  boxShadow: "0 4px 16px rgba(245,158,11,0.3)",
+                  transition: "transform 0.15s ease, box-shadow 0.15s ease",
+                }}
+              >
+                <span>Get my website in 7 days</span>
+                <span>→</span>
+              </a>
+
+              {/* Secondary Consultation Button */}
+              <a
+                href={getConsultUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("consult_click", "hero")}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "13px 22px",
+                  borderRadius: "8px",
+                  background: "var(--surface)",
+                  color: "var(--text)",
+                  border: "1px solid var(--border)",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                <span>Free 15-min consultation</span>
+                <span style={{ color: "var(--accent)" }}>↗</span>
+              </a>
+            </div>
 
             {/* Secondary text links (one row, smaller) */}
             <div

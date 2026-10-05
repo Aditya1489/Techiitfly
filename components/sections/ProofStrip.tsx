@@ -13,7 +13,11 @@ interface SiteReceipt {
 }
 
 export default function ProofStrip() {
-  const sitesMap = (receiptsData as { sites?: Record<string, SiteReceipt> })?.sites || {};
+  const sitesMap = (receiptsData as { sites?: Record<string, SiteReceipt>; lastUpdated?: string | null })?.sites || {};
+  const hasReceiptsRun = Boolean(
+    receiptsData?.lastUpdated &&
+    Object.values(sitesMap).some((s) => s?.history && s.history.length > 0)
+  );
 
   const sites = [
     {
@@ -124,24 +128,26 @@ export default function ProofStrip() {
           })}
         </div>
 
-        {/* Link to Receipts page */}
-        <Link
-          href="/receipts"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "5px",
-            fontFamily: "var(--font-geist-mono)",
-            fontSize: "0.78rem",
-            color: "var(--accent)",
-            textDecoration: "none",
-            fontWeight: 500,
-            whiteSpace: "nowrap",
-          }}
-        >
-          <span>See daily performance receipts</span>
-          <span>→</span>
-        </Link>
+        {/* Link to Receipts page (hidden until at least one run exists) */}
+        {hasReceiptsRun && (
+          <Link
+            href="/receipts"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "5px",
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.78rem",
+              color: "var(--accent)",
+              textDecoration: "none",
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span>See daily performance receipts</span>
+            <span>→</span>
+          </Link>
+        )}
       </div>
     </section>
   );

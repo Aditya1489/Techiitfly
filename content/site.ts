@@ -4,18 +4,23 @@ export interface SiteConfig {
   founder: string;
   location: string;
   email: string;
-  contactEmail: string; // "" means email is hidden across the site until verified
+  contactEmail: string;
   phone: string;
+  phoneRaw: string;
+  replyHours: string;
   whatsappUrl: string;
   whatsappProjectUrl: string;
   whatsappInstituteUrl: string;
   whatsappTutorUrl: string;
+  consultUrl: string;
+  googleReviewsUrl: string;
+  siteUrl: string;
   metaDescription: string;
-  showIitClaim: boolean; // false by default; turn on only when confirmed
-  showAppServices: boolean; // false by default; hides Mobile Apps pricing tab
-  showItServices: boolean; // false by default; hides Managed IT pricing tab
-  mathsyInstitutesPrice: string; // "" means hide price on offer card
-  mathsyMeetPrice: string; // "" means hide price on offer card
+  showIitClaim: boolean;
+  showAppServices: boolean;
+  showItServices: boolean;
+  mathsyInstitutesPrice: string;
+  mathsyMeetPrice: string;
 }
 
 export const SITE: SiteConfig = {
@@ -23,9 +28,11 @@ export const SITE: SiteConfig = {
   tagline: "Websites & learning platforms. Delivered in days, not months.",
   founder: "Aditya Chavhan",
   location: "Pune, India",
-  email: "", // Never expose unverified or old domains
-  contactEmail: "", // Empty string hides email links everywhere
+  email: "contact@techiitfly.com",
+  contactEmail: "contact@techiitfly.com",
   phone: "+91 93739 17738",
+  phoneRaw: "+919373917738",
+  replyHours: "We reply within 2 hours, 10am–8pm IST, Mon–Sat",
   whatsappUrl:
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27d%20like%20to%20discuss%20a%20project.",
   whatsappProjectUrl:
@@ -34,11 +41,30 @@ export const SITE: SiteConfig = {
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%20run%20a%20coaching%20institute%20and%20would%20like%20a%20Mathsy%20demo.",
   whatsappTutorUrl:
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27m%20a%20tutor%20interested%20in%20Mathsy%20Meet.",
+  consultUrl: "", // Cal.com link when ready; fallback to WhatsApp 15-min consultation
+  googleReviewsUrl: "", // Optional Google Reviews link; hidden if empty
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://techiitfly.vercel.app",
   metaDescription:
-    "Proof-first portfolio of techiitfly (Pune, India). We design, build, and deploy production web platforms and high-converting sites for education and wellness businesses.",
+    "techiitfly — Websites & learning platforms for education and wellness businesses. Delivered in days, not months. Pune, India.",
   showIitClaim: false,
   showAppServices: false,
   showItServices: false,
   mathsyInstitutesPrice: "",
   mathsyMeetPrice: "",
 };
+
+export function getConsultUrl(): string {
+  if (SITE.consultUrl && SITE.consultUrl.trim() !== "") {
+    return SITE.consultUrl;
+  }
+  return `https://wa.me/919373917738?text=${encodeURIComponent(
+    "Hi techiitfly, I'd like a free 15-minute consultation."
+  )}`;
+}
+
+export function getProjectEmailUrl(): string {
+  return `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(
+    "Project enquiry — techiitfly"
+  )}`;
+}
+

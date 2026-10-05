@@ -4,6 +4,7 @@ import Hero from "@/components/hero/Hero";
 import ProofStrip from "@/components/sections/ProofStrip";
 import OffersSection from "@/components/sections/OffersSection";
 import SelectedWork from "@/components/sections/SelectedWork";
+import Testimonials from "@/components/sections/Testimonials";
 import Guarantee from "@/components/sections/Guarantee";
 import AboutFounder from "@/components/sections/AboutFounder";
 import TryItYourself from "@/components/sections/TryItYourself";
@@ -28,6 +29,9 @@ export default function Home() {
 
         {/* 4. Selected Work */}
         <SelectedWork />
+
+        {/* Testimonials (Hidden if empty in content/testimonials.ts) */}
+        <Testimonials />
 
         {/* 5. 7-Day Guarantee + Timeline (Merged) */}
         <Guarantee />

@@ -25,32 +25,35 @@ const geistMono = Geist_Mono({
   preload: false, // non-critical, lazy
 });
 
+import { SITE } from "@/content/site";
+import Analytics from "@/components/analytics/Analytics";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://techiitfly.com"),
+  metadataBase: new URL(SITE.siteUrl),
   title: {
-    default: "techiitfly — Websites, Apps & IT Support",
-    template: "%s · techiitfly",
+    default: "techiitfly — Websites & learning platforms for education and wellness businesses",
+    template: "%s | techiitfly",
   },
   description:
-    "Aditya Chavhan builds high-performance websites, apps and IT solutions for growing businesses. Mathsy EdTech platform. YogaGarhi. Proof, not promises.",
+    "techiitfly — Websites & learning platforms for education and wellness businesses. Delivered in days, not months. Pune, India.",
   keywords: ["web development", "EdTech", "wellness websites", "Pune", "India", "Mathsy", "techiitfly"],
-  authors: [{ name: "Aditya Chavhan", url: "https://techiitfly.com" }],
+  authors: [{ name: "Aditya Chavhan", url: SITE.siteUrl }],
   creator: "Aditya Chavhan",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://techiitfly.com",
+    url: SITE.siteUrl,
     siteName: "techiitfly",
-    title: "techiitfly — Websites, Apps & IT Support",
+    title: "techiitfly — Websites & learning platforms for education and wellness businesses",
     description:
-      "Aditya Chavhan builds high-performance websites, apps and IT solutions for growing businesses.",
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Portfolio" }],
+      "Websites and learning platforms for education and wellness businesses. Delivered in days, not months.",
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "techiitfly — Websites, Apps & IT Support",
+    title: "techiitfly — Websites & learning platforms for education and wellness businesses",
     description:
-      "Aditya Chavhan builds high-performance websites, apps and IT solutions for growing businesses.",
+      "Websites and learning platforms for education and wellness businesses. Delivered in days, not months.",
     images: ["/og/home.png"],
   },
   robots: { index: true, follow: true },
@@ -62,6 +65,26 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "techiitfly",
+    url: SITE.siteUrl,
+    logo: `${SITE.siteUrl}/favicon.svg`,
+    email: SITE.contactEmail,
+    telephone: SITE.phoneRaw,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: SITE.phoneRaw,
+        contactType: "customer service",
+        email: SITE.contactEmail,
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+    ],
+  };
+
   return (
     <html
       lang="en"
@@ -72,6 +95,11 @@ export default function RootLayout({
         {/* Preconnect for fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* JSON-LD Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {/* Theme: default dark, avoids FOUC */}
         <script
           dangerouslySetInnerHTML={{
@@ -79,7 +107,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="grain">{children}</body>
+      <body className="grain">
+        <Analytics />
+        {children}
+      </body>
     </html>
   );
 }

@@ -3,14 +3,16 @@ import PricingClient from "@/app/techiitfly-pricing/PricingClient";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
+import { SITE } from "@/content/site";
+
 export const metadata: Metadata = {
-  title: "Pricing | techiitfly — Websites, Apps & IT Support",
+  title: "Pricing — Websites & Learning Platforms",
   description:
-    "Transparent, fixed pricing for websites, mobile apps, and managed IT services by techiitfly. Delivered in days, not months.",
+    "Transparent, fixed pricing for websites and custom learning platforms by techiitfly. Delivered in days, not months.",
   openGraph: {
-    title: "Pricing | techiitfly",
-    description: "Websites, apps and IT support. Delivered in days, not months.",
-    url: "https://techiitfly.com/pricing",
+    title: "Pricing — Websites & Learning Platforms | techiitfly",
+    description: "Fixed prices starting at ₹9,999. Websites and learning platforms delivered in days, not months.",
+    url: `${SITE.siteUrl}/pricing`,
   },
 };
 

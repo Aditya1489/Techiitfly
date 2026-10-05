@@ -5,7 +5,8 @@ This checklist tracks every placeholder, pending asset, external API key, and co
 ---
 
 ## 1. Content & Studio Details
-- [ ] **Contact Email**: Currently hidden (`""` in `content/site.ts`). Verify or set your preferred inbox on `techiitfly.com`.
+- [x] **Contact Email**: Configured as `contact@techiitfly.com` in `content/site.ts`.
+- [x] **Privacy Policy**: Plain-language privacy policy live at `/privacy` covering contact methods, analytics/advertising cookies, data requests, and zero-sale commitment. Please review copy.
 - [ ] **WhatsApp Phone Number**: Currently configured as `+91 93739 17738`. Verify country code and phone number.
 - [ ] **Domain & Canonical URLs**: Update canonical metadata URL in `app/layout.tsx` once production domain is finalized.
 

@@ -5,7 +5,7 @@ import ReceiptsClient from "@/components/receipts/ReceiptsClient";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Live Receipts — Automated Core Web Vitals & Audits | techiitfly",
+  title: "Live Receipts — Automated Core Web Vitals & Audits",
   description:
     "Daily automated PageSpeed and Core Web Vitals audit receipts for live production platforms engineered by techiitfly.",
 };

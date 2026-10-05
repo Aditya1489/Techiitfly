@@ -23,11 +23,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) {
-    return { title: "Project Not Found — techiitfly" };
+    return { title: "Project Not Found" };
   }
   return {
-    title: `${project.title} Case Study — ${SITE.name}`,
+    title: `${project.title} — Case Study`,
     description: project.summary,
+    openGraph: {
+      title: `${project.title} Case Study | techiitfly`,
+      description: project.summary,
+      url: `${SITE.siteUrl}/work/${project.slug}`,
+      images: project.featuredScreenshots.desktop
+        ? [{ url: project.featuredScreenshots.desktop, width: 1200, height: 750, alt: project.title }]
+        : [{ url: "/og/home.png", width: 1200, height: 630, alt: project.title }],
+    },
   };
 }
 

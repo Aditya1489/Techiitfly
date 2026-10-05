@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { SITE } from "@/content/site";
+import { hasFounderBio } from "@/content/about";
+import { trackEvent } from "@/lib/tracking";
 
 // ─── Theme toggle ────────────────────────────────────────────────────────────
 function ThemeToggle() {
@@ -96,7 +98,7 @@ const NAV_LINKS: NavItem[] = [
     ],
   },
   { id: "pricing", label: "Pricing", href: "/pricing" },
-  { id: "about", label: "About", href: "/#about" },
+  ...(hasFounderBio ? [{ id: "about", label: "About", href: "/#about" }] : []),
   { id: "contact", label: "Contact", href: "/#contact" },
 ];
 

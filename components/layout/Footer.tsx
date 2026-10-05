@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { SITE } from "@/content/site";
+import { hasFounderBio } from "@/content/about";
+import { trackEvent } from "@/lib/tracking";
 
 export default function Footer() {
   return (
@@ -98,17 +102,19 @@ export default function Footer() {
           >
             Pricing
           </Link>
-          <a
-            href="/#about"
-            style={{
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
-              color: "var(--muted)",
-              textDecoration: "none",
-            }}
-          >
-            About
-          </a>
+          {hasFounderBio && (
+            <a
+              href="/#about"
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.85rem",
+                color: "var(--muted)",
+                textDecoration: "none",
+              }}
+            >
+              About
+            </a>
+          )}
           <a
             href="/#contact"
             style={{
@@ -120,10 +126,25 @@ export default function Footer() {
           >
             Contact
           </a>
+          {SITE.contactEmail && (
+            <a
+              href={`mailto:${SITE.contactEmail}`}
+              onClick={() => trackEvent("email_click", "footer")}
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.85rem",
+                color: "var(--muted)",
+                textDecoration: "none",
+              }}
+            >
+              {SITE.contactEmail}
+            </a>
+          )}
           <a
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("whatsapp_click", "footer")}
             style={{
               fontFamily: "var(--font-geist-sans)",
               fontSize: "0.85rem",
@@ -144,6 +165,7 @@ export default function Footer() {
           borderTop: "1px solid var(--border)",
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
           flexWrap: "wrap",
           gap: "12px",
           fontFamily: "var(--font-geist-mono)",
@@ -152,6 +174,14 @@ export default function Footer() {
         }}
       >
         <span>© 2026 techiitfly · Pune, India</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <Link
+            href="/privacy"
+            style={{ color: "var(--muted)", textDecoration: "none" }}
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );

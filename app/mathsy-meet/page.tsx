@@ -6,7 +6,7 @@ import MeetLabEmbed from "@/components/meet/MeetLabEmbed";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors | techiitfly",
+  title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
   description:
     "Live online math classroom for educators with built-in digital compass, protractor, ruler, set-square, slide-to-poll interactivity, and tablet pairing. Teach live without screen-sharing friction.",
   keywords: [
@@ -16,6 +16,13 @@ export const metadata: Metadata = {
     "virtual math classroom software",
     "live teaching tools for educators",
   ],
+  openGraph: {
+    title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
+    description:
+      "Live online math classroom for educators with built-in digital compass, protractor, ruler, set-square, slide-to-poll interactivity, and tablet pairing.",
+    url: `${SITE.siteUrl}/mathsy-meet`,
+    images: [{ url: "/screenshots/mathsy-meet-desktop.webp", width: 1200, height: 750, alt: "Mathsy Meet" }],
+  },
 };
 
 const TUTOR_FEATURES = [
@@ -163,17 +170,6 @@ export default function MathsyMeetPage() {
                 <span>→</span>
               </a>
             </div>
-
-            <div
-              style={{
-                marginTop: "20px",
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.74rem",
-                color: "var(--muted)",
-              }}
-            >
-              [Demo room URL: In development. Test the interactive geometry canvas directly below]
-            </div>
           </div>
         </section>
 
@@ -188,7 +184,7 @@ export default function MathsyMeetPage() {
         >
           <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: "36px" }}>
-              <span className="section-label">INTERACTIVE HARDWARE SIMULATION</span>
+              <span className="section-label">BUILT-IN GEOMETRY SUITE</span>
               <h2
                 style={{
                   fontFamily: "var(--font-instrument-serif)",
@@ -239,7 +235,7 @@ export default function MathsyMeetPage() {
                   marginTop: "8px",
                 }}
               >
-                Confirmed tutor features. Built for classroom flow.
+                Features engineered for live teaching.
               </h2>
               <p
                 style={{
@@ -309,68 +305,7 @@ export default function MathsyMeetPage() {
           </div>
         </section>
 
-        {/* ─── d) Demo Video Slot ─────────────────────────────────────────── */}
-        <section
-          id="demo-video"
-          style={{
-            padding: "80px 24px",
-            borderBottom: "1px solid var(--border)",
-            background: "var(--surface)",
-          }}
-        >
-          <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
-            <span className="section-label">CLASSROOM WALKTHROUGH</span>
-            <h2
-              style={{
-                fontFamily: "var(--font-instrument-serif)",
-                fontSize: "clamp(2.1rem, 4vw, 3.2rem)",
-                fontWeight: 400,
-                color: "var(--text)",
-                marginTop: "8px",
-                marginBottom: "20px",
-              }}
-            >
-              Watch Mathsy Meet in action.
-            </h2>
-
-            {/* Video Slot Frame */}
-            <div
-              style={{
-                position: "relative",
-                width: "100%",
-                borderRadius: "var(--radius-lg)",
-                overflow: "hidden",
-                border: "1px solid var(--border)",
-                background: "#080807",
-                aspectRatio: "16 / 9",
-                boxShadow: "0 20px 40px -15px rgba(0,0,0,0.8)",
-              }}
-            >
-              <video
-                src="/video/mathsy-meet-demo.mp4"
-                poster="/screenshots/mathsy-meet-desktop.webp"
-                controls
-                muted
-                playsInline
-                preload="none"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </div>
-
-            <p
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.75rem",
-                color: "var(--muted)",
-                marginTop: "16px",
-              }}
-            >
-              Video slot: /public/video/mathsy-meet-demo.mp4 (Awaiting final upload from Aditya Chavhan)
-            </p>
-          </div>
-        </section>
-
-        {/* ─── e) Plans & Pricing ─────────────────────────────────────────── */}
+        {/* ─── d) Plans & Access ─────────────────────────────────────────── */}
         <section
           id="plans"
           style={{
@@ -390,7 +325,7 @@ export default function MathsyMeetPage() {
               padding: "48px 32px",
             }}
           >
-            <span className="section-label">ACCESS & PLANS</span>
+            <span className="section-label">ACCESS &amp; LICENSING</span>
             <h2
               style={{
                 fontFamily: "var(--font-instrument-serif)",
@@ -437,121 +372,14 @@ export default function MathsyMeetPage() {
               <span>Get Access on WhatsApp</span>
               <span>→</span>
             </a>
-
-            <p
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.75rem",
-                color: "var(--muted)",
-                marginTop: "20px",
-                marginBottom: 0,
-              }}
-            >
-              [Specific subscription tiers & per-tutor plans to be confirmed in LAUNCH_CHECKLIST.md]
-            </p>
           </div>
         </section>
 
-        {/* ─── f) FAQ ─────────────────────────────────────────────────────── */}
-        <section
-          id="faq"
-          style={{
-            padding: "90px 24px",
-            borderBottom: "1px solid var(--border)",
-            background: "var(--surface)",
-          }}
-        >
-          <div style={{ maxWidth: "860px", margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
-              <span className="section-label">TUTOR FAQ</span>
-              <h2
-                style={{
-                  fontFamily: "var(--font-instrument-serif)",
-                  fontSize: "clamp(2.3rem, 4.5vw, 3.6rem)",
-                  fontWeight: 400,
-                  color: "var(--text)",
-                  marginTop: "8px",
-                }}
-              >
-                Questions from educators.
-              </h2>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {[
-                {
-                  q: "What device and browser requirements are needed?",
-                  status: "[TODO: Confirm exact supported browser versions and hardware in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "How many students can join a single live math class?",
-                  status: "[TODO: Confirm maximum student cohort capacity per room in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "How are class recordings stored and accessed?",
-                  status: "[TODO: Confirm cloud storage allocation & download retention in LAUNCH_CHECKLIST.md]",
-                },
-                {
-                  q: "Does Mathsy Meet support drawing tablets, iPads, and digital pens?",
-                  status: "[TODO: Confirm stylus pressure & tablet pairing requirements in LAUNCH_CHECKLIST.md]",
-                },
-              ].map((faq, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "var(--bg)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "8px",
-                    padding: "24px 22px",
-                  }}
-                >
-                  <h4
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1.08rem",
-                      fontWeight: 600,
-                      color: "var(--text)",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {faq.q}
-                  </h4>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.9rem",
-                      color: "var(--muted)",
-                      lineHeight: 1.5,
-                      margin: 0,
-                    }}
-                  >
-                    Confirmed specifications for this question are listed in LAUNCH_CHECKLIST.md. Inquire directly on WhatsApp for preliminary answers.
-                  </p>
-                  <span
-                    style={{
-                      display: "inline-block",
-                      marginTop: "10px",
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.72rem",
-                      color: "var(--accent)",
-                      background: "rgba(245,158,11,0.08)",
-                      padding: "2px 8px",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    {faq.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── g) Final CTA ───────────────────────────────────────────────── */}
+        {/* ─── e) Final CTA ───────────────────────────────────────────────── */}
         <section
           style={{
             padding: "90px 24px 110px",
-            background: "var(--bg)",
+            background: "var(--surface)",
             textAlign: "center",
           }}
         >
@@ -578,28 +406,53 @@ export default function MathsyMeetPage() {
             >
               Contact founder Aditya Chavhan to request access or schedule a 1-on-1 walkthrough of the geometry tools.
             </p>
-            <a
-              href={SITE.whatsappTutorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: "var(--accent)",
-                color: "var(--primary-btn-text)",
-                padding: "16px 32px",
-                borderRadius: "8px",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "1.05rem",
-                fontWeight: 600,
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-                boxShadow: "0 0 32px rgba(245,158,11,0.3)",
-              }}
-            >
-              <span>Get Access on WhatsApp</span>
-              <span>→</span>
-            </a>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
+              <a
+                href={SITE.whatsappTutorUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background: "var(--accent)",
+                  color: "var(--primary-btn-text)",
+                  padding: "16px 32px",
+                  borderRadius: "8px",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "1.05rem",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  boxShadow: "0 0 32px rgba(245,158,11,0.3)",
+                }}
+              >
+                <span>Get Access on WhatsApp</span>
+                <span>→</span>
+              </a>
+
+              {SITE.contactEmail && (
+                <a
+                  href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent("Mathsy Meet access request")}`}
+                  style={{
+                    background: "var(--bg)",
+                    color: "var(--text)",
+                    border: "1px solid var(--border)",
+                    padding: "16px 28px",
+                    borderRadius: "8px",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "1rem",
+                    fontWeight: 500,
+                    textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <span>Prefer email? {SITE.contactEmail}</span>
+                  <span style={{ color: "var(--accent)" }}>↗</span>
+                </a>
+              )}
+            </div>
           </div>
         </section>
       </main>

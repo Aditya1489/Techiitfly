@@ -5,7 +5,7 @@ export default function OffersSection() {
   const offers = [
     {
       id: "websites",
-      title: "Custom Websites",
+      title: "Websites",
       target: "For growing businesses & academies",
       badge: "7-Day Delivery",
       bullets: [
@@ -13,7 +13,7 @@ export default function OffersSection() {
         "WhatsApp booking button and lead capture contact form.",
         "Search engine setup with Google Maps integration.",
       ],
-      price: "from ₹9,999 · live in 7 days",
+      price: "Starting at ₹9,999 · live in 7 days",
       cta: "View website packages →",
       href: "/pricing",
       primary: true,

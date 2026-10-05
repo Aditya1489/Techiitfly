@@ -213,21 +213,8 @@ export default function ThemeCustomizerPreview() {
             lineHeight: 1.4,
           }}
         >
-          <strong style={{ color: "var(--accent)" }}>Honest Simulation Note:</strong> {selectedTheme.description} On production deployment, your institute receives handcrafted CSS design tokens, custom SVG logo, and custom sub-domain.
+          Preview only. Your portal uses your own logo, colours and domain.
         </p>
-        <span
-          style={{
-            fontFamily: "var(--font-geist-mono)",
-            fontSize: "0.72rem",
-            color: "var(--muted)",
-            background: "var(--surface-2)",
-            padding: "2px 8px",
-            borderRadius: "4px",
-            border: "1px solid var(--border)",
-          }}
-        >
-          CSS Live Filter Active
-        </span>
       </div>
     </div>
   );
