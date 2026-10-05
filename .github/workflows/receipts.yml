@@ -1,0 +1,39 @@
+name: Update PageSpeed Receipts
+
+on:
+  schedule:
+    # Run every day at 04:00 UTC
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-receipts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch live PageSpeed receipts
+        env:
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+        run: node scripts/fetch-receipts.mjs
+
+      - name: Commit and push changes if updated
+        run: |
+          git config --local user.email "bot@mcstechnology.in"
+          git config --local user.name "MCS Receipts Bot"
+          git add public/data/receipts.json
+          if git diff --staged --quiet; then
+            echo "No changes to receipts.json"
+          else
+            git commit -m "chore(receipts): daily automated PageSpeed audit update [skip ci]"
+            git push
+          fi

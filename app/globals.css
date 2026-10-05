@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────
+   Design Tokens — techiitfly Portfolio
+   ───────────────────────────────────────── */
+
+@layer base {
+  :root {
+    /* Dark mode is default */
+    --bg: #0e0d0b;
+    --surface: #1a1814;
+    --surface-2: #221f1a;
+    --border: rgba(243, 238, 230, 0.08);
+    --text: #f3eee6;
+    --muted: #a39e94;
+    --accent: #f59e0b;
+    --accent-dim: rgba(245, 158, 11, 0.15);
+    --accent-glow: rgba(245, 158, 11, 0.35);
+    --success: #16a34a;
+    --warn: #f59e0b;
+    --fail: #dc2626;
+    --radius: 12px;
+    --radius-lg: 20px;
+    --header-bg: rgba(14, 13, 11, 0.88);
+    --vignette-bg: rgba(14, 13, 11, 0.96);
+    --vignette-mid: rgba(14, 13, 11, 0.85);
+    --vignette-transparent: rgba(14, 13, 11, 0.2);
+    --card-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
+    --card-hover-border: #f59e0b;
+    --card-hover-shadow: 0 16px 40px -12px rgba(245,158,11,0.2);
+    --primary-btn-text: #0e0d0b;
+    color-scheme: dark;
+  }
+
+  [data-theme="light"] {
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --surface-2: #f3eee6;
+    --border: #e5ded3;
+    --text: #161512;
+    --muted: #6b6357;
+    --accent: #b45309;
+    --accent-dim: rgba(180, 83, 9, 0.12);
+    --accent-glow: rgba(180, 83, 9, 0.2);
+    --header-bg: rgba(250, 247, 242, 0.88);
+    --vignette-bg: rgba(250, 247, 242, 0.96);
+    --vignette-mid: rgba(250, 247, 242, 0.85);
+    --vignette-transparent: rgba(250, 247, 242, 0);
+    --card-shadow: 0 1px 2px rgba(26, 24, 20, 0.04), 0 8px 24px rgba(26, 24, 20, 0.06);
+    --card-hover-border: #d9a35a;
+    --card-hover-shadow: 0 4px 12px rgba(26, 24, 20, 0.08), 0 16px 32px rgba(26, 24, 20, 0.12);
+    --primary-btn-text: #0e0d0b;
+    color-scheme: light;
+  }
+
+  /* Force dark scope for dark-background cards/frames regardless of root theme */
+  .force-dark,
+  [data-theme="dark"] {
+    --bg: #0e0d0b;
+    --surface: #1a1814;
+    --surface-2: #221f1a;
+    --border: rgba(243, 238, 230, 0.08);
+    --text: #f3eee6;
+    --muted: #a39e94;
+    --accent: #f59e0b;
+    --accent-dim: rgba(245, 158, 11, 0.15);
+    --accent-glow: rgba(245, 158, 11, 0.35);
+    --header-bg: rgba(14, 13, 11, 0.88);
+    --vignette-bg: rgba(14, 13, 11, 0.96);
+    --vignette-mid: rgba(14, 13, 11, 0.85);
+    --vignette-transparent: rgba(14, 13, 11, 0.2);
+    --card-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
+    --card-hover-border: #f59e0b;
+    --card-hover-shadow: 0 16px 40px -12px rgba(245,158,11,0.2);
+    --primary-btn-text: #0e0d0b;
+    color-scheme: dark;
+    color: var(--text);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-2);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
+  }
+}
+
+/* ─── Utility Classes ─── */
+@layer utilities {
+  .text-accent { color: var(--accent); }
+  .bg-surface { background: var(--surface); }
+  .bg-surface-2 { background: var(--surface-2); }
+  .border-subtle { border: 1px solid var(--border); }
+  .text-muted { color: var(--muted); }
+  .font-mono { font-family: var(--font-geist-mono), ui-monospace, monospace; }
+  .font-display { font-family: var(--font-instrument-serif), Georgia, serif; }
+
+  /* Glow effects */
+  .glow-accent {
+    box-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(245,158,11,0.1);
+  }
+  .text-glow {
+    text-shadow: 0 0 30px var(--accent-glow);
+  }
+
+  /* Glass card */
+  .glass {
+    background: rgba(26, 24, 20, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+  }
+
+  /* Grain texture overlay */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.95;
+  }
+}
+
+/* Mobile responsive navigation */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
