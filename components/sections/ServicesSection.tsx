@@ -7,16 +7,11 @@ import { WEB_PLANS, APP_PLANS, IT_PLANS, PRICING_CONFIG, getWebPlans } from "@/c
 import { trackEvent } from "@/lib/tracking";
 
 export default function ServicesSection() {
-  const [activeTab, setActiveTab] = useState<"web" | "app" | "it">("web");
   const WHATSAPP = SITE.phoneRaw.replace(/[^0-9]/g, "");
-
-  const currentPlans =
-    activeTab === "web" ? getWebPlans() : activeTab === "app" ? APP_PLANS : IT_PLANS;
-  const currentCategory =
-    activeTab === "web" ? "Website" : activeTab === "app" ? "App" : "IT Services";
+  const currentPlans = getWebPlans();
 
   function getWaHref(planName: string) {
-    const msg = `Hi techiitfly, I'm interested in: ${currentCategory} – ${planName}`;
+    const msg = `Hi techiitfly, I'm interested in: Website – ${planName}`;
     return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   }
 
@@ -60,89 +55,8 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        {/* Service Switcher Tabs */}
-        {(SITE.showAppServices || SITE.showItServices) && (
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                padding: "6px",
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-                borderRadius: "999px",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => setActiveTab("web")}
-                style={{
-                  padding: "8px 18px",
-                  borderRadius: "999px",
-                  border: "none",
-                  background: activeTab === "web" ? "var(--surface-2)" : "transparent",
-                  color: activeTab === "web" ? "var(--text)" : "var(--muted)",
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "0.88rem",
-                  fontWeight: activeTab === "web" ? 700 : 500,
-                  cursor: "pointer",
-                  transition: "all 0.15s ease",
-                  boxShadow: activeTab === "web" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
-                }}
-              >
-                Websites (7 Days)
-              </button>
-              {SITE.showAppServices && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("app")}
-                  style={{
-                    padding: "8px 18px",
-                    borderRadius: "999px",
-                    border: "none",
-                    background: activeTab === "app" ? "var(--surface-2)" : "transparent",
-                    color: activeTab === "app" ? "var(--text)" : "var(--muted)",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.88rem",
-                    fontWeight: activeTab === "app" ? 700 : 500,
-                    cursor: "pointer",
-                    transition: "all 0.15s ease",
-                    boxShadow: activeTab === "app" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
-                  }}
-                >
-                  Mobile Apps
-                </button>
-              )}
-              {SITE.showItServices && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("it")}
-                  style={{
-                    padding: "8px 18px",
-                    borderRadius: "999px",
-                    border: "none",
-                    background: activeTab === "it" ? "var(--surface-2)" : "transparent",
-                    color: activeTab === "it" ? "var(--text)" : "var(--muted)",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.88rem",
-                    fontWeight: activeTab === "it" ? 700 : 500,
-                    cursor: "pointer",
-                    transition: "all 0.15s ease",
-                    boxShadow: activeTab === "it" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
-                  }}
-                >
-                  IT Support
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
         {/* 3 Packages Grid */}
         <div
-          key={activeTab}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
@@ -337,101 +251,72 @@ export default function ServicesSection() {
                 </ul>
 
                 {/* CTAs */}
-                {activeTab === "web" ? (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    <Link
-                      href={`/checkout/${plan.name.toLowerCase()}`}
-                      onClick={() => trackEvent("begin_checkout", `services_${plan.name.toLowerCase()}`)}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "6px",
-                        padding: "12px 18px",
-                        borderRadius: "8px",
-                        background: plan.popular ? "var(--accent)" : "var(--surface-2)",
-                        color: plan.popular ? "#0e0d0b" : "var(--text)",
-                        border: plan.popular ? "none" : "1px solid var(--border)",
-                        fontFamily: "var(--font-geist-sans)",
-                        fontSize: "0.92rem",
-                        fontWeight: 700,
-                        textDecoration: "none",
-                        transition: "all 0.15s ease",
-                        textAlign: "center",
-                      }}
-                    >
-                      <span>Book &amp; pay advance</span>
-                      <span>→</span>
-                    </Link>
-                    <a
-                      href={getWaHref(plan.name)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackEvent("whatsapp_click", `services_quote_${plan.name.toLowerCase()}`)}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "6px",
-                        padding: "9px 14px",
-                        borderRadius: "8px",
-                        background: "transparent",
-                        border: "1px solid var(--border)",
-                        color: "var(--muted)",
-                        fontFamily: "var(--font-geist-sans)",
-                        fontSize: "0.85rem",
-                        fontWeight: 600,
-                        textDecoration: "none",
-                        transition: "all 0.15s ease",
-                        textAlign: "center",
-                      }}
-                    >
-                      <span>Get a quote first</span>
-                      <span>↗</span>
-                    </a>
-                    <p
-                      style={{
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "0.7rem",
-                        color: "var(--muted)",
-                        margin: "2px 0 0",
-                        textAlign: "center",
-                      }}
-                    >
-                      By booking, you agree to our{" "}
-                      <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>
-                        Terms
-                      </Link>
-                    </p>
-                  </div>
-                ) : (
-                  <a
-                    href={getWaHref(plan.name)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("whatsapp_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <Link
+                    href={`/checkout/${plan.name.toLowerCase()}`}
+                    onClick={() => trackEvent("begin_checkout", `services_${plan.name.toLowerCase()}`)}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "8px",
-                      padding: "13px 20px",
+                      gap: "6px",
+                      padding: "12px 18px",
                       borderRadius: "8px",
                       background: plan.popular ? "var(--accent)" : "var(--surface-2)",
                       color: plan.popular ? "#0e0d0b" : "var(--text)",
                       border: plan.popular ? "none" : "1px solid var(--border)",
                       fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.95rem",
+                      fontSize: "0.92rem",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      transition: "all 0.15s ease",
+                      textAlign: "center",
+                    }}
+                  >
+                    <span>Book &amp; pay advance</span>
+                    <span>→</span>
+                  </Link>
+                  <a
+                    href={getWaHref(plan.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("whatsapp_click", `services_quote_${plan.name.toLowerCase()}`)}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      padding: "9px 14px",
+                      borderRadius: "8px",
+                      background: "transparent",
+                      border: "1px solid var(--border)",
+                      color: "var(--muted)",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.85rem",
                       fontWeight: 600,
                       textDecoration: "none",
                       transition: "all 0.15s ease",
                       textAlign: "center",
                     }}
                   >
-                    <span>Choose {plan.name} on WhatsApp</span>
-                    <span>→</span>
+                    <span>Get a quote first</span>
+                    <span>↗</span>
                   </a>
-                )}
+                  <p
+                    style={{
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.7rem",
+                      color: "var(--muted)",
+                      margin: "2px 0 0",
+                      textAlign: "center",
+                    }}
+                  >
+                    By booking, you agree to our{" "}
+                    <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "underline" }}>
+                      Terms
+                    </Link>
+                  </p>
+                </div>
 
                 {/* Desktop (≥1024px) direct phone and email link beneath CTA */}
                 <div
@@ -447,7 +332,7 @@ export default function ServicesSection() {
                   or call{" "}
                   <a
                     href={`tel:${SITE.phoneRaw}`}
-                    onClick={() => trackEvent("call_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
+                    onClick={() => trackEvent("call_click", `services_${plan.name.toLowerCase()}`)}
                     style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "2px" }}
                   >
                     {SITE.phone}
@@ -455,7 +340,7 @@ export default function ServicesSection() {
                   {" · "}
                   <a
                     href={`mailto:${SITE.contactEmail}`}
-                    onClick={() => trackEvent("email_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
+                    onClick={() => trackEvent("email_click", `services_${plan.name.toLowerCase()}`)}
                     style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "2px" }}
                   >
                     email
@@ -465,6 +350,109 @@ export default function ServicesSection() {
             );
           })}
         </div>
+
+        {/* Compact Mobile Apps Card */}
+        {SITE.showAppServices && (
+          <div
+            style={{
+              margin: "0 auto 36px",
+              background: "var(--surface)",
+              border: "1.5px solid var(--border)",
+              borderRadius: "var(--radius-lg)",
+              padding: "24px 28px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "20px",
+              boxShadow: "var(--card-shadow)",
+              transition: "border-color 0.2s, box-shadow 0.2s",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap", maxWidth: "720px" }}>
+              <div
+                style={{
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "12px",
+                  background: "var(--accent-dim)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--accent)",
+                  flexShrink: 0,
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                  <line x1="12" y1="18" x2="12.01" y2="18" />
+                </svg>
+              </div>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "1.18rem",
+                      fontWeight: 700,
+                      color: "var(--text)",
+                      margin: 0,
+                    }}
+                  >
+                    Mobile apps — starting at ₹99,999
+                  </h3>
+                  <span
+                    style={{
+                      background: "var(--surface-2)",
+                      color: "var(--accent)",
+                      border: "1px solid var(--border)",
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      padding: "2px 8px",
+                      borderRadius: "999px",
+                    }}
+                  >
+                    iOS &amp; Android
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.88rem",
+                    color: "var(--muted)",
+                    margin: "4px 0 0",
+                    lineHeight: 1.45,
+                  }}
+                >
+                  Cross-platform MVP ready in 4–6 weeks. Custom UI, store publishing, and scalable backend.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/pricing#apps"
+              onClick={() => trackEvent("consult_click", "home_compact_mobile_apps")}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "11px 22px",
+                borderRadius: "8px",
+                background: "var(--accent)",
+                color: "var(--primary-btn-text)",
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.92rem",
+                fontWeight: 700,
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "opacity 0.2s ease",
+              }}
+            >
+              <span>View app packages</span>
+              <span>→</span>
+            </Link>
+          </div>
+        )}
 
         {/* Small comparison note */}
         <p

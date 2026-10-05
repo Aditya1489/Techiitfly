@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -206,6 +206,23 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
               </span>
             )}
           </div>
+        ) : plan.price.startsWith("From") ? (
+          <div style={{ fontSize: "1.9rem", fontWeight: 800, display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: "6px" }}>
+            <span>{plan.price}</span>
+            {plan.priceNote && (
+              <span
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "var(--muted)",
+                  fontFamily: "var(--font-geist-mono)",
+                  letterSpacing: 0,
+                }}
+              >
+                · {plan.priceNote}
+              </span>
+            )}
+          </div>
         ) : plan.priceNote ? (
           <div style={{ fontSize: "1.9rem", fontWeight: 800 }}>
             <span
@@ -365,6 +382,63 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
             </Link>
           </p>
         </div>
+      ) : plan.id.startsWith("app") || ["MVP", "Standard App", "Advanced"].includes(plan.name) ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <a
+            href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+              `Hi techiitfly, I'm interested in a mobile app — ${plan.name}.`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("whatsapp_click", `pricing_app_${plan.name.toLowerCase().replace(/\s+/g, "_")}`)}
+            style={{
+              display: "block",
+              textAlign: "center",
+              fontFamily: "var(--font-geist-sans)",
+              fontWeight: 700,
+              fontSize: "0.92rem",
+              textDecoration: "none",
+              padding: "13px 18px",
+              borderRadius: "10px",
+              background: plan.popular ? "var(--accent)" : "var(--surface-2)",
+              border: plan.popular ? "none" : "1.5px solid var(--border)",
+              color: plan.popular ? "var(--primary-btn-text)" : "var(--text)",
+              transition: "all 0.2s ease",
+            }}
+          >
+            Get a quote →
+          </a>
+          <a
+            href={getConsultUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("consult_click", `pricing_app_consult_${plan.name.toLowerCase().replace(/\s+/g, "_")}`)}
+            style={{
+              display: "block",
+              textAlign: "center",
+              fontFamily: "var(--font-geist-sans)",
+              fontWeight: 600,
+              fontSize: "0.85rem",
+              textDecoration: "none",
+              padding: "9px 14px",
+              borderRadius: "8px",
+              background: "transparent",
+              border: "1px solid var(--border)",
+              color: "var(--muted)",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--text)";
+              e.currentTarget.style.borderColor = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--muted)";
+              e.currentTarget.style.borderColor = "var(--border)";
+            }}
+          >
+            Book a free consultation ↗
+          </a>
+        </div>
       ) : (
         <a
           href={waLink(plan.waLabel)}
@@ -500,6 +574,49 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 export default function PricingClient() {
   const [activeTab, setActiveTab] = useState<Tab>("web");
 
+  useEffect(() => {
+    function handleHash() {
+      if (typeof window === "undefined") return;
+      const h = window.location.hash.toLowerCase();
+      if (h === "#apps" || h === "#app" || h === "#mobile-apps") {
+        setActiveTab("app");
+      } else if (h === "#web" || h === "#websites") {
+        setActiveTab("web");
+      }
+    }
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
+
+  const handleTabChange = (tabId: Tab) => {
+    setActiveTab(tabId);
+    if (typeof window !== "undefined") {
+      const targetHash = tabId === "app" ? "#apps" : "";
+      if (window.location.hash !== targetHash) {
+        if (targetHash) {
+          window.history.replaceState(null, "", targetHash);
+        } else {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % TABS.length;
+      handleTabChange(TABS[nextIndex].id);
+      document.getElementById(`tab-${TABS[nextIndex].id}`)?.focus();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prevIndex = (currentIndex - 1 + TABS.length) % TABS.length;
+      handleTabChange(TABS[prevIndex].id);
+      document.getElementById(`tab-${TABS[prevIndex].id}`)?.focus();
+    }
+  };
+
   return (
     <div style={{ background: "var(--bg)", color: "var(--text)", minHeight: "100vh" }}>
       <div style={{ maxWidth: "1140px", margin: "0 auto", padding: "0 20px" }}>
@@ -565,26 +682,15 @@ export default function PricingClient() {
               fontWeight: 400,
               lineHeight: 1.1,
               color: "var(--text)",
-              maxWidth: "740px",
+              maxWidth: "760px",
               margin: "0 auto",
               letterSpacing: "-0.02em",
             }}
           >
-            {!SITE.showAppServices && !SITE.showItServices ? (
-              <>
-                Websites that bring you customers.{" "}
-                <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
-                  Live in 7 days.
-                </em>
-              </>
-            ) : (
-              <>
-                Websites &amp; learning platforms.{" "}
-                <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
-                  Delivered in days, not months.
-                </em>
-              </>
-            )}
+            Websites &amp; mobile apps.{" "}
+            <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
+              Delivered on time, at fixed prices.
+            </em>
           </motion.h1>
 
           <motion.p
@@ -661,7 +767,7 @@ export default function PricingClient() {
           <div style={{ display: "flex", justifyContent: "center", margin: "10px 0 36px" }}>
             <div
               role="tablist"
-              aria-label="Service type"
+              aria-label="Service packages"
               style={{
                 display: "inline-flex",
                 background: "var(--surface)",
@@ -673,57 +779,96 @@ export default function PricingClient() {
                 justifyContent: "center",
               }}
             >
-              {TABS.map((tab) => (
-                <motion.button
-                  key={tab.id}
-                  role="tab"
-                  aria-selected={activeTab === tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  whileTap={{ scale: 0.96 }}
-                  style={{
-                    fontFamily: "var(--font-geist-sans)",
-                    fontWeight: 600,
-                    fontSize: "0.88rem",
-                    border: "none",
-                    padding: "10px 22px",
-                    borderRadius: "999px",
-                    cursor: "pointer",
-                    transition: "background 0.2s, color 0.2s",
-                    background: activeTab === tab.id ? "var(--accent)" : "transparent",
-                    color: activeTab === tab.id ? "var(--primary-btn-text)" : "var(--muted)",
-                  }}
-                >
-                  {tab.label}
-                </motion.button>
-              ))}
+              {TABS.map((tab, idx) => {
+                const isSelected = activeTab === tab.id;
+                return (
+                  <motion.button
+                    key={tab.id}
+                    id={`tab-${tab.id}`}
+                    role="tab"
+                    aria-selected={isSelected}
+                    aria-controls={`panel-${tab.id}`}
+                    tabIndex={isSelected ? 0 : -1}
+                    onClick={() => handleTabChange(tab.id)}
+                    onKeyDown={(e) => handleKeyDown(e, idx)}
+                    whileTap={{ scale: 0.96 }}
+                    style={{
+                      fontFamily: "var(--font-geist-sans)",
+                      fontWeight: 600,
+                      fontSize: "0.92rem",
+                      border: "none",
+                      padding: "10px 24px",
+                      borderRadius: "999px",
+                      cursor: "pointer",
+                      transition: "background 0.2s, color 0.2s, box-shadow 0.2s",
+                      background: isSelected ? "var(--accent)" : "transparent",
+                      color: isSelected ? "var(--primary-btn-text)" : "var(--muted)",
+                      outline: "none",
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.boxShadow = "0 0 0 2px var(--accent)";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    {tab.label}
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         )}
 
         {/* ── Plan cards ───────────────────────────────────────────────── */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "20px",
-                alignItems: "stretch",
-              }}
-              className="pricing-grid"
+        <div
+          role="tabpanel"
+          id={`panel-${activeTab}`}
+          aria-labelledby={`tab-${activeTab}`}
+          tabIndex={0}
+          style={{ outline: "none" }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25 }}
             >
-              {PLAN_MAP[activeTab].map((plan, i) => (
-                <PlanCard key={plan.name} plan={plan} index={i} />
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "20px",
+                  alignItems: "stretch",
+                }}
+                className="pricing-grid"
+              >
+                {PLAN_MAP[activeTab].map((plan, i) => (
+                  <PlanCard key={plan.name} plan={plan} index={i} />
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Small text under app packages */}
+          {activeTab === "app" && (
+            <p
+              style={{
+                textAlign: "center",
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.85rem",
+                color: "var(--muted)",
+                maxWidth: "680px",
+                margin: "24px auto 0",
+                lineHeight: 1.5,
+              }}
+            >
+              Final price depends on features and integrations. You get a fixed quote and timeline after a free consultation.
+            </p>
+          )}
+        </div>
 
         {/* Highlighted Consultation Card below packages */}
         <div

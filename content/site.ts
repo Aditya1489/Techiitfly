@@ -58,7 +58,7 @@ export const SITE: SiteConfig = {
   metaDescription:
     "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹12,999, live in 7 days, guaranteed. Free 15-minute consultation.",
   showIitClaim: false,
-  showAppServices: false,
+  showAppServices: true,
   showItServices: false,
   mathsyInstitutesPrice: "From ₹35,000 / year",
   mathsyMeetPrice: "₹999 / month per tutor",

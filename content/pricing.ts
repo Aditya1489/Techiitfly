@@ -471,7 +471,7 @@ export const PRICING_FAQS: PricingFaq[] = [
 // ─── JSON-LD Offer Generator ──────────────────────────────────────────────────
 export function getPricingJsonLdOffers() {
   const plans = getWebPlans();
-  return plans.map((plan) => ({
+  const offers = plans.map((plan) => ({
     "@type": "Offer",
     name: `${plan.name} Website Package`,
     price: plan.priceAmount.toString(),
@@ -481,6 +481,21 @@ export function getPricingJsonLdOffers() {
     url: `https://techiitfly.com/checkout/${plan.id}`,
     description: `${plan.name} website package: ${plan.timeline}, ${plan.revisions}, ${plan.support}. Starting at ${plan.price}.`,
   }));
+
+  APP_PLANS.forEach((app) => {
+    offers.push({
+      "@type": "Offer",
+      name: `${app.name} Mobile App Package`,
+      price: app.priceAmount.toString(),
+      priceCurrency: "INR",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `https://techiitfly.com/pricing#apps`,
+      description: `${app.name} mobile app package: ${app.timeline}, ${app.support}. ${app.price}.`,
+    });
+  });
+
+  return offers;
 }
 
 // ─── Helper for single package lookup ──────────────────────────────────────────

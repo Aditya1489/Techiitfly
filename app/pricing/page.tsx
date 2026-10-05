@@ -6,18 +6,21 @@ import { SITE } from "@/content/site";
 import { getPricingJsonLdOffers, STARTER_PRICE_FORMATTED } from "@/content/pricing";
 
 export const metadata: Metadata = {
-  title: "Pricing — Transparent Fixed Prices for Websites | techiitfly",
-  description: `Transparent, fixed pricing for websites and software by techiitfly. Starter websites from ${STARTER_PRICE_FORMATTED}, live in 7 days, guaranteed.`,
+  title: "Pricing — Websites & Mobile Apps at Fixed Prices | techiitfly",
+  description:
+    "Websites & mobile apps. Delivered on time, at fixed prices. Websites from ₹12,999 and mobile apps from ₹99,999. Free 15-minute consultation.",
   openGraph: {
-    title: "Pricing — Transparent Fixed Prices for Websites | techiitfly",
-    description: `Fixed prices starting at ${STARTER_PRICE_FORMATTED}. Fast, mobile-friendly websites delivered in days.`,
+    title: "Pricing — Websites & Mobile Apps at Fixed Prices | techiitfly",
+    description:
+      "Websites & mobile apps. Delivered on time, at fixed prices. Websites from ₹12,999 and mobile apps from ₹99,999.",
     url: `${SITE.siteUrl}/pricing`,
     images: [{ url: "/og/pricing.png", width: 1200, height: 630, alt: "techiitfly Pricing" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricing — Transparent Fixed Prices for Websites | techiitfly",
-    description: `Fixed prices starting at ${STARTER_PRICE_FORMATTED}. Fast, mobile-friendly websites delivered in days.`,
+    title: "Pricing — Websites & Mobile Apps at Fixed Prices | techiitfly",
+    description:
+      "Websites & mobile apps. Delivered on time, at fixed prices. Websites from ₹12,999 and mobile apps from ₹99,999.",
     images: ["/og/pricing.png"],
   },
 };
@@ -26,8 +29,9 @@ export default function PricingPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Pricing — techiitfly",
-    description: `Transparent fixed pricing for website design and development services. Packages starting from ${STARTER_PRICE_FORMATTED}.`,
+    name: "Pricing — Websites & Mobile Apps | techiitfly",
+    description:
+      "Websites & mobile apps. Delivered on time, at fixed prices. Fixed pricing packages starting from ₹12,999 for websites and ₹99,999 for mobile apps.",
     url: `${SITE.siteUrl}/pricing`,
     offers: getPricingJsonLdOffers(),
   };

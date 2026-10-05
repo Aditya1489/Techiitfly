@@ -29,16 +29,31 @@ async function capture() {
     console.log(`Capturing for viewport: ${vp.name}...`);
     await page.setViewport({ width: vp.width, height: vp.height });
 
-    // 1. /pricing (page screenshot)
+    // 1. /pricing (Websites tab)
     console.log(`Navigating to ${BASE_URL}/pricing...`);
     await page.goto(`${BASE_URL}/pricing`, { waitUntil: "networkidle2", timeout: 30000 });
     await new Promise((r) => setTimeout(r, 1200));
     await page.screenshot({
-      path: path.join(OUTPUT_DIR, `pricing_page_${vp.name}.png`),
+      path: path.join(OUTPUT_DIR, `pricing_websites_${vp.name}.png`),
       fullPage: false,
     });
 
-    // 2. Home services section
+    // 2. /pricing#apps (Mobile Apps tab)
+    console.log(`Navigating to ${BASE_URL}/pricing#apps...`);
+    await page.goto(`${BASE_URL}/pricing#apps`, { waitUntil: "networkidle2", timeout: 30000 });
+    await new Promise((r) => setTimeout(r, 1200));
+    // Also explicitly click tab if not activated
+    const appTabBtn = await page.$("#tab-app");
+    if (appTabBtn) {
+      await appTabBtn.click();
+      await new Promise((r) => setTimeout(r, 600));
+    }
+    await page.screenshot({
+      path: path.join(OUTPUT_DIR, `pricing_apps_${vp.name}.png`),
+      fullPage: false,
+    });
+
+    // 3. Home services section
     console.log(`Navigating to ${BASE_URL}/#services...`);
     await page.goto(`${BASE_URL}/#services`, { waitUntil: "networkidle2", timeout: 30000 });
     await new Promise((r) => setTimeout(r, 1200));
