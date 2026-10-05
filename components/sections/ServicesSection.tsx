@@ -61,78 +61,84 @@ export default function ServicesSection() {
         </div>
 
         {/* Service Switcher Tabs */}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "6px",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "999px",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => setActiveTab("web")}
+        {(SITE.showAppServices || SITE.showItServices) && (
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}>
+            <div
               style={{
-                padding: "8px 18px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "6px",
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
                 borderRadius: "999px",
-                border: "none",
-                background: activeTab === "web" ? "var(--surface-2)" : "transparent",
-                color: activeTab === "web" ? "var(--text)" : "var(--muted)",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.88rem",
-                fontWeight: activeTab === "web" ? 700 : 500,
-                cursor: "pointer",
-                transition: "all 0.15s ease",
-                boxShadow: activeTab === "web" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
               }}
             >
-              Websites (7 Days)
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("app")}
-              style={{
-                padding: "8px 18px",
-                borderRadius: "999px",
-                border: "none",
-                background: activeTab === "app" ? "var(--surface-2)" : "transparent",
-                color: activeTab === "app" ? "var(--text)" : "var(--muted)",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.88rem",
-                fontWeight: activeTab === "app" ? 700 : 500,
-                cursor: "pointer",
-                transition: "all 0.15s ease",
-                boxShadow: activeTab === "app" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
-              }}
-            >
-              Mobile Apps
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("it")}
-              style={{
-                padding: "8px 18px",
-                borderRadius: "999px",
-                border: "none",
-                background: activeTab === "it" ? "var(--surface-2)" : "transparent",
-                color: activeTab === "it" ? "var(--text)" : "var(--muted)",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.88rem",
-                fontWeight: activeTab === "it" ? 700 : 500,
-                cursor: "pointer",
-                transition: "all 0.15s ease",
-                boxShadow: activeTab === "it" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
-              }}
-            >
-              IT Support
-            </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("web")}
+                style={{
+                  padding: "8px 18px",
+                  borderRadius: "999px",
+                  border: "none",
+                  background: activeTab === "web" ? "var(--surface-2)" : "transparent",
+                  color: activeTab === "web" ? "var(--text)" : "var(--muted)",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.88rem",
+                  fontWeight: activeTab === "web" ? 700 : 500,
+                  cursor: "pointer",
+                  transition: "all 0.15s ease",
+                  boxShadow: activeTab === "web" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                }}
+              >
+                Websites (7 Days)
+              </button>
+              {SITE.showAppServices && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("app")}
+                  style={{
+                    padding: "8px 18px",
+                    borderRadius: "999px",
+                    border: "none",
+                    background: activeTab === "app" ? "var(--surface-2)" : "transparent",
+                    color: activeTab === "app" ? "var(--text)" : "var(--muted)",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.88rem",
+                    fontWeight: activeTab === "app" ? 700 : 500,
+                    cursor: "pointer",
+                    transition: "all 0.15s ease",
+                    boxShadow: activeTab === "app" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                  }}
+                >
+                  Mobile Apps
+                </button>
+              )}
+              {SITE.showItServices && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("it")}
+                  style={{
+                    padding: "8px 18px",
+                    borderRadius: "999px",
+                    border: "none",
+                    background: activeTab === "it" ? "var(--surface-2)" : "transparent",
+                    color: activeTab === "it" ? "var(--text)" : "var(--muted)",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.88rem",
+                    fontWeight: activeTab === "it" ? 700 : 500,
+                    cursor: "pointer",
+                    transition: "all 0.15s ease",
+                    boxShadow: activeTab === "it" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                  }}
+                >
+                  IT Support
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* 3 Packages Grid */}
         <div
@@ -350,91 +356,6 @@ export default function ServicesSection() {
           })}
         </div>
 
-        {/* Optional App & IT Services Compact Cards (shown only if true) */}
-        {(SITE.showAppServices || SITE.showItServices) && (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "20px",
-              marginBottom: "36px",
-            }}
-          >
-            {SITE.showAppServices && (
-              <div
-                style={{
-                  background: "var(--surface-2)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)",
-                  padding: "20px 24px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>
-                  <h4 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "1.05rem", fontWeight: 700, color: "var(--text)", margin: 0 }}>
-                    Mobile Apps
-                  </h4>
-                  <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.85rem", color: "var(--muted)", margin: "4px 0 0" }}>
-                    Android &amp; iOS app development starting at ₹49,999.
-                  </p>
-                </div>
-                <Link
-                  href="/pricing"
-                  style={{
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    color: "var(--accent)",
-                    textDecoration: "none",
-                    whiteSpace: "nowrap",
-                    marginLeft: "16px",
-                  }}
-                >
-                  View App Pricing →
-                </Link>
-              </div>
-            )}
-
-            {SITE.showItServices && (
-              <div
-                style={{
-                  background: "var(--surface-2)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)",
-                  padding: "20px 24px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>
-                  <h4 style={{ fontFamily: "var(--font-geist-sans)", fontSize: "1.05rem", fontWeight: 700, color: "var(--text)", margin: 0 }}>
-                    IT Support
-                  </h4>
-                  <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.85rem", color: "var(--muted)", margin: "4px 0 0" }}>
-                    Remote &amp; on-site office IT management from ₹9,999/mo.
-                  </p>
-                </div>
-                <Link
-                  href="/pricing"
-                  style={{
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    color: "var(--accent)",
-                    textDecoration: "none",
-                    whiteSpace: "nowrap",
-                    marginLeft: "16px",
-                  }}
-                >
-                  View IT Pricing →
-                </Link>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Link to /pricing */}
         <div style={{ textAlign: "center" }}>

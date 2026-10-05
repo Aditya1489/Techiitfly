@@ -4,12 +4,12 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Pricing | techiitfly — Websites, Apps & IT Support",
+  title: "Pricing | techiitfly — Websites & Mobile Apps",
   description:
-    "Transparent, fixed pricing for websites, mobile apps, and managed IT services by techiitfly. Delivered in days, not months.",
+    "Transparent, fixed pricing for websites and mobile apps by techiitfly. Delivered in days, not months.",
   openGraph: {
     title: "Pricing | techiitfly",
-    description: "Websites, apps and IT support. Delivered in days, not months.",
+    description: "Websites and mobile apps. Delivered in days, not months.",
     url: "https://techiitfly.com/techiitfly-pricing",
   },
 };

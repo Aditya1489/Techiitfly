@@ -78,7 +78,7 @@ const FAQS = [
   },
   {
     q: "How does payment work?",
-    a: "50% advance to start, 50% on delivery. For monthly IT services, billing is monthly.",
+    a: "50% advance to start, 50% on delivery once you are 100% satisfied with the result.",
   },
   {
     q: "Do I own the source code?",

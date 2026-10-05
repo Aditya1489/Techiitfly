@@ -48,7 +48,7 @@ export const SITE: SiteConfig = {
     "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
   showIitClaim: false,
   showAppServices: true,
-  showItServices: true,
+  showItServices: false,
   mathsyInstitutesPrice: "",
   mathsyMeetPrice: "",
 };
