@@ -93,11 +93,6 @@ const NAV_LINKS: NavItem[] = [
         desc: "Live online classroom with built-in geometry tools",
         href: "/mathsy-meet",
       },
-      {
-        label: "Mathsy for Institutes",
-        desc: "Branded learning platform for coaching classes",
-        href: "/mathsy-for-institutes",
-      },
     ],
   },
 ];

@@ -370,14 +370,7 @@ export default function Contact() {
               margin: 0,
             }}
           >
-            Interested in our products?{" "}
-            <Link
-              href="/mathsy-for-institutes"
-              style={{ color: "var(--text)", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}
-            >
-              Mathsy for Institutes
-            </Link>
-            {" · "}
+            Interested in our product?{" "}
             <Link
               href="/mathsy-meet"
               style={{ color: "var(--text)", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}

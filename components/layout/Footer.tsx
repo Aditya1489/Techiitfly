@@ -149,12 +149,6 @@ export default function Footer() {
           >
             Mathsy Meet
           </Link>
-          <Link
-            href="/mathsy-for-institutes"
-            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--text)", textDecoration: "none" }}
-          >
-            Mathsy for Institutes
-          </Link>
           <span style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.78rem", color: "var(--muted)", marginTop: "4px" }}>
             Software we build and run ourselves.
           </span>

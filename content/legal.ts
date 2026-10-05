@@ -225,9 +225,9 @@ export function getLegalText(): {
     {
       id: "products",
       number: "16",
-      title: "Our products (Mathsy Meet, Mathsy for Institutes)",
+      title: "Our products (Mathsy Meet)",
       paragraphs: [
-        `16.1 Mathsy Meet and Mathsy for Institutes are software products owned by techiitfly. Using them does not transfer ownership of the software to you.`,
+        `16.1 Mathsy Meet is a software product owned by techiitfly. Using it does not transfer ownership of the software to you.`,
         `16.2 Access is licensed, not sold, under a separate subscription or licence agreement that sets out pricing, usage limits, support and data terms. That agreement applies in addition to these Terms.`,
         `16.3 Free demos, trials and walkthroughs are provided as-is and may be changed or ended at any time.`,
       ],
