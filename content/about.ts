@@ -1,5 +1,12 @@
-// Founder bio for techiitfly
-// Add 2-3 sentences about yourself below when ready.
-// When this string is empty, the founder bio paragraph is cleanly hidden in the UI.
-export const founderBio: string = "";
-export const hasFounderBio: boolean = Boolean(founderBio && founderBio.trim().length > 0);
+// Founder bio & story for techiitfly
+// When story or photo is empty, the founder block is cleanly hidden in the UI.
+export const founderName = "Aditya Chavhan";
+export const founderPhoto: string = ""; // e.g. "/images/aditya.webp"
+export const founderStory: string = ""; // 2-3 lines of story when ready
+
+// Backward compatibility aliases
+export const founderBio: string = founderStory;
+export const hasFounderBio: boolean = Boolean(
+  founderStory && founderStory.trim().length > 0 && founderPhoto && founderPhoto.trim().length > 0
+);
+export const hasFounderBlock: boolean = hasFounderBio;

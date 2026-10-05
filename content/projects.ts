@@ -355,3 +355,6 @@ export function getAllProjects(): CaseStudy[] {
 export function getProjectBySlug(slug: string): CaseStudy | undefined {
   return PROJECTS.find((p) => p.slug === slug);
 }
+
+export * from "./work";
+

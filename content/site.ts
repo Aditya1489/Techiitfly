@@ -1,5 +1,6 @@
 export interface SiteConfig {
   name: string;
+  brand: string;
   tagline: string;
   founder: string;
   location: string;
@@ -7,12 +8,15 @@ export interface SiteConfig {
   contactEmail: string;
   phone: string;
   phoneRaw: string;
+  address: string;
   replyHours: string;
   whatsappUrl: string;
   whatsappProjectUrl: string;
   whatsappTutorUrl: string;
   consultUrl: string;
   googleReviewsUrl: string;
+  googleRating?: number;
+  googleReviewCount?: number;
   siteUrl: string;
   metaDescription: string;
   showIitClaim: boolean;
@@ -34,6 +38,7 @@ export interface SiteConfig {
 
 export const SITE: SiteConfig = {
   name: "techiitfly",
+  brand: "techiitfly",
   tagline: "Websites that bring you customers. Delivered in 7 days.",
   founder: "Aditya Chavhan",
   location: "Pune, India",
@@ -41,7 +46,8 @@ export const SITE: SiteConfig = {
   contactEmail: "contact@techiitfly.com",
   phone: "+91 93739 17738",
   phoneRaw: "+919373917738",
-  replyHours: "We reply within 2 hours, 10am–8pm IST, Mon–Sat",
+  address: "",
+  replyHours: "We reply within 24 hours, Mon–Sat",
   whatsappUrl:
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27d%20like%20to%20discuss%20a%20project.",
   whatsappProjectUrl:
@@ -50,6 +56,8 @@ export const SITE: SiteConfig = {
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27m%20a%20tutor%20interested%20in%20Mathsy%20Meet.",
   consultUrl: "", // Cal.com link when ready; fallback to WhatsApp 15-min consultation
   googleReviewsUrl: "", // Optional Google Reviews link; hidden if empty
+  googleRating: undefined, // empty = hide rating everywhere
+  googleReviewCount: undefined,
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://techiitfly.vercel.app",
   metaDescription:
     "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹12,999, live in 7 days, guaranteed. Free 15-minute consultation.",

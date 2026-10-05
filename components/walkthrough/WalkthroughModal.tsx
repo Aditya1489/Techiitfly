@@ -243,7 +243,7 @@ export default function WalkthroughModal() {
 
                 {/* 2. WhatsApp */}
                 <a
-                  href="https://wa.me/919373917738?text=Hi%20Aditya%2C%20I%27d%20like%20a%20walkthrough%20of%20your%20work."
+                  href={SITE.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
