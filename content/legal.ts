@@ -225,7 +225,7 @@ export function getLegalText(): {
     {
       id: "products",
       number: "16",
-      title: "Our products (Mathsy Meet)",
+      title: "Our product (Mathsy Meet)",
       paragraphs: [
         `16.1 Mathsy Meet is a software product owned by techiitfly. Using it does not transfer ownership of the software to you.`,
         `16.2 Access is licensed, not sold, under a separate subscription or licence agreement that sets out pricing, usage limits, support and data terms. That agreement applies in addition to these Terms.`,

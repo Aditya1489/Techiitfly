@@ -25,13 +25,6 @@ const OG_PAGES = [
     badge: "From ₹12,999",
   },
   {
-    filename: "mathsy-for-institutes.png",
-    eyebrow: "PLATFORM LICENSING · TECHIITFLY PRODUCTS",
-    headline: "Mathsy for Institutes",
-    subline: "Complete 4-portal learning platform for coaching classes and test-prep academies. Running live at mathsy.in.",
-    badge: "4-Portal System",
-  },
-  {
     filename: "mathsy-meet.png",
     eyebrow: "TEACHING TOOLS · TECHIITFLY PRODUCTS",
     headline: "Mathsy Meet for Tutors",

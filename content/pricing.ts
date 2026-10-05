@@ -35,16 +35,6 @@ export interface AddonItem {
   note?: string;
 }
 
-export interface InstitutesPricing {
-  headline: string;
-  priceText: string;
-  startingPrice: number;
-  cardPriceLine: string;
-  bullets: string[];
-  primaryCtaText: string;
-  secondaryCtaText: string;
-}
-
 export interface MeetPricing {
   meetMonthly: number;
   priceText: string;
@@ -60,7 +50,6 @@ export interface PricingConfig {
   launchOffer: LaunchOfferConfig;
   comparisonNote: string;
   addons: AddonItem[];
-  institutes: InstitutesPricing;
   meet: MeetPricing;
 }
 
@@ -101,19 +90,6 @@ export const PRICING_CONFIG: PricingConfig = {
       price: "₹2,000",
     },
   ],
-  institutes: {
-    headline: "Simple yearly licence. No revenue share.",
-    priceText: "From ₹35,000 / year + one-time setup (quoted after your demo).",
-    startingPrice: 35000,
-    cardPriceLine: "From ₹35,000/year",
-    bullets: [
-      "No cut of your fees or course sales",
-      "Price based on student count and customisation",
-      "Includes your branding, domain and onboarding training",
-    ],
-    primaryCtaText: "Book a free demo (30 min)",
-    secondaryCtaText: "Get a quote on WhatsApp",
-  },
   meet: {
     meetMonthly: 999,
     priceText: "₹999 / month per tutor",

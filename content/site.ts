@@ -10,7 +10,6 @@ export interface SiteConfig {
   replyHours: string;
   whatsappUrl: string;
   whatsappProjectUrl: string;
-  whatsappInstituteUrl: string;
   whatsappTutorUrl: string;
   consultUrl: string;
   googleReviewsUrl: string;
@@ -19,7 +18,6 @@ export interface SiteConfig {
   showIitClaim: boolean;
   showAppServices: boolean;
   showItServices: boolean;
-  mathsyInstitutesPrice: string;
   mathsyMeetPrice: string;
   legalEntityType: string;
   registeredAddress: string;
@@ -48,8 +46,6 @@ export const SITE: SiteConfig = {
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27d%20like%20to%20discuss%20a%20project.",
   whatsappProjectUrl:
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27d%20like%20to%20discuss%20a%20website%2Fplatform%20project.",
-  whatsappInstituteUrl:
-    "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%20run%20a%20coaching%20institute%20and%20would%20like%20a%20Mathsy%20demo.",
   whatsappTutorUrl:
     "https://wa.me/919373917738?text=Hi%20techiitfly%2C%20I%27m%20a%20tutor%20interested%20in%20Mathsy%20Meet.",
   consultUrl: "", // Cal.com link when ready; fallback to WhatsApp 15-min consultation
@@ -60,7 +56,6 @@ export const SITE: SiteConfig = {
   showIitClaim: false,
   showAppServices: true,
   showItServices: false,
-  mathsyInstitutesPrice: "From ₹35,000 / year",
   mathsyMeetPrice: "₹999 / month per tutor",
   legalEntityType: "",
   registeredAddress: "",

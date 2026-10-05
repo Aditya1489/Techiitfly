@@ -81,25 +81,8 @@ const NAV_LINKS: NavItem[] = [
   { id: "services", label: "Services", href: "/#services" },
   { id: "work", label: "Work", href: "/#work" },
   { id: "pricing", label: "Pricing", href: "/pricing" },
+  { id: "mathsy-meet", label: "Mathsy Meet", href: "/mathsy-meet" },
   { id: "contact", label: "Contact", href: "/#contact" },
-  {
-    id: "products",
-    label: "Products",
-    href: "#",
-    isDropdown: true,
-    children: [
-      {
-        label: "Mathsy Meet",
-        desc: "Live online classroom with built-in geometry tools",
-        href: "/mathsy-meet",
-      },
-      {
-        label: "Mathsy for Institutes",
-        desc: "White-label 4-portal LMS for coaching classes",
-        href: "/mathsy-for-institutes",
-      },
-    ],
-  },
 ];
 
 // ─── Header ──────────────────────────────────────────────────────────────────

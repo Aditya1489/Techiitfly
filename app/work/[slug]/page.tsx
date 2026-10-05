@@ -726,7 +726,7 @@ export default async function CaseStudyPage({
                 marginBottom: "14px",
               }}
             >
-              Ready to Build Something Similar?
+              Discuss a project like this
             </h2>
             <p
               style={{
@@ -779,6 +779,29 @@ export default async function CaseStudyPage({
                 Contact Form
               </Link>
             </div>
+            {project.slug === "mathsy" && (
+              <p
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.85rem",
+                  color: "var(--muted)",
+                  marginTop: "24px",
+                  marginBottom: 0,
+                }}
+              >
+                Looking for our live class and video platform?{" "}
+                <Link
+                  href="/mathsy-meet"
+                  style={{
+                    color: "var(--accent)",
+                    textDecoration: "underline",
+                    fontWeight: 500,
+                  }}
+                >
+                  Explore Mathsy Meet →
+                </Link>
+              </p>
+            )}
           </div>
         </div>
       </main>

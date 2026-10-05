@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/mathsy-for-institutes",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
+}

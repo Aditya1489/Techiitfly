@@ -336,7 +336,7 @@ export default function MathsyMeetPage() {
               padding: "48px 32px",
             }}
           >
-            <span className="section-label">ACCESS &amp; LICENSING</span>
+            <span className="section-label">GET ACCESS</span>
             <h2
               style={{
                 fontFamily: "var(--font-instrument-serif)",
@@ -359,7 +359,7 @@ export default function MathsyMeetPage() {
                 margin: "0 auto 28px",
               }}
             >
-              Tutor subscription tiers and room licensing are available for solo math tutors, coaching pairs, and private academies.
+              Tutor subscription tiers and classroom room plans are available for solo math tutors, tutoring pairs, and educators.
             </p>
 
             <a
