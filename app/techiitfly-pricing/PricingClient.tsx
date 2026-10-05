@@ -33,6 +33,8 @@ function TechiitflyLogo({ size = 36 }: { size?: number }) {
 }
 
 import { SITE, getConsultUrl } from "@/content/site";
+import { Plan, WEB_PLANS, APP_PLANS, IT_PLANS, ADDONS } from "@/content/pricing";
+import { trackEvent } from "@/lib/tracking";
 
 // ─── WhatsApp number ──────────────────────────────────────────────────────────
 const WHATSAPP = SITE.phone.replace(/[^0-9]/g, "");
@@ -40,196 +42,6 @@ function waLink(plan: string) {
   const msg = `Hi techiitfly, I'm interested in: ${plan}`;
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
-type FeatureItem = { text: string; included: boolean };
-interface Plan {
-  name: string;
-  for: string;
-  price: string;
-  priceNote: string;
-  timeline: string;
-  popular?: boolean;
-  features: FeatureItem[];
-  cta: string;
-  waLabel: string;
-}
-
-const WEB_PLANS: Plan[] = [
-  {
-    name: "Starter",
-    for: "A clean online presence for a new or small business.",
-    price: "₹9,999",
-    priceNote: "starting from",
-    timeline: "Live in 5–7 days",
-    features: [
-      { text: "Up to 5 pages", included: true },
-      { text: "Template-based design", included: true },
-      { text: "Mobile friendly", included: true },
-      { text: "Contact form + WhatsApp button", included: true },
-      { text: "Basic SEO setup", included: true },
-      { text: "7 days free support", included: true },
-    ],
-    cta: "Get Starter",
-    waLabel: "Website – Starter",
-  },
-  {
-    name: "Business",
-    for: "For companies that want to look premium and rank on Google.",
-    price: "₹24,999",
-    priceNote: "starting from",
-    timeline: "Live in 7–10 days",
-    popular: true,
-    features: [
-      { text: "Up to 10 pages", included: true },
-      { text: "Custom design", included: true },
-      { text: "Mobile friendly", included: true },
-      { text: "Basic SEO setup", included: true },
-      { text: "Admin panel to edit content", included: true },
-      { text: "Google Analytics + Maps", included: true },
-      { text: "30 days free support", included: true },
-    ],
-    cta: "Get Business",
-    waLabel: "Website – Business",
-  },
-  {
-    name: "Premium",
-    for: "E-commerce, booking or fully custom web platforms.",
-    price: "₹49,999",
-    priceNote: "starting from",
-    timeline: "Live in 14–21 days",
-    features: [
-      { text: "15+ pages or online store", included: true },
-      { text: "Custom design + animations", included: true },
-      { text: "Payment gateway / booking", included: true },
-      { text: "Advanced SEO", included: true },
-      { text: "Admin dashboard", included: true },
-      { text: "Speed + security hardening", included: true },
-      { text: "90 days free support", included: true },
-    ],
-    cta: "Get Premium",
-    waLabel: "Website – Premium",
-  },
-];
-
-const APP_PLANS: Plan[] = [
-  {
-    name: "MVP",
-    for: "Test your idea fast with the core features only.",
-    price: "₹49,999",
-    priceNote: "starting from",
-    timeline: "Ready in 2–3 weeks",
-    features: [
-      { text: "Android or iOS", included: true },
-      { text: "3–5 core features", included: true },
-      { text: "Login + basic backend", included: true },
-      { text: "Play Store / App Store publishing", included: true },
-      { text: "Admin panel", included: false },
-      { text: "15 days free support", included: true },
-    ],
-    cta: "Get MVP",
-    waLabel: "App – MVP",
-  },
-  {
-    name: "Standard App",
-    for: "One app for both platforms, ready for real customers.",
-    price: "₹1,49,999",
-    priceNote: "starting from",
-    timeline: "Ready in 4–6 weeks",
-    popular: true,
-    features: [
-      { text: "Android + iOS together", included: true },
-      { text: "Login, payments, notifications", included: true },
-      { text: "Custom UI design", included: true },
-      { text: "Admin panel", included: true },
-      { text: "Store publishing included", included: true },
-      { text: "60 days free support", included: true },
-    ],
-    cta: "Get Standard",
-    waLabel: "App – Standard",
-  },
-  {
-    name: "Advanced",
-    for: "Complex apps with custom backend and integrations.",
-    price: "₹3,00,000+",
-    priceNote: "custom quote",
-    timeline: "8+ weeks",
-    features: [
-      { text: "Android + iOS + web dashboard", included: true },
-      { text: "Custom backend + APIs", included: true },
-      { text: "Third-party integrations", included: true },
-      { text: "Analytics + reporting", included: true },
-      { text: "Scalable cloud setup", included: true },
-      { text: "90 days free support", included: true },
-    ],
-    cta: "Request a quote",
-    waLabel: "App – Advanced",
-  },
-];
-
-const IT_PLANS: Plan[] = [
-  {
-    name: "Essential",
-    for: "Basic IT care for small offices.",
-    price: "₹9,999",
-    priceNote: "/ month",
-    timeline: "Response within 24 hours",
-    features: [
-      { text: "Up to 10 devices", included: true },
-      { text: "Remote helpdesk support", included: true },
-      { text: "Email + antivirus setup", included: true },
-      { text: "Monthly health check", included: true },
-      { text: "On-site visits", included: false },
-      { text: "Server management", included: false },
-    ],
-    cta: "Get Essential",
-    waLabel: "IT Services – Essential",
-  },
-  {
-    name: "Business Care",
-    for: "We run your IT so your team can focus on work.",
-    price: "₹24,999",
-    priceNote: "/ month",
-    timeline: "Response within 4 hours",
-    popular: true,
-    features: [
-      { text: "Up to 30 devices", included: true },
-      { text: "Remote + on-site support", included: true },
-      { text: "Server + network management", included: true },
-      { text: "Cloud backups", included: true },
-      { text: "Security monitoring", included: true },
-      { text: "Monthly report", included: true },
-    ],
-    cta: "Get Business Care",
-    waLabel: "IT Services – Business Care",
-  },
-  {
-    name: "Enterprise",
-    for: "A dedicated IT team for larger companies.",
-    price: "Custom",
-    priceNote: "quote",
-    timeline: "Response within 1 hour",
-    features: [
-      { text: "Unlimited devices", included: true },
-      { text: "Dedicated IT engineer", included: true },
-      { text: "24×7 monitoring", included: true },
-      { text: "Compliance + audits", included: true },
-      { text: "Cloud migration", included: true },
-      { text: "Custom SLA", included: true },
-    ],
-    cta: "Request a quote",
-    waLabel: "IT Services – Enterprise",
-  },
-];
-
-const ADDONS = [
-  { label: "Extra page", price: "₹1,500" },
-  { label: "Logo design", price: "₹3,000" },
-  { label: "Domain + hosting (1 year)", price: "₹4,000" },
-  { label: "Monthly website maintenance", price: "₹2,500" },
-  { label: "Express delivery", price: "+30%" },
-  { label: "Content writing (per page)", price: "₹800" },
-];
 
 const STEPS: { title: string; desc: React.ReactNode }[] = [
   {
@@ -241,6 +53,7 @@ const STEPS: { title: string; desc: React.ReactNode }[] = [
           href={getConsultUrl()}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent("consult_click", "pricing_step_1")}
           style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px" }}
         >
           book a free 15-minute call
@@ -488,9 +301,39 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
             e.currentTarget.style.opacity = "1";
           }
         }}
+        onClick={() => trackEvent("whatsapp_click", `pricing_${plan.name.toLowerCase()}`)}
       >
         {plan.cta}
       </a>
+
+      {/* Desktop (>=1024px) phone and email links */}
+      <div
+        className="desktop-only"
+        style={{
+          marginTop: "10px",
+          textAlign: "center",
+          fontSize: "0.72rem",
+          fontFamily: "var(--font-geist-mono)",
+          color: "var(--muted)",
+        }}
+      >
+        or call{" "}
+        <a
+          href={`tel:${SITE.phoneRaw}`}
+          onClick={() => trackEvent("call_click", `pricing_${plan.name.toLowerCase()}`)}
+          style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "2px" }}
+        >
+          {SITE.phone}
+        </a>
+        {" · "}
+        <a
+          href={`mailto:${SITE.contactEmail}`}
+          onClick={() => trackEvent("email_click", `pricing_${plan.name.toLowerCase()}`)}
+          style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "2px" }}
+        >
+          email
+        </a>
+      </div>
     </motion.article>
   );
 }
@@ -786,6 +629,85 @@ export default function PricingClient() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Highlighted Consultation Card below packages */}
+        <div
+          style={{
+            marginTop: "32px",
+            background: "var(--surface)",
+            border: "1.5px solid var(--accent)",
+            borderRadius: "var(--radius-lg)",
+            padding: "24px 28px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "18px",
+            boxShadow: "0 8px 30px rgba(245,158,11,0.1)",
+          }}
+        >
+          <div style={{ maxWidth: "620px" }}>
+            <span
+              style={{
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: "0.72rem",
+                color: "var(--accent)",
+                letterSpacing: "0.08em",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                display: "block",
+                marginBottom: "4px",
+              }}
+            >
+              FREE · 15 MINUTES · NO OBLIGATION
+            </span>
+            <h3
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "1.15rem",
+                fontWeight: 700,
+                color: "var(--text)",
+                margin: "0 0 4px 0",
+              }}
+            >
+              Not sure which package fits?
+            </h3>
+            <p
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.9rem",
+                color: "var(--muted)",
+                margin: 0,
+              }}
+            >
+              Book a free 15-minute consultation and get a fixed quote.
+            </p>
+          </div>
+
+          <a
+            href={getConsultUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("consult_click", "pricing_highlight_card")}
+            style={{
+              padding: "12px 22px",
+              borderRadius: "8px",
+              background: "var(--accent)",
+              color: "var(--primary-btn-text)",
+              fontFamily: "var(--font-geist-sans)",
+              fontSize: "0.92rem",
+              fontWeight: 700,
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span>Book free consultation</span>
+            <span>→</span>
+          </a>
+        </div>
 
         <p
           style={{

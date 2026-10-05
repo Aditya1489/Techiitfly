@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ThemeCustomizerPreview from "@/components/institutes/ThemeCustomizerPreview";
+import InstitutesDemoButton from "@/components/institutes/InstitutesDemoButton";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -22,7 +23,13 @@ export const metadata: Metadata = {
     description:
       "White-label 4-portal LMS for coaching institutes, test-prep academies (NEET/JEE), and tutoring centres in India.",
     url: `${SITE.siteUrl}/mathsy-for-institutes`,
-    images: [{ url: "/screenshots/mathsy/mathsy-student-dashboard-desktop.webp", width: 1200, height: 750, alt: "Mathsy for Institutes" }],
+    images: [{ url: "/og/mathsy-for-institutes.png", width: 1200, height: 630, alt: "Mathsy for Institutes" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mathsy for Institutes — Coaching Institute Management Software & LMS",
+    description: "White-label 4-portal LMS for coaching institutes and test-prep academies.",
+    images: ["/og/mathsy-for-institutes.png"],
   },
 };
 
@@ -157,28 +164,7 @@ export default function MathsyForInstitutesPage() {
                 alignItems: "center",
               }}
             >
-              <a
-                href={SITE.whatsappInstituteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "var(--accent)",
-                  color: "var(--primary-btn-text)",
-                  padding: "14px 28px",
-                  borderRadius: "8px",
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  boxShadow: "0 0 24px rgba(245,158,11,0.25)",
-                }}
-              >
-                <span>Book a Demo on WhatsApp</span>
-                <span>→</span>
-              </a>
+              <InstitutesDemoButton label="Book a free demo (30 min)" location="institutes_hero" />
 
               <a
                 href="#who-it-is-for"
@@ -299,40 +285,6 @@ export default function MathsyForInstitutesPage() {
                   Organize grades 8–12 batches, distribute syllabus notes, monitor class attendance, and keep parents updated without endless WhatsApp group chaos.
                 </p>
               </div>
-
-              <div
-                style={{
-                  background: "var(--bg)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "32px 26px",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "var(--font-geist-mono)",
-                    fontSize: "0.75rem",
-                    color: "var(--accent)",
-                    marginBottom: "8px",
-                  }}
-                >
-                  CATEGORY 03
-                </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "1.3rem",
-                    fontWeight: 600,
-                    color: "var(--text)",
-                    marginBottom: "12px",
-                  }}
-                >
-                  Multi-Branch Tutoring Centres
-                </h3>
-                <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.92rem", color: "var(--muted)", lineHeight: 1.6 }}>
-                  Maintain central control across faculty rosters, schedule branch timetables, assign student cohorts, and standardize exam evaluations under one flagship brand.
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -369,7 +321,7 @@ export default function MathsyForInstitutesPage() {
                   margin: "12px auto 0",
                 }}
               >
-                Every user gets a tailored interface with role-based access. Every feature below is proven in active production.
+                Every user gets a tailored interface with role-based access.
               </p>
             </div>
 
@@ -813,7 +765,7 @@ export default function MathsyForInstitutesPage() {
                 margin: "0 auto 28px",
               }}
             >
-              Whether you are an independent test-prep academy with 100 students or a multi-branch institute with 2,000+ learners, we structure licensing to your exact volume.
+              Whether you are an independent test-prep academy or a growing coaching class, we structure licensing to your exact volume.
             </p>
 
             <a
@@ -874,7 +826,7 @@ export default function MathsyForInstitutesPage() {
                 marginBottom: "24px",
               }}
             >
-              Mathsy is not a mockup or prototype. It is a live learning platform supporting real students and teachers across daily lectures, proctored test series, and mentorship evaluations.
+              Mathsy is not a mockup or prototype. It is running live at mathsy.in.
             </p>
             <a
               href="https://www.mathsy.in"
@@ -925,28 +877,11 @@ export default function MathsyForInstitutesPage() {
               Schedule a live demonstration with founder Aditya Chavhan. We will walk you through the 4 portals and discuss your institute&apos;s custom deployment.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", alignItems: "center" }}>
-              <a
-                href={SITE.whatsappInstituteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "var(--accent)",
-                  color: "var(--primary-btn-text)",
-                  padding: "16px 32px",
-                  borderRadius: "8px",
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "1.05rem",
-                  fontWeight: 600,
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  boxShadow: "0 0 32px rgba(245,158,11,0.3)",
-                }}
-              >
-                <span>Book a Demo on WhatsApp</span>
-                <span>→</span>
-              </a>
+              <InstitutesDemoButton
+                label="Book a free demo (30 min)"
+                location="institutes_final_cta"
+                style={{ padding: "16px 32px", fontSize: "1.05rem" }}
+              />
               {SITE.contactEmail && (
                 <a
                   href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent("Mathsy demo request")}`}

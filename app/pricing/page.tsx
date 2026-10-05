@@ -6,13 +6,20 @@ import Footer from "@/components/layout/Footer";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Pricing — Websites & Learning Platforms",
+  title: "Pricing — Transparent Fixed Prices for Websites",
   description:
-    "Transparent, fixed pricing for websites and custom learning platforms by techiitfly. Delivered in days, not months.",
+    "Transparent, fixed pricing for websites and software by techiitfly. Starter websites from ₹9,999, live in 7 days, guaranteed.",
   openGraph: {
-    title: "Pricing — Websites & Learning Platforms | techiitfly",
-    description: "Fixed prices starting at ₹9,999. Websites and learning platforms delivered in days, not months.",
+    title: "Pricing — Transparent Fixed Prices for Websites | techiitfly",
+    description: "Fixed prices starting at ₹9,999. Fast, mobile-friendly websites delivered in days.",
     url: `${SITE.siteUrl}/pricing`,
+    images: [{ url: "/og/pricing.png", width: 1200, height: 630, alt: "techiitfly Pricing" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pricing — Transparent Fixed Prices for Websites | techiitfly",
+    description: "Fixed prices starting at ₹9,999. Fast, mobile-friendly websites delivered in days.",
+    images: ["/og/pricing.png"],
   },
 };
 

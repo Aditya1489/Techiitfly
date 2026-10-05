@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { SITE } from "@/content/site";
+import { SITE, getConsultUrl } from "@/content/site";
 import { trackEvent, getWhatsAppHref } from "@/lib/tracking";
 import Testimonials from "@/components/sections/Testimonials";
 
@@ -283,8 +283,10 @@ export default function WebsitesLandingClient() {
             </a>
 
             <a
-              href={`tel:${SITE.phoneRaw}`}
-              onClick={() => trackEvent("call_click", "websites_hero")}
+              href={getConsultUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent("consult_click", "websites_hero")}
               style={{
                 background: "var(--surface)",
                 color: "var(--text)",
@@ -300,7 +302,8 @@ export default function WebsitesLandingClient() {
                 gap: "8px",
               }}
             >
-              <span>Call now: {SITE.phone}</span>
+              <span>Book a free consultation</span>
+              <span style={{ color: "var(--accent)" }}>↗</span>
             </a>
           </div>
 

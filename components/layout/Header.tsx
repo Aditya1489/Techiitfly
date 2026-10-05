@@ -78,7 +78,10 @@ interface NavItem {
 }
 
 const NAV_LINKS: NavItem[] = [
+  { id: "services", label: "Services", href: "/#services" },
   { id: "work", label: "Work", href: "/#work" },
+  { id: "pricing", label: "Pricing", href: "/pricing" },
+  { id: "contact", label: "Contact", href: "/#contact" },
   {
     id: "products",
     label: "Products",
@@ -86,20 +89,17 @@ const NAV_LINKS: NavItem[] = [
     isDropdown: true,
     children: [
       {
-        label: "Mathsy for Institutes",
-        desc: "4-portal learning platform for coaching classes",
-        href: "/mathsy-for-institutes",
+        label: "Mathsy Meet",
+        desc: "Live online classroom with built-in geometry tools",
+        href: "/mathsy-meet",
       },
       {
-        label: "Mathsy Meet",
-        desc: "virtual math classroom with geometry tools",
-        href: "/mathsy-meet",
+        label: "Mathsy for Institutes",
+        desc: "Branded learning platform for coaching classes",
+        href: "/mathsy-for-institutes",
       },
     ],
   },
-  { id: "pricing", label: "Pricing", href: "/pricing" },
-  ...(hasFounderBio ? [{ id: "about", label: "About", href: "/#about" }] : []),
-  { id: "contact", label: "Contact", href: "/#contact" },
 ];
 
 // ─── Header ──────────────────────────────────────────────────────────────────
@@ -118,12 +118,14 @@ export default function Header() {
 
   // ── Scroll-spy with IntersectionObserver ──
   useEffect(() => {
-    const sectionIds = ["hero", "offers", "work", "guarantee", "about", "products-overview", "faq", "contact"];
+    const sectionIds = ["hero", "services", "offers", "work", "guarantee", "consultation", "products", "products-overview", "faq", "contact"];
     const observerCallback: IntersectionObserverCallback = (entries) => {
       const visible = entries.filter((e) => e.isIntersecting);
       if (visible.length > 0) {
         visible.sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
-        const currentId = visible[0].target.id;
+        let currentId = visible[0].target.id;
+        if (currentId === "offers") currentId = "services";
+        if (currentId === "products-overview") currentId = "products";
         setActiveSection(currentId);
       }
     };

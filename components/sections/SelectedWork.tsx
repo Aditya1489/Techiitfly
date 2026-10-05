@@ -2,43 +2,33 @@ import Link from "next/link";
 import { PROJECTS } from "@/content/projects";
 
 export default function SelectedWork() {
-  const mathsy = PROJECTS.find((p) => p.slug === "mathsy");
   const yogagarhi = PROJECTS.find((p) => p.slug === "yogagarhi");
   const yogicpath = PROJECTS.find((p) => p.slug === "yogicpath");
 
   const cards = [
     {
-      project: mathsy,
-      bullets: [
-        "4 synchronized portals for students, tutors, parents, and admin.",
-        "Mathsy Meet live classroom with built-in geometry tools.",
-        "Proctored exam engine with digital booklet evaluation.",
-      ],
-      featuredImage: "/screenshots/mathsy/mathsy-student-dashboard-desktop.webp",
-      alt: "Mathsy platform student portal interface",
-      isFlagship: true,
-    },
-    {
       project: yogagarhi,
+      clientName: "YogaGarhi",
+      outcome: "Turned website traffic into direct retreat bookings with an interactive Ayurvedic diagnostic quiz and instant WhatsApp booking.",
       bullets: [
-        "Interactive Ayurveda Prakriti diagnostic quiz capturing qualified leads.",
-        "Retreat cohort countdown timers and student video testimonials.",
-        "WhatsApp booking CTAs pre-filling the selected retreat course.",
+        "Interactive Prakriti diagnostic quiz capturing qualified leads before booking.",
+        "Retreat cohort countdown timers and student video testimonial reels.",
+        "Pre-filled WhatsApp booking links directing students to specific retreat dates.",
       ],
       featuredImage: "/screenshots/yogagarhi-desktop.webp",
-      alt: "YogaGarhi live website interface",
-      isFlagship: false,
+      alt: "YogaGarhi live retreat website interface",
     },
     {
       project: yogicpath,
+      clientName: "Yogic Path",
+      outcome: "Positioned the academy to rank globally and convert course inquiries with structured certification curriculum and gated syllabus downloads.",
       bullets: [
-        "Gated syllabus brochure download capturing student inquiries.",
-        "200-Hour and 300-Hour interactive certification curriculum.",
-        "Campus landing pages across Rishikesh, Kerala, and Bali.",
+        "Gated syllabus brochure download capturing prospective student inquiries.",
+        "200-Hour & 300-Hour interactive certification curriculum and schedule.",
+        "Campus showcase pages covering Rishikesh, Kerala, and Bali locations.",
       ],
       featuredImage: "/screenshots/yogicpath-desktop.webp",
       alt: "Yogic Path teacher training platform interface",
-      isFlagship: false,
     },
   ].filter((item) => item.project != null);
 
@@ -68,7 +58,7 @@ export default function SelectedWork() {
               marginBottom: "12px",
             }}
           >
-            Production Platforms &amp; Client Websites
+            Client Websites Built for Real Businesses
           </h2>
           <p
             style={{
@@ -80,11 +70,11 @@ export default function SelectedWork() {
               margin: "0 auto",
             }}
           >
-            High-converting digital presence and full-stack software engineered for education and wellness businesses.
+            Clean design, fast load times, and built-in conversion paths that bring in enquiries from day one.
           </p>
         </div>
 
-        {/* 3 Work Cards */}
+        {/* 2 Work Cards (YogaGarhi & Yogic Path) */}
         <div
           style={{
             display: "grid",
@@ -93,7 +83,7 @@ export default function SelectedWork() {
             alignItems: "stretch",
           }}
         >
-          {cards.map(({ project, bullets, featuredImage, alt, isFlagship }) => {
+          {cards.map(({ project, clientName, outcome, bullets, featuredImage, alt }) => {
             if (!project) return null;
 
             return (
@@ -101,14 +91,12 @@ export default function SelectedWork() {
                 key={project.slug}
                 style={{
                   background: "var(--surface)",
-                  border: isFlagship ? "1px solid var(--accent)" : "1px solid var(--border)",
+                  border: "1px solid var(--border)",
                   borderRadius: "var(--radius-lg)",
                   padding: "28px 24px",
                   display: "flex",
                   flexDirection: "column",
-                  boxShadow: isFlagship
-                    ? "0 12px 36px rgba(245,158,11,0.12)"
-                    : "var(--card-shadow)",
+                  boxShadow: "var(--card-shadow)",
                   position: "relative",
                 }}
               >
@@ -147,35 +135,35 @@ export default function SelectedWork() {
                     }}
                   >
                     <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#10b981" }} />
-                    Live
+                    Live Website
                   </span>
                 </div>
 
-                {/* Title */}
+                {/* Client Name / Title */}
                 <h3
                   style={{
                     fontFamily: "var(--font-instrument-serif)",
-                    fontSize: "2rem",
+                    fontSize: "2.1rem",
                     fontWeight: 400,
                     color: "var(--text)",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                   }}
                 >
-                  {project.title}
+                  {clientName}
                 </h3>
 
-                {/* One-line subtitle */}
+                {/* Plain-Language Outcome Line */}
                 <p
                   style={{
                     fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.9rem",
-                    lineHeight: 1.5,
+                    fontSize: "0.92rem",
+                    lineHeight: 1.55,
                     color: "var(--muted)",
-                    marginBottom: "18px",
-                    minHeight: "40px",
+                    marginBottom: "20px",
+                    minHeight: "44px",
                   }}
                 >
-                  {project.tagline}
+                  {outcome}
                 </p>
 
                 {/* Screenshot Preview */}
@@ -235,7 +223,7 @@ export default function SelectedWork() {
                   style={{
                     listStyle: "none",
                     padding: 0,
-                    margin: "0 0 20px 0",
+                    margin: "0 0 24px 0",
                     display: "flex",
                     flexDirection: "column",
                     gap: "10px",
@@ -247,12 +235,12 @@ export default function SelectedWork() {
                       key={b}
                       style={{
                         fontFamily: "var(--font-geist-sans)",
-                        fontSize: "0.86rem",
+                        fontSize: "0.88rem",
                         color: "var(--text)",
                         display: "flex",
                         alignItems: "flex-start",
                         gap: "8px",
-                        lineHeight: 1.4,
+                        lineHeight: 1.45,
                       }}
                     >
                       <span style={{ color: "var(--accent)", lineHeight: 1.2, fontWeight: 700 }}>✓</span>
@@ -261,35 +249,22 @@ export default function SelectedWork() {
                   ))}
                 </ul>
 
-                {/* Tech stack in small mono text */}
-                <div
-                  style={{
-                    fontFamily: "var(--font-geist-mono)",
-                    fontSize: "0.72rem",
-                    color: "var(--muted)",
-                    paddingBottom: "16px",
-                    marginBottom: "16px",
-                    borderBottom: "1px solid var(--border)",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {project.stack.slice(0, 5).join(" · ")}
-                </div>
-
-                {/* Actions */}
+                {/* Actions (Read case study + Visit live site) */}
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                     gap: "12px",
+                    paddingTop: "16px",
+                    borderTop: "1px solid var(--border)",
                   }}
                 >
                   <Link
                     href={`/work/${project.slug}`}
                     style={{
                       fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.88rem",
+                      fontSize: "0.9rem",
                       fontWeight: 600,
                       color: "var(--accent)",
                       textDecoration: "none",
@@ -304,7 +279,7 @@ export default function SelectedWork() {
                     rel="noopener noreferrer"
                     style={{
                       fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.82rem",
+                      fontSize: "0.85rem",
                       color: "var(--muted)",
                       textDecoration: "none",
                     }}

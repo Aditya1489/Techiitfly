@@ -25,7 +25,7 @@ export interface SiteConfig {
 
 export const SITE: SiteConfig = {
   name: "techiitfly",
-  tagline: "Websites & learning platforms. Delivered in days, not months.",
+  tagline: "Websites that bring you customers. Delivered in 7 days.",
   founder: "Aditya Chavhan",
   location: "Pune, India",
   email: "contact@techiitfly.com",
@@ -45,7 +45,7 @@ export const SITE: SiteConfig = {
   googleReviewsUrl: "", // Optional Google Reviews link; hidden if empty
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://techiitfly.vercel.app",
   metaDescription:
-    "techiitfly — Websites & learning platforms for education and wellness businesses. Delivered in days, not months. Pune, India.",
+    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
   showIitClaim: false,
   showAppServices: false,
   showItServices: false,
@@ -58,7 +58,7 @@ export function getConsultUrl(): string {
     return SITE.consultUrl;
   }
   return `https://wa.me/919373917738?text=${encodeURIComponent(
-    "Hi techiitfly, I'd like a free 15-minute consultation."
+    "Hi techiitfly, I'd like to book a free 15-minute consultation."
   )}`;
 }
 

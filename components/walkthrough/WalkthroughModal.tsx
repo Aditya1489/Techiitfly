@@ -40,19 +40,19 @@ export default function WalkthroughModal() {
 
   return (
     <>
-      {/* Floating Walkthrough Compact Pill Button */}
+      {/* Floating Walkthrough Compact Pill Button (Desktop only, hidden on mobile while sticky bar shows) */}
       <motion.button
         onClick={() => setIsOpen(true)}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        className="desktop-walkthrough-btn"
         style={{
           position: "fixed",
           bottom: "24px",
           right: "24px",
           zIndex: 90,
-          display: "flex",
           alignItems: "center",
           gap: "6px",
           padding: "8px 14px",
@@ -81,6 +81,17 @@ export default function WalkthroughModal() {
         />
         Walkthrough
       </motion.button>
+
+      <style jsx global>{`
+        .desktop-walkthrough-btn {
+          display: flex !important;
+        }
+        @media (max-width: 768px) {
+          .desktop-walkthrough-btn {
+            display: none !important;
+          }
+        }
+      `}</style>
 
       {/* Modal Dialog */}
       <AnimatePresence>

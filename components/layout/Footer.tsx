@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SITE } from "@/content/site";
-import { hasFounderBio } from "@/content/about";
+import { SITE, getConsultUrl } from "@/content/site";
 import { trackEvent } from "@/lib/tracking";
 
 export default function Footer() {
@@ -11,21 +10,21 @@ export default function Footer() {
       style={{
         background: "var(--bg)",
         borderTop: "1px solid var(--border)",
-        padding: "48px 24px",
+        padding: "60px 24px 36px",
       }}
     >
       <div
         style={{
           maxWidth: "1140px",
           margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "24px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: "40px",
+          alignItems: "start",
         }}
       >
-        <div>
+        {/* Brand & Tagline */}
+        <div style={{ maxWidth: "320px" }}>
           <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}>
             {/* techiitfly logo icon */}
             <svg width="26" height="26" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -47,7 +46,7 @@ export default function Footer() {
             <span
               style={{
                 fontFamily: "var(--font-geist-sans)",
-                fontSize: "1.1rem",
+                fontSize: "1.15rem",
                 fontWeight: 800,
                 color: "var(--text)",
                 letterSpacing: "-0.03em",
@@ -59,108 +58,159 @@ export default function Footer() {
           <p
             style={{
               fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
+              fontSize: "0.88rem",
+              lineHeight: 1.5,
               color: "var(--muted)",
-              marginTop: "4px",
+              marginTop: "12px",
             }}
           >
-            Websites &amp; learning platforms. Delivered in days, not months.
+            Websites that bring you customers. Delivered in 7 days.
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.75rem",
+              color: "var(--muted)",
+              marginTop: "10px",
+            }}
+          >
+            Fixed prices from ₹9,999 · Pune, India
           </p>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
-          <a
-            href="/#work"
+        {/* Services Column (Services links first) */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <span
             style={{
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
-              color: "var(--muted)",
-              textDecoration: "none",
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              color: "var(--accent)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: "4px",
             }}
           >
-            Work
+            Services
+          </span>
+          <a
+            href="/#services"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--text)", textDecoration: "none" }}
+          >
+            Website Packages
           </a>
           <a
-            href="/#products-overview"
-            style={{
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
-              color: "var(--muted)",
-              textDecoration: "none",
-            }}
+            href="/#work"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
           >
-            Products
+            Selected Work
           </a>
           <Link
             href="/pricing"
-            style={{
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
-              color: "var(--muted)",
-              textDecoration: "none",
-            }}
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
           >
-            Pricing
+            Pricing &amp; Add-ons
           </Link>
-          {hasFounderBio && (
-            <a
-              href="/#about"
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.85rem",
-                color: "var(--muted)",
-                textDecoration: "none",
-              }}
-            >
-              About
-            </a>
-          )}
+          <a
+            href={getConsultUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("consult_click", "footer")}
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+          >
+            Free 15-min Consultation
+          </a>
           <a
             href="/#contact"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+          >
+            Contact &amp; Quotes
+          </a>
+        </div>
+
+        {/* Products Column (Separate small Products column) */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <span
             style={{
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
-              color: "var(--muted)",
-              textDecoration: "none",
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              color: "var(--accent)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: "4px",
             }}
           >
-            Contact
-          </a>
-          {SITE.contactEmail && (
-            <a
-              href={`mailto:${SITE.contactEmail}`}
-              onClick={() => trackEvent("email_click", "footer")}
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.85rem",
-                color: "var(--muted)",
-                textDecoration: "none",
-              }}
-            >
-              {SITE.contactEmail}
-            </a>
-          )}
+            Products
+          </span>
+          <Link
+            href="/mathsy-meet"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--text)", textDecoration: "none" }}
+          >
+            Mathsy Meet
+          </Link>
+          <Link
+            href="/mathsy-for-institutes"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--text)", textDecoration: "none" }}
+          >
+            Mathsy for Institutes
+          </Link>
+          <span style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.78rem", color: "var(--muted)", marginTop: "4px" }}>
+            Software we build and run ourselves.
+          </span>
+        </div>
+
+        {/* Contact Column */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <span
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              color: "var(--accent)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: "4px",
+            }}
+          >
+            Connect
+          </span>
           <a
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent("whatsapp_click", "footer")}
-            style={{
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "0.85rem",
-              color: "var(--accent)",
-              textDecoration: "none",
-            }}
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--accent)", textDecoration: "none" }}
           >
             WhatsApp ({SITE.phone}) ↗
           </a>
+          <a
+            href={`tel:${SITE.phoneRaw}`}
+            onClick={() => trackEvent("call_click", "footer")}
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+          >
+            Call: {SITE.phone}
+          </a>
+          {SITE.contactEmail && (
+            <a
+              href={`mailto:${SITE.contactEmail}`}
+              onClick={() => trackEvent("email_click", "footer")}
+              style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+            >
+              {SITE.contactEmail}
+            </a>
+          )}
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.74rem", color: "var(--muted)", marginTop: "4px" }}>
+            ● Mon–Sat, 10am–8pm IST
+          </span>
         </div>
       </div>
 
+      {/* Copyright & Legal */}
       <div
         style={{
           maxWidth: "1140px",
-          margin: "32px auto 0",
+          margin: "40px auto 0",
           paddingTop: "24px",
           borderTop: "1px solid var(--border)",
           display: "flex",

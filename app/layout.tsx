@@ -31,12 +31,12 @@ import Analytics from "@/components/analytics/Analytics";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
   title: {
-    default: "techiitfly — Websites & learning platforms for education and wellness businesses",
+    default: "techiitfly — Website Development in Pune | Live in 7 Days",
     template: "%s | techiitfly",
   },
   description:
-    "techiitfly — Websites & learning platforms for education and wellness businesses. Delivered in days, not months. Pune, India.",
-  keywords: ["web development", "EdTech", "wellness websites", "Pune", "India", "Mathsy", "techiitfly"],
+    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+  keywords: ["website development", "Pune", "web design", "business websites", "techiitfly", "7 day website"],
   authors: [{ name: "Aditya Chavhan", url: SITE.siteUrl }],
   creator: "Aditya Chavhan",
   openGraph: {
@@ -44,16 +44,16 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE.siteUrl,
     siteName: "techiitfly",
-    title: "techiitfly — Websites & learning platforms for education and wellness businesses",
+    title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description:
-      "Websites and learning platforms for education and wellness businesses. Delivered in days, not months.",
+      "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
     images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "techiitfly — Websites & learning platforms for education and wellness businesses",
+    title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description:
-      "Websites and learning platforms for education and wellness businesses. Delivered in days, not months.",
+      "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
     images: ["/og/home.png"],
   },
   robots: { index: true, follow: true },

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MeetLabEmbed from "@/components/meet/MeetLabEmbed";
+import MeetWalkthroughButton from "@/components/meet/MeetWalkthroughButton";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -21,7 +22,14 @@ export const metadata: Metadata = {
     description:
       "Live online math classroom for educators with built-in digital compass, protractor, ruler, set-square, slide-to-poll interactivity, and tablet pairing.",
     url: `${SITE.siteUrl}/mathsy-meet`,
-    images: [{ url: "/screenshots/mathsy-meet-desktop.webp", width: 1200, height: 750, alt: "Mathsy Meet" }],
+    images: [{ url: "/og/mathsy-meet.png", width: 1200, height: 630, alt: "Mathsy Meet" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
+    description:
+      "Live online math classroom for educators with built-in digital compass, protractor, ruler, and set-square.",
+    images: ["/og/mathsy-meet.png"],
   },
 };
 
@@ -147,6 +155,8 @@ export default function MathsyMeetPage() {
                 Try the Tools Below ↓
               </a>
 
+              <MeetWalkthroughButton label="Book a free walkthrough" location="meet_hero" />
+
               <a
                 href={SITE.whatsappTutorUrl}
                 target="_blank"
@@ -246,7 +256,7 @@ export default function MathsyMeetPage() {
                   margin: "8px auto 0",
                 }}
               >
-                Every feature below is implemented and active in the Mathsy teaching stack.
+                Built specifically for high-clarity math, geometry, and science instruction.
               </p>
             </div>
 
@@ -429,6 +439,12 @@ export default function MathsyMeetPage() {
                 <span>Get Access on WhatsApp</span>
                 <span>→</span>
               </a>
+
+              <MeetWalkthroughButton
+                label="Book a free walkthrough"
+                location="meet_final_cta"
+                style={{ padding: "16px 28px", fontSize: "1.05rem" }}
+              />
 
               {SITE.contactEmail && (
                 <a

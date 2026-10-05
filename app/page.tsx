@@ -1,17 +1,38 @@
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/hero/Hero";
-import ProofStrip from "@/components/sections/ProofStrip";
-import OffersSection from "@/components/sections/OffersSection";
+import ServicesSection from "@/components/sections/ServicesSection";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Testimonials from "@/components/sections/Testimonials";
 import Guarantee from "@/components/sections/Guarantee";
-import AboutFounder from "@/components/sections/AboutFounder";
-import TryItYourself from "@/components/sections/TryItYourself";
-import ProductsSection from "@/components/sections/ProductsSection";
+import ConsultationBand from "@/components/sections/ConsultationBand";
+import CompactProducts from "@/components/sections/CompactProducts";
 import FaqSection from "@/components/sections/FaqSection";
 import Contact from "@/components/sections/Contact";
 import WalkthroughModal from "@/components/walkthrough/WalkthroughModal";
+import MobileStickyBar from "@/components/layout/MobileStickyBar";
+import { SITE } from "@/content/site";
+
+export const metadata: Metadata = {
+  title: "techiitfly — Website Development in Pune | Live in 7 Days",
+  description:
+    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+  openGraph: {
+    title: "techiitfly — Website Development in Pune | Live in 7 Days",
+    description:
+      "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+    url: SITE.siteUrl,
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "techiitfly — Website Development in Pune | Live in 7 Days",
+    description:
+      "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹9,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+    images: ["/og/home.png"],
+  },
+};
 
 export default function Home() {
   return (
@@ -21,39 +42,36 @@ export default function Home() {
         {/* 1. Hero */}
         <Hero />
 
-        {/* 2. Proof Strip */}
-        <ProofStrip />
+        {/* 2. Services & Packages */}
+        <ServicesSection />
 
-        {/* 3. What We Offer + Starting Prices */}
-        <OffersSection />
-
-        {/* 4. Selected Work */}
+        {/* 3. Selected Work (Client websites only) */}
         <SelectedWork />
 
-        {/* Testimonials (Hidden if empty in content/testimonials.ts) */}
+        {/* 4. Testimonials (Hidden if empty in content/testimonials.ts) */}
         <Testimonials />
 
-        {/* 5. 7-Day Guarantee + Timeline (Merged) */}
+        {/* 5. 7-Day Guarantee */}
         <Guarantee />
 
-        {/* 6. About the Founder (Hidden until bio provided in content/about.ts) */}
-        <AboutFounder />
+        {/* 6. Free Consultation Band */}
+        <ConsultationBand />
 
-        {/* 7. Try It Yourself (Compact 3 cards) */}
-        <TryItYourself />
+        {/* 7. Our Products (Compact) */}
+        <CompactProducts />
 
-        {/* 8. Standalone Products (Mathsy for Institutes & Mathsy Meet) */}
-        <ProductsSection />
-
-        {/* 9. FAQ (5-Question Accordion) */}
+        {/* 8. FAQ */}
         <FaqSection />
 
-        {/* 10. Final CTA + Contact */}
+        {/* 9. Contact */}
         <Contact />
       </main>
 
-      {/* Floating Walkthrough trigger */}
+      {/* Floating Walkthrough trigger (Desktop only) */}
       <WalkthroughModal />
+
+      {/* Mobile Sticky Bar (Free Consultation + WhatsApp) */}
+      <MobileStickyBar />
 
       <Footer />
     </>
