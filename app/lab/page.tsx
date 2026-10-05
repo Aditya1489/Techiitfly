@@ -5,7 +5,7 @@ import WhiteboardCanvas from "@/components/lab/WhiteboardCanvas";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Live Lab — Mathsy Meet Virtual Classroom Tools | techiitfly",
+  title: "Live Lab — Mathsy Meet Virtual Classroom Tools",
   description:
     "Interactive testbed for custom geometry and math tools built for Mathsy Meet: compass, protractor, ruler, and set-square.",
 };

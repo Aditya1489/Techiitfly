@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import PayClient from "./PayClient";
 
 export const metadata: Metadata = {
-  title: "Pay Your Quote | techiitfly",
+  title: "Pay Your Quote",
   description:
     "Securely pay your project advance or milestone invoice for written quotes from techiitfly.",
 };

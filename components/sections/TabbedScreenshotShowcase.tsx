@@ -12,7 +12,7 @@ interface TabbedScreenshotShowcaseProps {
 export default function TabbedScreenshotShowcase({
   items,
   title = "Production Platform Showcase",
-  subtitle = "Interactive tabbed tour of verified production interfaces, featuring exam engines, live evaluation, and student telemetry.",
+  subtitle = "Interactive tabbed tour of production interfaces, featuring exam engines, live evaluation, and student telemetry.",
 }: TabbedScreenshotShowcaseProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [isPermanentlyPaused, setIsPermanentlyPaused] = useState(false);
@@ -210,7 +210,7 @@ export default function TabbedScreenshotShowcase({
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
           <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "var(--accent)" }} />
           <span className="section-label" style={{ margin: 0 }}>
-            VERIFIED PLATFORM SCREENS // INTERACTIVE SUITE
+            PLATFORM SCREENS // INTERACTIVE SUITE
           </span>
         </div>
         <h3

@@ -55,7 +55,7 @@ export default function Flagship() {
           <StickyScrollShowcase
             items={mathsy.glorifiedScreenshots}
             title="Production Platform Showcase"
-            subtitle="Tour verified production interfaces across the student learning portal, test series engine, tutor evaluation queue, and practice modules."
+            subtitle="Tour production interfaces across the student learning portal, test series engine, tutor evaluation queue, and practice modules."
           />
         )}
 

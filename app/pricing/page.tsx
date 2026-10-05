@@ -6,7 +6,7 @@ import { SITE } from "@/content/site";
 import { getPricingJsonLdOffers, STARTER_PRICE_FORMATTED } from "@/content/pricing";
 
 export const metadata: Metadata = {
-  title: "Pricing — Websites & Mobile Apps at Fixed Prices | techiitfly",
+  title: "Pricing — Websites & Mobile Apps at Fixed Prices",
   description:
     "Websites & mobile apps. Delivered on time, at fixed prices. Websites from ₹12,999 and mobile apps from ₹99,999. Free 15-minute consultation.",
   openGraph: {

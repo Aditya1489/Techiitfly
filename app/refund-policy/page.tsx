@@ -6,7 +6,7 @@ import { SITE } from "@/content/site";
 import { getLegalText } from "@/content/legal";
 
 export const metadata: Metadata = {
-  title: "Refund & Cancellation Policy | techiitfly",
+  title: "Refund & Cancellation Policy",
   description:
     "Plain-language refund and cancellation policy for techiitfly project advances, milestone approvals, and payments.",
   openGraph: {

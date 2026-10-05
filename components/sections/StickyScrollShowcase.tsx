@@ -12,7 +12,7 @@ interface StickyScrollShowcaseProps {
 export default function StickyScrollShowcase({
   items,
   title = "Production Platform Showcase",
-  subtitle = "Scroll through the verified production interfaces across the student learning portal, test series engine, tutor evaluation queue, and practice modules.",
+  subtitle = "Scroll through production interfaces across the student learning portal, test series engine, tutor evaluation queue, and practice modules.",
 }: StickyScrollShowcaseProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mobileIndex, setMobileIndex] = useState(0);
@@ -370,7 +370,7 @@ export default function StickyScrollShowcase({
                     borderRadius: "4px",
                   }}
                 >
-                  {items[activeIndex]?.badge || "Verified Screen"}
+                  {items[activeIndex]?.badge || "Production Screen"}
                 </span>
                 <span
                   style={{

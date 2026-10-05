@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Pricing | techiitfly — Websites & Mobile Apps",
+  title: "Pricing — Websites & Mobile Apps",
   description:
     "Transparent, fixed pricing for websites and mobile apps by techiitfly. Delivered in days, not months.",
   openGraph: {

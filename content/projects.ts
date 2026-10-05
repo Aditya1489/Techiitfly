@@ -316,7 +316,7 @@ export const PROJECTS: CaseStudy[] = [
     solution:
       "Built a clear information architecture showcasing detailed daily schedules, syllabus modules, instructor credentials, and an automated brochure download lead gate.",
     keyFeatures: [
-      "Gated syllabus brochure download capturing verified student leads",
+      "Gated syllabus brochure download capturing qualified student leads",
       "200-Hour and 300-Hour interactive curriculum breakdown",
       "Campus location landing pages across Rishikesh, Kerala, and Bali",
       "SEO-optimized FAQ section structured with Google FAQ Schema",

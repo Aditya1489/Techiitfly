@@ -6,7 +6,7 @@ import Contact from "@/components/sections/Contact";
 import { SITE, getConsultUrl } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Contact Us | techiitfly",
+  title: "Contact Us",
   description:
     "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Phone, WhatsApp, and email support.",
   openGraph: {

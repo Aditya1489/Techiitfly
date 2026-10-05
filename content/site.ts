@@ -60,7 +60,7 @@ export const SITE: SiteConfig = {
   googleReviewCount: undefined,
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://techiitfly.vercel.app",
   metaDescription:
-    "Fast, mobile-friendly websites for growing businesses. Fixed prices from ₹12,999, live in 7 days, guaranteed. Free 15-minute consultation.",
+    "Fast, mobile-friendly websites for growing businesses. 7-day delivery guarantee, fixed-price quotes and a free 15-minute consultation.",
   showIitClaim: false,
   showAppServices: true,
   showItServices: false,

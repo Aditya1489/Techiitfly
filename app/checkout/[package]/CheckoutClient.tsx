@@ -558,7 +558,7 @@ export default function CheckoutClient({ packageSlug }: CheckoutClientProps) {
               margin: 0,
             }}
           >
-            Direct card/UPI checkout button is being activated. Message us on WhatsApp to receive a verified instant
+            Direct card/UPI checkout button is being activated. Message us on WhatsApp to receive a direct
             payment link and lock your slot.
           </p>
         )}

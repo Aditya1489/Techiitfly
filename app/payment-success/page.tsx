@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import PaymentSuccessClient from "./PaymentSuccessClient";
 
 export const metadata: Metadata = {
-  title: "Payment Received | techiitfly",
+  title: "Payment Received",
   description: "Payment confirmed. Your website project slot is booked with techiitfly.",
   robots: {
     index: false,

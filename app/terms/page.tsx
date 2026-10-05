@@ -5,7 +5,7 @@ import TermsClient from "./TermsClient";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | techiitfly",
+  title: "Terms & Conditions",
   description:
     "Plain-language Terms & Conditions for techiitfly web development services, fixed packages, and software products.",
   openGraph: {

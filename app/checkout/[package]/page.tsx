@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     slug === "starter" ? "Starter" : slug === "business" ? "Business" : slug === "premium" ? "Premium" : "Website";
 
   return {
-    title: `Book ${name} Website Package | techiitfly`,
+    title: `Book ${name} Website Package`,
     description: `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`,
   };
 }

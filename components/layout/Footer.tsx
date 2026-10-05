@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { SITE, getConsultUrl } from "@/content/site";
 import { trackEvent } from "@/lib/tracking";
-import { STARTER_PRICE_FORMATTED } from "@/content/pricing";
 
 export default function Footer() {
   return (
@@ -75,7 +74,7 @@ export default function Footer() {
               marginTop: "10px",
             }}
           >
-            Fixed prices from {STARTER_PRICE_FORMATTED} · Pune, India
+            7-day delivery guarantee · Pune, India
           </p>
         </div>
 
@@ -196,7 +195,7 @@ export default function Footer() {
             </a>
           )}
           <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.74rem", color: "var(--muted)", marginTop: "4px" }}>
-            ● Mon–Sat, 10am–8pm IST
+            ● {SITE.replyHours}
           </span>
         </div>
       </div>

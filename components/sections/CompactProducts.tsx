@@ -125,21 +125,6 @@ export default function CompactProducts() {
               Live online classroom with built-in geometry tools for math tutors.
             </p>
 
-            {/* Price Line under product card */}
-            <div
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.95rem",
-                fontWeight: 700,
-                color: "var(--accent)",
-                marginBottom: "16px",
-                paddingTop: "14px",
-                borderTop: "1px solid var(--border)",
-              }}
-            >
-              {PRICING_CONFIG.meet.cardPriceLine}
-            </div>
-
             {/* CTA Link */}
             <Link
               href="/mathsy-meet"

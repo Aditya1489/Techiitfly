@@ -10,12 +10,13 @@ import ConsultationBand from "@/components/sections/ConsultationBand";
 import CompactProducts from "@/components/sections/CompactProducts";
 import FaqSection from "@/components/sections/FaqSection";
 import Contact from "@/components/sections/Contact";
-import WalkthroughModal from "@/components/walkthrough/WalkthroughModal";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "techiitfly — Website Development in Pune | Live in 7 Days",
+  title: {
+    absolute: "techiitfly — Website Development in Pune | Live in 7 Days",
+  },
   description: SITE.metaDescription,
   openGraph: {
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
@@ -63,9 +64,6 @@ export default function Home() {
         {/* 9. Contact */}
         <Contact />
       </main>
-
-      {/* Floating Walkthrough trigger (Desktop only) */}
-      <WalkthroughModal />
 
       {/* Mobile Sticky Bar (Free Consultation + WhatsApp) */}
       <MobileStickyBar />

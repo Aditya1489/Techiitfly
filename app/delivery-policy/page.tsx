@@ -6,7 +6,7 @@ import { SITE } from "@/content/site";
 import { getLegalText } from "@/content/legal";
 
 export const metadata: Metadata = {
-  title: "Service Delivery Policy | techiitfly",
+  title: "Service Delivery Policy",
   description:
     "Plain-language Service Delivery Policy for techiitfly. We provide digital website and app services with fixed-timeline delivery.",
   openGraph: {
