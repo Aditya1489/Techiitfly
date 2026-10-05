@@ -1,15 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { SITE } from "@/content/site";
-import { WEB_PLANS } from "@/content/pricing";
+import { WEB_PLANS, APP_PLANS, IT_PLANS } from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
 
 export default function ServicesSection() {
+  const [activeTab, setActiveTab] = useState<"web" | "app" | "it">("web");
   const WHATSAPP = SITE.phoneRaw.replace(/[^0-9]/g, "");
 
+  const currentPlans =
+    activeTab === "web" ? WEB_PLANS : activeTab === "app" ? APP_PLANS : IT_PLANS;
+  const currentCategory =
+    activeTab === "web" ? "Website" : activeTab === "app" ? "App" : "IT Services";
+
   function getWaHref(planName: string) {
-    const msg = `Hi techiitfly, I'm interested in: Website – ${planName}`;
+    const msg = `Hi techiitfly, I'm interested in: ${currentCategory} – ${planName}`;
     return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   }
 
@@ -24,7 +31,7 @@ export default function ServicesSection() {
     >
       <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
         {/* Section Header */}
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
+        <div style={{ textAlign: "center", marginBottom: "36px" }}>
           <span className="section-label">OUR SERVICES</span>
           <h2
             style={{
@@ -53,8 +60,83 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        {/* 3 Website Packages Grid */}
+        {/* Service Switcher Tabs */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "6px",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "999px",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setActiveTab("web")}
+              style={{
+                padding: "8px 18px",
+                borderRadius: "999px",
+                border: "none",
+                background: activeTab === "web" ? "var(--surface-2)" : "transparent",
+                color: activeTab === "web" ? "var(--text)" : "var(--muted)",
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.88rem",
+                fontWeight: activeTab === "web" ? 700 : 500,
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+                boxShadow: activeTab === "web" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+              }}
+            >
+              Websites (7 Days)
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("app")}
+              style={{
+                padding: "8px 18px",
+                borderRadius: "999px",
+                border: "none",
+                background: activeTab === "app" ? "var(--surface-2)" : "transparent",
+                color: activeTab === "app" ? "var(--text)" : "var(--muted)",
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.88rem",
+                fontWeight: activeTab === "app" ? 700 : 500,
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+                boxShadow: activeTab === "app" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+              }}
+            >
+              Mobile Apps
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("it")}
+              style={{
+                padding: "8px 18px",
+                borderRadius: "999px",
+                border: "none",
+                background: activeTab === "it" ? "var(--surface-2)" : "transparent",
+                color: activeTab === "it" ? "var(--text)" : "var(--muted)",
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.88rem",
+                fontWeight: activeTab === "it" ? 700 : 500,
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+                boxShadow: activeTab === "it" ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+              }}
+            >
+              IT Support
+            </button>
+          </div>
+        </div>
+
+        {/* 3 Packages Grid */}
         <div
+          key={activeTab}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
@@ -63,7 +145,7 @@ export default function ServicesSection() {
             marginBottom: "36px",
           }}
         >
-          {WEB_PLANS.map((plan) => {
+          {currentPlans.map((plan) => {
             const bullets = plan.homeBullets || plan.features.slice(0, 4).map((f) => f.text);
 
             return (
@@ -149,7 +231,7 @@ export default function ServicesSection() {
                         fontWeight: 500,
                       }}
                     >
-                      Starting at
+                      {plan.priceNote ? `${plan.priceNote} ` : "Starting at "}
                     </span>
                     <span
                       style={{
@@ -212,7 +294,7 @@ export default function ServicesSection() {
                   href={getWaHref(plan.name)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("whatsapp_click", `services_${plan.name.toLowerCase()}`)}
+                  onClick={() => trackEvent("whatsapp_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -249,7 +331,7 @@ export default function ServicesSection() {
                   or call{" "}
                   <a
                     href={`tel:${SITE.phoneRaw}`}
-                    onClick={() => trackEvent("call_click", `services_${plan.name.toLowerCase()}`)}
+                    onClick={() => trackEvent("call_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
                     style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "2px" }}
                   >
                     {SITE.phone}
@@ -257,7 +339,7 @@ export default function ServicesSection() {
                   {" · "}
                   <a
                     href={`mailto:${SITE.contactEmail}`}
-                    onClick={() => trackEvent("email_click", `services_${plan.name.toLowerCase()}`)}
+                    onClick={() => trackEvent("email_click", `services_${activeTab}_${plan.name.toLowerCase()}`)}
                     style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "2px" }}
                   >
                     email

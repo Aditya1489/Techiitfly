@@ -96,6 +96,12 @@ export const APP_PLANS: Plan[] = [
     price: "₹49,999",
     priceNote: "starting from",
     timeline: "Ready in 2–3 weeks",
+    homeBullets: [
+      "Android or iOS native experience",
+      "3–5 core user journeys & features",
+      "Secure login & fast cloud backend",
+      "Play Store or App Store publishing",
+    ],
     features: [
       { text: "Android or iOS", included: true },
       { text: "3–5 core features", included: true },
@@ -114,6 +120,12 @@ export const APP_PLANS: Plan[] = [
     priceNote: "starting from",
     timeline: "Ready in 4–6 weeks",
     popular: true,
+    homeBullets: [
+      "Android + iOS cross-platform apps",
+      "Authentication, payments & push alerts",
+      "Custom brand UI & admin dashboard",
+      "Store approval & 60 days warranty",
+    ],
     features: [
       { text: "Android + iOS together", included: true },
       { text: "Login, payments, notifications", included: true },
@@ -131,6 +143,12 @@ export const APP_PLANS: Plan[] = [
     price: "₹3,00,000+",
     priceNote: "custom quote",
     timeline: "8+ weeks",
+    homeBullets: [
+      "Mobile apps + web management dashboard",
+      "Custom microservices & database architecture",
+      "Enterprise third-party API integrations",
+      "High-scale cloud infra + 90 days VIP care",
+    ],
     features: [
       { text: "Android + iOS + web dashboard", included: true },
       { text: "Custom backend + APIs", included: true },
@@ -151,6 +169,12 @@ export const IT_PLANS: Plan[] = [
     price: "₹9,999",
     priceNote: "/ month",
     timeline: "Response within 24 hours",
+    homeBullets: [
+      "Up to 10 office workstations & laptops",
+      "Remote helpdesk & troubleshooting",
+      "Domain email & endpoint security setup",
+      "Monthly preventative health checkup",
+    ],
     features: [
       { text: "Up to 10 devices", included: true },
       { text: "Remote helpdesk support", included: true },
@@ -169,6 +193,12 @@ export const IT_PLANS: Plan[] = [
     priceNote: "/ month",
     timeline: "Response within 4 hours",
     popular: true,
+    homeBullets: [
+      "Up to 30 computers, printers & routers",
+      "Priority remote + on-site technician visits",
+      "Server, firewall & local network tuning",
+      "Automated cloud backup & security scans",
+    ],
     features: [
       { text: "Up to 30 devices", included: true },
       { text: "Remote + on-site support", included: true },
@@ -186,6 +216,12 @@ export const IT_PLANS: Plan[] = [
     price: "Custom",
     priceNote: "quote",
     timeline: "Response within 1 hour",
+    homeBullets: [
+      "Unlimited systems, servers & branches",
+      "Dedicated senior network/systems engineer",
+      "24×7 proactive uptime monitoring",
+      "Compliance audit & zero-downtime SLA",
+    ],
     features: [
       { text: "Unlimited devices", included: true },
       { text: "Dedicated IT engineer", included: true },
