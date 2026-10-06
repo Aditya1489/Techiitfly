@@ -127,8 +127,9 @@ export const PRICING_CONFIG: PricingConfig = {
     freeTrialDays: 0,
     meetUnlimitedClasses: false,
     bullets: [
-      "Built-in compass, protractor, ruler and set-square",
-      "Polls, hand-raise queue and automatic PDF notes",
+      "Built-in compass, protractor, ruler and set-squares",
+      "Screen sharing, PDF & NCERT slides with notes on each page",
+      "Live polls + question bank and automatic PDF notes",
     ],
     primaryCtaText: "Book a free walkthrough",
     trialCtaText: "Start your free trial",

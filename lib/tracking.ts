@@ -13,6 +13,7 @@ export type TrackingEventType =
   | "meet_plan_click"
   | "feature_request"
   | "meet_walkthrough_click"
+  | "meet_demo_click"
   | "xray_compare_started"
   | "xray_compare_completed"
   | "xray_share"

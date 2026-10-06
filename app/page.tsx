@@ -11,6 +11,7 @@ import FounderSection from "@/components/sections/FounderSection";
 import ComparisonTable from "@/components/sections/ComparisonTable";
 import Guarantee from "@/components/sections/Guarantee";
 import ConsultationBand from "@/components/sections/ConsultationBand";
+import CompactProducts from "@/components/sections/CompactProducts";
 import FaqSection from "@/components/sections/FaqSection";
 import FinalCta from "@/components/sections/FinalCta";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
@@ -166,10 +167,13 @@ export default function Home() {
         {/* 10. FREE CONSULTATION BAND */}
         <ConsultationBand />
 
-        {/* 11. FAQ */}
+        {/* 11. OUR PRODUCT (Mathsy Meet) */}
+        <CompactProducts />
+
+        {/* 12. FAQ */}
         <FaqSection />
 
-        {/* 12. FINAL CTA */}
+        {/* 13. FINAL CTA */}
         <FinalCta />
       </main>
 

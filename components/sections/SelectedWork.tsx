@@ -47,7 +47,7 @@ export default function SelectedWork() {
           </p>
         </div>
 
-        {/* 3 Work Cards: YogaGarhi, Yogic Path, Mathsy ("Platform we built") */}
+        {/* 3 Work Cards: YogaGarhi, Yogic Path, Mathsy (all client work) */}
         <div
           style={{
             display: "grid",

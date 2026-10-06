@@ -313,7 +313,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Slide-to-poll &amp; real-time hand-raise queue</span>
+              <span>Screen sharing</span>
             </li>
             <li
               style={{
@@ -325,7 +325,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Automatic post-class PDF notes generation</span>
+              <span>PDF &amp; NCERT slides with notes on each page</span>
             </li>
             <li
               style={{
@@ -337,7 +337,31 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>iPad &amp; stylus pen pairing without lag</span>
+              <span>Live polls + question bank</span>
+            </li>
+            <li
+              style={{
+                display: "flex",
+                gap: "10px",
+                fontSize: "0.88rem",
+                color: "var(--text)",
+                lineHeight: 1.45,
+              }}
+            >
+              <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
+              <span>Automatic post-class PDF notes</span>
+            </li>
+            <li
+              style={{
+                display: "flex",
+                gap: "10px",
+                fontSize: "0.88rem",
+                color: "var(--text)",
+                lineHeight: 1.45,
+              }}
+            >
+              <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
+              <span>Tablet pairing (iPad &amp; stylus like paper)</span>
             </li>
             <li
               style={{
@@ -545,7 +569,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>All geometry tools with precision degree snapping</span>
+              <span>Everything in Solo Tutor</span>
             </li>
             <li
               style={{
@@ -557,7 +581,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Live session recording &amp; YouTube live stream broadcast</span>
+              <span>YouTube publishing</span>
             </li>
             <li
               style={{
@@ -569,8 +593,22 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Slide-to-poll with detailed response metrics</span>
+              <span>Pop-out whiteboard for OBS</span>
             </li>
+            {SITE.showMeetAiFeatures && (
+              <li
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  fontSize: "0.88rem",
+                  color: "var(--text)",
+                  lineHeight: 1.45,
+                }}
+              >
+                <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
+                <span>AI teaching helpers</span>
+              </li>
+            )}
             <li
               style={{
                 display: "flex",

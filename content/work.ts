@@ -2,7 +2,7 @@ export interface WorkProject {
   slug: string;
   title: string;
   client: string;
-  label?: string; // e.g. "Platform we built" for Mathsy
+  label?: string; // e.g. "EDTECH CLIENT · MATHSY.IN" for Mathsy
   tagline: string;
   problem: string;
   built: string;
@@ -73,26 +73,26 @@ export const WORK_PROJECTS: WorkProject[] = [
   {
     slug: "mathsy",
     title: "Mathsy",
-    client: "Mathsy Online Learning",
-    label: "Platform we built",
-    tagline: "Custom virtual classroom and examination platform (past work)",
+    client: "Mathsy (mathsy.in)",
+    label: "EDTECH CLIENT · MATHSY.IN",
+    tagline: "4-portal learning platform with live classes and proctored exam engine",
     problem:
-      "Math tutors and online students needed a purpose-built virtual classroom with real-time geometric instruments and an integrated exam engine.",
+      "An online maths and science academy needed one platform for students, tutors, parents and admins — including live classes built for teaching maths.",
     built:
-      "A 4-portal learning platform with custom Mediasoup SFU video rooms, interactive whiteboard geometry tools (compass, protractor, ruler), and automated evaluations.",
+      "A 4-portal learning platform with live classes, proctored exams, digital answer-sheet evaluation, parent progress tracking and report cards.",
     result: "", // empty = hide that line
     clientQuote: undefined, // empty = hide
     screenshots: {
       desktop: "/screenshots/mathsy-desktop.webp",
       mobile: "/screenshots/mathsy-mobile.webp",
     },
-    liveUrl: "https://mathsy.in",
+    liveUrl: "https://www.mathsy.in",
     stack: ["React 18", "TypeScript", "Mediasoup SFU", "Supabase", "KaTeX"],
     keyFeatures: [
       "Custom virtual classroom with real-time video and audio",
       "Interactive whiteboard geometry instrumentation (compass, protractor, ruler)",
-      "Proctored testing engine and evaluation queue",
-      "Student learning dashboard and telemetry",
+      "Proctored testing engine and digital answer-sheet evaluation",
+      "Student learning dashboard and parent progress tracking",
     ],
   },
 ];

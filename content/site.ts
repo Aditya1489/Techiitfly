@@ -22,6 +22,10 @@ export interface SiteConfig {
   showIitClaim: boolean;
   showAppServices: boolean;
   showItServices: boolean;
+  showMeetAiFeatures: boolean;
+  showMathsyMeetOrigin: boolean;
+  meetAppUrl: string;
+  meetDemoUrl: string;
   mathsyMeetPrice: string;
   legalEntityType: string;
   registeredAddress: string;
@@ -64,6 +68,10 @@ export const SITE: SiteConfig = {
   showIitClaim: false,
   showAppServices: true,
   showItServices: false,
+  showMeetAiFeatures: true,
+  showMathsyMeetOrigin: false,
+  meetAppUrl: "https://classroom-meet.vercel.app",
+  meetDemoUrl: "",
   mathsyMeetPrice: "₹999 / month per tutor",
   legalEntityType: "",
   registeredAddress: "",
@@ -123,5 +131,14 @@ export function getWhatsAppUrl(message?: string): string {
   const phone = SITE.phoneRaw.replace(/[^0-9]/g, "");
   const text = message || "Hi techiitfly, I'd like to discuss a project.";
   return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+}
+
+export function getMeetDemoUrl(): string {
+  const base =
+    SITE.meetDemoUrl && SITE.meetDemoUrl.trim() !== ""
+      ? SITE.meetDemoUrl
+      : SITE.meetAppUrl;
+  const separator = base.includes("?") ? "&" : "?";
+  return `${base}${separator}utm_source=techiitfly&utm_medium=website&utm_campaign=meet_demo`;
 }
 

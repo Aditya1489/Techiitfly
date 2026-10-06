@@ -31,8 +31,8 @@ const COACHING_FAQS = [
     a: "Yes. We organize your subjects, fee structures, faculty credentials, and timetable into clear tables that are easy to browse on mobile phones.",
   },
   {
-    q: "Do you also provide tools for conducting online live classes?",
-    a: "Yes. For educators teaching maths online, we also build and run Mathsy Meet (/mathsy-meet), a dedicated live classroom platform with on-screen geometry tools and tablet pairing.",
+    q: "Can you build custom learning platforms or coaching portals?",
+    a: "Yes. For example, we designed and built Mathsy, a 4-portal learning platform we built for an EdTech client (read our case study at /work/mathsy). For educators teaching maths online, we also offer Mathsy Meet (/mathsy-meet), our own live classroom product with on-screen geometry tools and tablet pairing.",
   },
   {
     q: "How fast will our coaching class website be ready?",
@@ -211,7 +211,7 @@ export default function CoachingClassesPage() {
             ))}
           </div>
 
-          {/* Mathsy Meet link banner (linked once) */}
+          {/* Mathsy Client Case Study & Mathsy Meet Product Banner */}
           <div
             style={{
               marginTop: "36px",
@@ -228,25 +228,40 @@ export default function CoachingClassesPage() {
           >
             <div>
               <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.72rem", color: "var(--accent)", textTransform: "uppercase", fontWeight: 700 }}>
-                ONLINE TEACHING SOFTWARE
+                CUSTOM PLATFORMS &amp; LIVE CLASSROOM SOFTWARE
               </span>
               <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.95rem", color: "var(--text)", margin: "4px 0 0", fontWeight: 500 }}>
-                Need a virtual classroom platform for online math tutoring? Explore our product Mathsy Meet.
+                Explore Mathsy, a 4-portal learning platform we built for an EdTech client, or Mathsy Meet, our own live classroom product.
               </p>
             </div>
-            <Link
-              href="/mathsy-meet"
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.92rem",
-                fontWeight: 700,
-                color: "var(--accent)",
-                textDecoration: "underline",
-                textUnderlineOffset: "4px",
-              }}
-            >
-              Explore Mathsy Meet →
-            </Link>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
+              <Link
+                href="/work/mathsy"
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.92rem",
+                  fontWeight: 600,
+                  color: "var(--text)",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "4px",
+                }}
+              >
+                Read Mathsy story →
+              </Link>
+              <Link
+                href="/mathsy-meet"
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.92rem",
+                  fontWeight: 700,
+                  color: "var(--accent)",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "4px",
+                }}
+              >
+                Explore Mathsy Meet →
+              </Link>
+            </div>
           </div>
         </section>
 

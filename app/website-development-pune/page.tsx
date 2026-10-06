@@ -39,6 +39,10 @@ const PUNE_FAQS = [
     q: "What if we need to meet or discuss requirements locally?",
     a: "Aditya Chavhan is based in Pune. You can easily schedule a 15-minute phone or video consultation to outline your scope and get a fixed quote in 24 hours.",
   },
+  {
+    q: "Do you build custom web applications and platforms?",
+    a: "Yes. In addition to high-converting websites, we engineered Mathsy, a 4-portal learning platform we built for an EdTech client (read our case study at /work/mathsy). We also build and offer Mathsy Meet (/mathsy-meet), our own live classroom product.",
+  },
 ];
 
 export default function PuneWebDevPage() {
@@ -197,6 +201,60 @@ export default function PuneWebDevPage() {
 
         {/* Selected Work */}
         <SelectedWork />
+
+        {/* Custom Platforms & Own Product Banner */}
+        <section style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 24px 40px" }}>
+          <div
+            style={{
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "12px",
+              padding: "24px 28px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "16px",
+            }}
+          >
+            <div>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.72rem", color: "var(--accent)", textTransform: "uppercase", fontWeight: 700 }}>
+                FULL-STACK PLATFORMS &amp; SAAS
+              </span>
+              <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.95rem", color: "var(--text)", margin: "4px 0 0", fontWeight: 500 }}>
+                Need more than a website? We built Mathsy, a 4-portal learning platform we built for an EdTech client, and we build Mathsy Meet, our own live classroom product.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
+              <Link
+                href="/work/mathsy"
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.92rem",
+                  fontWeight: 600,
+                  color: "var(--text)",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "4px",
+                }}
+              >
+                Mathsy Case Study →
+              </Link>
+              <Link
+                href="/mathsy-meet"
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.92rem",
+                  fontWeight: 700,
+                  color: "var(--accent)",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "4px",
+                }}
+              >
+                Mathsy Meet →
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* How It Works */}
         <HowItWorks />

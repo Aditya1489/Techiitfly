@@ -7,6 +7,7 @@ import { SITE } from "@/content/site";
 import TabbedScreenshotShowcase from "@/components/sections/TabbedScreenshotShowcase";
 import StickyScrollShowcase from "@/components/sections/StickyScrollShowcase";
 import MathsyMeetMediaSlot from "@/components/sections/MathsyMeetMediaSlot";
+import MathsyCaseStudy from "@/components/work/MathsyCaseStudy";
 
 // Generate static params for all case studies (static export required)
 export function generateStaticParams() {
@@ -80,8 +81,12 @@ export default async function CaseStudyPage({
             ← Back to studio work
           </Link>
 
-          {/* Hero details */}
-          <div style={{ marginBottom: "48px" }}>
+          {project.slug === "mathsy" ? (
+            <MathsyCaseStudy project={project} />
+          ) : (
+            <>
+              {/* Hero details */}
+              <div style={{ marginBottom: "48px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
               <span className="section-label">{project.category}</span>
               <span
@@ -803,6 +808,8 @@ export default async function CaseStudyPage({
               </p>
             )}
           </div>
+            </>
+          )}
         </div>
       </main>
       <Footer />

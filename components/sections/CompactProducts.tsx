@@ -1,27 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { PRICING_CONFIG } from "@/content/pricing";
+import Image from "next/image";
+import { getMeetDemoUrl } from "@/content/site";
+import { trackEvent } from "@/lib/tracking";
 
 export default function CompactProducts() {
+  const handleDemoClick = () => {
+    trackEvent("meet_demo_click", "home_product_section");
+  };
+
   return (
     <section
       id="products"
       style={{
         position: "relative",
         background: "var(--bg)",
-        padding: "64px 24px 72px",
+        padding: "72px 24px 80px",
         borderTop: "1px solid var(--border)",
       }}
     >
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "860px", margin: "0 auto" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "36px" }}>
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <span className="section-label">OUR PRODUCT</span>
           <h2
             style={{
               fontFamily: "var(--font-instrument-serif)",
-              fontSize: "clamp(2rem, 4vw, 3rem)",
+              fontSize: "clamp(2rem, 4vw, 3.2rem)",
               fontWeight: 400,
               lineHeight: 1.15,
               color: "var(--text)",
@@ -44,103 +50,150 @@ export default function CompactProducts() {
           </p>
         </div>
 
-        {/* Single Centered Product Card */}
-        <div style={{ maxWidth: "540px", margin: "0 auto" }}>
+        {/* Mathsy Meet Single Feature Card */}
+        <div style={{ maxWidth: "680px", margin: "0 auto" }}>
           <div
             style={{
               background: "var(--surface)",
               border: "1px solid var(--border)",
               borderRadius: "var(--radius-lg)",
-              padding: "32px 28px",
+              overflow: "hidden",
+              boxShadow: "var(--card-shadow)",
               display: "flex",
               flexDirection: "column",
-              boxShadow: "var(--card-shadow)",
-              transition: "border-color 0.2s ease, transform 0.2s ease",
             }}
           >
-            {/* Badge + Icon Header */}
+            {/* Real Classroom Screenshot (our own demo room) */}
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "16px",
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 9",
+                background: "#12100E",
+                borderBottom: "1px solid var(--border)",
               }}
             >
+              <Image
+                src="/screenshots/mathsy-meet-desktop.webp"
+                alt="Mathsy Meet live math classroom whiteboard interface preview"
+                fill
+                sizes="(max-width: 768px) 100vw, 680px"
+                style={{ objectFit: "cover", objectPosition: "top center" }}
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  top: "14px",
+                  left: "14px",
+                  background: "rgba(0, 0, 0, 0.75)",
+                  color: "var(--accent)",
+                  border: "1px solid var(--accent)",
+                  padding: "4px 10px",
+                  borderRadius: "4px",
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                OUR PRODUCT
+              </span>
+            </div>
+
+            {/* Content Details */}
+            <div style={{ padding: "30px 28px" }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "10px",
-                  background: "var(--accent-dim)",
-                  border: "1px solid var(--border)",
+                  justifyContent: "space-between",
+                  marginBottom: "10px",
                 }}
               >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth={2}>
-                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                  <polyline points="2 17 12 22 22 17" />
-                  <polyline points="2 12 12 17 22 12" />
-                </svg>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "1.45rem",
+                    fontWeight: 700,
+                    color: "var(--text)",
+                    margin: 0,
+                  }}
+                >
+                  Mathsy Meet
+                </h3>
+                <span
+                  style={{
+                    fontFamily: "var(--font-geist-mono)",
+                    fontSize: "0.75rem",
+                    color: "var(--accent)",
+                    fontWeight: 600,
+                  }}
+                >
+                  Live Classroom
+                </span>
               </div>
-              <span
+
+              {/* Exact Line required */}
+              <p
                 style={{
-                  fontFamily: "var(--font-geist-mono)",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  color: "var(--accent)",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "1rem",
+                  lineHeight: 1.6,
+                  color: "var(--muted)",
+                  marginBottom: "26px",
                 }}
               >
-                For Tutors
-              </span>
+                Live online classroom for maths tutors: teach from PDFs, use a real compass and protractor, share your screen and run live polls.
+              </p>
+
+              {/* Buttons: Try a free demo class → and Learn more */}
+              <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", alignItems: "center" }}>
+                <a
+                  href={getMeetDemoUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleDemoClick}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "12px 22px",
+                    borderRadius: "8px",
+                    background: "var(--accent)",
+                    color: "var(--primary-btn-text)",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.92rem",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  <span>Try a free demo class</span>
+                  <span>→</span>
+                </a>
+
+                <Link
+                  href="/mathsy-meet"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "12px 20px",
+                    borderRadius: "8px",
+                    background: "transparent",
+                    color: "var(--text)",
+                    border: "1px solid var(--border)",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.92rem",
+                    fontWeight: 500,
+                    textDecoration: "none",
+                  }}
+                >
+                  <span>Learn more</span>
+                </Link>
+              </div>
             </div>
-
-            {/* Title */}
-            <h3
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "1.35rem",
-                fontWeight: 700,
-                color: "var(--text)",
-                marginBottom: "8px",
-              }}
-            >
-              Mathsy Meet
-            </h3>
-
-            {/* Tagline */}
-            <p
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.92rem",
-                lineHeight: 1.55,
-                color: "var(--muted)",
-                marginBottom: "20px",
-              }}
-            >
-              Live online classroom with built-in geometry tools for math tutors.
-            </p>
-
-            {/* CTA Link */}
-            <Link
-              href="/mathsy-meet"
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.92rem",
-                fontWeight: 600,
-                color: "var(--accent)",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
-            >
-              <span>Explore Mathsy Meet →</span>
-            </Link>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ export interface CaseStudy {
   title: string;
   client: string;
   tagline: string;
-  category: "EdTech Platform" | "Wellness & Retreats" | "Teacher Training" | "Our Product";
+  category: "EdTech client platform" | "EdTech Platform" | "Wellness & Retreats" | "Teacher Training" | "Our Product";
   role: string;
   liveUrl: string;
   isFlagship?: boolean;
@@ -58,11 +58,11 @@ export const PROJECTS: CaseStudy[] = [
   {
     slug: "mathsy",
     title: "Mathsy",
-    client: "Mathsy Online Learning",
-    tagline: "4-portal EdTech platform with custom virtual classroom and exam engine",
-    category: "Our Product",
+    client: "Mathsy (mathsy.in)",
+    tagline: "4-portal learning platform with live classes, proctored exams, and parent progress tracking",
+    category: "EdTech client platform",
     role: "Product design, architecture & full-stack development",
-    liveUrl: "https://mathsy.in",
+    liveUrl: "https://www.mathsy.in",
     isFlagship: true,
     featuredScreenshots: {
       desktop: "/screenshots/mathsy-desktop.webp",
@@ -76,83 +76,68 @@ export const PROJECTS: CaseStudy[] = [
         title: "Student Portal Learning Deck",
         badge: "Student Portal",
         tag: "STUDENT PORTAL",
-        url: "https://mathsy.in/dashboard",
-        description: "Real-time dashboard showing study streaks, question queues, chapter progress, and active metrics.",
-        src: "/screenshots/mathsy/mathsy-student-dashboard-desktop.webp",
-      },
-      {
-        id: "live-classroom",
-        eyebrow: "VIRTUAL CLASSROOM",
-        title: "Live Virtual Classroom & Whiteboard",
-        badge: "Virtual Classroom",
-        tag: "VIRTUAL CLASSROOM",
-        url: "https://mathsy.in/meet",
-        description: "Live chemistry lecture deck with presentation slides, interactive drawing toolbar, and multi-user video feeds.",
-        src: "/screenshots/mathsy/mathsy-live-classroom-desktop.webp",
+        description: "Student dashboard showing study streaks, upcoming classes, chapter progress, and subject practice feeds.",
+        src: "/screenshots/mathsy-screens/student-dashboard.webp",
       },
       {
         id: "proctored-exams",
         eyebrow: "EXAM ENGINE",
-        title: "Scheduled Examination & Test Catalog",
+        title: "Scheduled Examination & Test Series",
         badge: "Exam Engine",
         tag: "EXAM ENGINE",
-        url: "https://mathsy.in/test-series",
         description: "Test series catalog showing duration timers, total marks, syllabus coverage, and submission statuses.",
-        src: "/screenshots/mathsy/mathsy-student-test-series-desktop.webp",
+        src: "/screenshots/mathsy-screens/proctored-exams.webp",
+      },
+      {
+        id: "exam-interface",
+        eyebrow: "TEST PALETTE",
+        title: "Proctored Exam Interface & Question Palette",
+        badge: "Exam Engine",
+        tag: "EXAM ENGINE",
+        description: "Live exam screen with question navigation palette, countdown timer, and KaTeX math equation rendering.",
+        src: "/screenshots/mathsy-screens/exam-engine.webp",
       },
       {
         id: "tutor-evaluation",
         eyebrow: "EVALUATION QUEUE",
-        title: "Digital Booklet Evaluation Queue",
+        title: "Digital Booklet Evaluation & Grading Queue",
         badge: "Tutor Portal",
         tag: "EVALUATION",
-        url: "https://mathsy.in/tutor/evaluations",
-        description: "Subjective booklet evaluation table with student submission queues, subject tags, and grading statuses.",
-        src: "/screenshots/mathsy/mathsy-tutor-evaluation-desktop.webp",
+        description: "Subjective booklet evaluation table where tutors review student answer sheets, annotate marks, and submit feedback.",
+        src: "/screenshots/mathsy-screens/evaluation-scorecard.webp",
       },
       {
-        id: "practice-portal",
-        eyebrow: "PRACTICE PORTAL",
-        title: "Subject Mastery & Practice Feed",
-        badge: "Practice Engine",
-        tag: "PRACTICE",
-        url: "https://mathsy.in/practice",
-        description: "Interactive practice tiles across Biology, Mathematics, and Physics with accuracy stats and recent sessions.",
-        src: "/screenshots/mathsy/mathsy-student-leaderboard-desktop.webp",
-      },
-      {
-        id: "public-homepage",
-        eyebrow: "PUBLIC PLATFORM",
-        title: "Curriculum Hub & Platform Landing",
-        badge: "Public Site",
-        tag: "PUBLIC SITE",
-        url: "https://mathsy.in",
-        description: "Public-facing landing hub featuring interactive 3D geometry visuals, course curricula, and enrollment metrics.",
-        src: "/screenshots/mathsy/mathsy-public-homepage-desktop.webp",
+        id: "study-resources",
+        eyebrow: "RESOURCES PORTAL",
+        title: "NCERT Chapter Library & Practice Resources",
+        badge: "Resources",
+        tag: "RESOURCES",
+        description: "Interactive practice resources across Mathematics, Physics, and Chemistry with chapter-wise curriculum organization.",
+        src: "/screenshots/mathsy-screens/study-resources.webp",
       },
     ],
     summary:
-      "A 4-portal EdTech platform (student/tutor/parent/admin) with live classes, exam engine with proctoring, digital answer-sheet evaluation, parent progress tracking, and report cards.",
+      "A 4-portal EdTech platform (student, tutor, parent, and admin) with live classes, proctored exams, digital answer-sheet evaluation, parent progress tracking, and report cards.",
     challenge:
-      "Off-the-shelf tools lacked integrated math sketching tools and unified coordination between students, tutors, parents, and administrative staff.",
+      "An online maths and science academy needed one platform for students, tutors, parents and admins — including live classes built for teaching maths.",
     solution:
-      "Built a unified 4-portal platform using React 18, TypeScript, Vite, and Supabase, featuring Mathsy Meet — a custom virtual classroom with self-hosted Mediasoup SFU and bespoke TLDraw math tools.",
+      "A 4-portal learning platform with live classes, proctored exams, digital answer-sheet evaluation, parent progress tracking and report cards.",
     portals: [
       {
         title: "Student Portal",
         description:
-          "Live classes, exam engine with proctoring, digital answer-sheet review, and report cards.",
+          "Live classes with interactive whiteboard, proctored exams, digital answer-sheet review, and progress reports.",
         features: [
           "Live class entry with one-click room access",
-          "Auto PDF notes delivered after class",
-          "Exam engine with proctoring & KaTeX rendering",
+          "Automatic PDF notes delivered after class",
+          "Proctored exam engine with KaTeX math rendering",
           "Digital answer-sheet review and report cards",
         ],
       },
       {
         title: "Tutor Portal",
         description:
-          "Live class orchestration, digital answer-sheet evaluation, and tablet pairing for tutors.",
+          "Live class orchestration, digital answer-sheet evaluation, and tablet pairing for handwriting.",
         features: [
           "Tablet pairing for tutors for stylus sketching",
           "Slide-to-poll interactive question broadcaster",
@@ -181,40 +166,13 @@ export const PROJECTS: CaseStudy[] = [
         ],
       },
     ],
-    flagshipModule: {
-      name: "Mathsy Meet",
-      subtitle: "Custom Virtual Classroom Inside Mathsy",
-      screenshots: {
-        desktop: "/screenshots/mathsy-meet-desktop.webp",
-      },
-      description:
-        "Custom virtual classroom inside Mathsy built with a self-hosted Mediasoup SFU media server and TLDraw whiteboard with custom math tools.",
-      highlights: [
-        "Self-hosted Mediasoup SFU (+ LiveKit adapter, coturn)",
-        "TLDraw whiteboard with custom math tools (compass, protractor, ruler, set-squares)",
-        "Slide-to-poll interactive widget",
-        "Hand-raise queue",
-        "Auto PDF notes after class",
-        "YouTube Live bridge for masterclasses",
-        "Tablet pairing for tutors",
-      ],
-      stack: [
-        "Mediasoup SFU",
-        "LiveKit Adapter",
-        "coturn",
-        "TLDraw Custom Tools",
-        "React 18",
-        "TypeScript",
-        "Zustand",
-        "KaTeX",
-      ],
-    },
+    flagshipModule: undefined,
     keyFeatures: [
       "4 role-based portals (Student, Tutor, Parent, Admin)",
-      "Mathsy Meet custom virtual classroom (Mediasoup SFU, coturn)",
-      "TLDraw geometric math tools (compass, protractor, ruler, set-squares)",
-      "Exam engine with proctoring and digital answer-sheet evaluation",
-      "Parent progress tracking and auto report cards",
+      "Dedicated live classroom with geometry instruments and tablet pen input",
+      "Proctored exam engine and digital answer-sheet evaluation",
+      "Parent progress tracking and automatic report cards",
+      "NCERT syllabus chapter library and practice feeds",
     ],
     stack: [
       "React 18",
@@ -224,26 +182,9 @@ export const PROJECTS: CaseStudy[] = [
       "TanStack Query",
       "Zustand",
       "Tailwind CSS",
-      "shadcn/ui",
       "KaTeX",
     ],
-    metrics: [
-      {
-        label: "Portals",
-        value: "4 Portals",
-        note: "Student, Tutor, Parent, Admin",
-      },
-      {
-        label: "Virtual Classroom",
-        value: "Mathsy Meet",
-        note: "Self-hosted Mediasoup SFU + coturn",
-      },
-      {
-        label: "Whiteboard Tools",
-        value: "4 Tools",
-        note: "Compass, protractor, ruler, set-squares",
-      },
-    ],
+    metrics: [],
   },
   {
     slug: "yogagarhi",
