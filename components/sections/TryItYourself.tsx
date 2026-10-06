@@ -13,10 +13,10 @@ export default function TryItYourself() {
   const tools = [
     {
       id: "xray",
-      title: "Test your website free",
-      desc: "Run a free performance & mobile audit on your existing site.",
-      badge: "Free Audit",
-      cta: "Run free test →",
+      title: "Compare vs. competitors",
+      desc: "Benchmark your website speed & SEO against your competitors and market standards.",
+      badge: "Competitor Benchmark",
+      cta: "Run comparison →",
       href: "/xray",
     },
     {

@@ -156,7 +156,7 @@ export default function ConsultationBand() {
                   textUnderlineOffset: "4px",
                 }}
               >
-                Or get a free audit of your current website →
+                Or compare your website vs. competitors →
               </Link>
             </div>
 
