@@ -119,3 +119,9 @@ export function getProjectEmailUrl(): string {
   )}`;
 }
 
+export function getWhatsAppUrl(message?: string): string {
+  const phone = SITE.phoneRaw.replace(/[^0-9]/g, "");
+  const text = message || "Hi techiitfly, I'd like to discuss a project.";
+  return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+}
+

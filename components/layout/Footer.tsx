@@ -154,6 +154,41 @@ export default function Footer() {
           </span>
         </div>
 
+        {/* Industries Column */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <span
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              color: "var(--accent)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: "4px",
+            }}
+          >
+            Industries
+          </span>
+          <Link
+            href="/website-development-pune"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+          >
+            Website Development Pune
+          </Link>
+          <Link
+            href="/websites-for-yoga-schools"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+          >
+            Yoga Schools &amp; Retreats
+          </Link>
+          <Link
+            href="/websites-for-coaching-classes"
+            style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.88rem", color: "var(--muted)", textDecoration: "none" }}
+          >
+            Coaching Classes &amp; Tutors
+          </Link>
+        </div>
+
         {/* Contact Column */}
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <span
