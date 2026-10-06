@@ -87,6 +87,9 @@ export function trackEvent(
         page_path: pagePath,
         utm_source: utmSource,
         terms_version: extraData?.terms_version,
+        plan: extraData?.plan,
+        billing: extraData?.billing,
+        item_name: extraData?.item_name,
       });
     }
   }
@@ -113,6 +116,9 @@ export function trackEvent(
         path: pagePath,
         utm_source: utmSource,
         terms_version: extraData?.terms_version,
+        plan: extraData?.plan,
+        billing: extraData?.billing,
+        item_name: extraData?.item_name,
       });
     }
   }

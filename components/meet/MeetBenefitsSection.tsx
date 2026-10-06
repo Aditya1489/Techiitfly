@@ -4,17 +4,17 @@ export default function MeetBenefitsSection() {
   const benefits = [
     {
       title: "Flat monthly price",
-      desc: "No per-minute billing, no surprise bandwidth fees, and no session metering. Teach as many classes as you want.",
+      desc: "No per-minute fees. Transparent flat monthly rate with no surprise bandwidth bills or session limits.",
       badge: "Transparent",
     },
     {
       title: "Students join from a link",
-      desc: "Zero installation friction. Students join instantly from their browser without downloading apps or creating student logins.",
+      desc: "No app, no student accounts needed. Students click a secure link in their browser and enter instantly.",
       badge: "Zero Setup",
     },
     {
       title: "Built for maths teaching",
-      desc: "Native digital geometry tools including true-arc compass, 360° protractor, precision ruler, and set-squares.",
+      desc: "Compass, protractor, ruler, set-squares built right into the whiteboard with true-arc snapping.",
       badge: "Math-First",
     },
     {
@@ -24,12 +24,12 @@ export default function MeetBenefitsSection() {
     },
     {
       title: "Notes done for you",
-      desc: "Every stroke and geometric annotation automatically packages into a crisp, vector-clean PDF for students the moment class ends.",
+      desc: "PDF after class packaged automatically with every stroke and geometric annotation the moment your lecture ends.",
       badge: "Automated",
     },
     {
       title: "Made for your needs",
-      desc: "Need custom tools, specialized question layouts, or parent progress reports? Request features; we build them right into your classroom.",
+      desc: "Request features; we build them. Need custom question tools or parent reports? We tailor the classroom to you.",
       badge: "Customizable",
     },
   ];

@@ -392,7 +392,8 @@ export default function MeetPlanCards({
               transition: "all 0.15s ease",
             }}
           >
-            {primaryCtaLabel} →
+            <span>{primaryCtaLabel}</span>
+            <span aria-hidden="true" style={{ marginLeft: "6px" }}>→</span>
           </a>
         </div>
 
@@ -634,7 +635,8 @@ export default function MeetPlanCards({
               transition: "all 0.15s ease",
             }}
           >
-            {primaryCtaLabel} →
+            <span>{primaryCtaLabel}</span>
+            <span aria-hidden="true" style={{ marginLeft: "6px" }}>→</span>
           </a>
         </div>
 
@@ -799,7 +801,8 @@ export default function MeetPlanCards({
               transition: "all 0.15s ease",
             }}
           >
-            Talk to Founder Aditya Chavhan →
+            <span>Talk to Founder Aditya Chavhan</span>
+            <span aria-hidden="true" style={{ marginLeft: "6px" }}>→</span>
           </a>
         </div>
       </div>
