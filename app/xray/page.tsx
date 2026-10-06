@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import XrayClient from "./XrayClient";
 import { SITE } from "@/content/site";
@@ -16,5 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default function XrayPage() {
-  return <XrayClient />;
+  return (
+    <Suspense fallback={<div style={{ minHeight: "100vh", background: "var(--bg)" }} />}>
+      <XrayClient />
+    </Suspense>
+  );
 }

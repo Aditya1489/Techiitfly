@@ -12,7 +12,12 @@ export type TrackingEventType =
   | "purchase"
   | "meet_plan_click"
   | "feature_request"
-  | "meet_walkthrough_click";
+  | "meet_walkthrough_click"
+  | "xray_compare_started"
+  | "xray_compare_completed"
+  | "xray_share"
+  | "xray_pdf"
+  | "xray_whatsapp";
 
 export function getStoredUtmSource(): string | null {
   if (typeof window === "undefined") return null;
@@ -52,6 +57,9 @@ export function trackEvent(
     terms_version?: string;
     plan?: string;
     billing?: string;
+    sites_count?: number;
+    strategy?: string;
+    user_rank?: number;
   }
 ) {
   if (typeof window === "undefined") return;
