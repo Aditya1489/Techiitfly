@@ -156,6 +156,7 @@ export function getLegalText(): {
         `9.2 If we cancel a Project for reasons within our control, we refund the full amount you paid for work not yet delivered.`,
         `9.3 Refunds are made to the original payment method within 14 working days.`,
         `9.4 Monthly services can be cancelled with 30 days' written notice. Months already paid are not refunded.`,
+        `9.5 Monthly SEO and AI search plans have a minimum term of 3 months, because results take time to build. After that, they can be cancelled with 30 days' written notice.`,
       ],
     },
     {
@@ -198,6 +199,7 @@ export function getLegalText(): {
         `13.1 We build what is agreed in the Scope with reasonable skill and care. We do not guarantee search rankings, traffic, leads, sales, ad performance or any business outcome.`,
         `13.2 Speed and performance scores (such as Google PageSpeed) vary with content, third-party scripts, hosting and Google's own changes, and are not guaranteed after Launch.`,
         `13.3 Free audits, sample scores and examples on the Website are for information only.`,
+        `13.4 SEO and AI search (AEO) services improve the signals that search engines and AI assistants use. We do not guarantee rankings on Google or any search engine, or that any AI assistant (such as ChatGPT, Gemini, Claude or Perplexity) will mention, recommend or cite your business. Their systems are controlled by third parties and change often.`,
       ],
     },
     {

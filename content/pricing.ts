@@ -115,6 +115,10 @@ export const PRICING_CONFIG: PricingConfig = {
       label: "Content writing (home or landing page)",
       price: "₹2,000 / page",
     },
+    {
+      label: "AI Search Setup (with a new website)",
+      price: "₹7,999",
+    },
   ],
   meet: {
     meetMonthly: 999,
@@ -478,6 +482,83 @@ export const IT_PLANS: Plan[] = [
 
 export const ADDONS: AddonItem[] = PRICING_CONFIG.addons;
 
+// ─── SEO & AI Search (AEO) Plans ──────────────────────────────────────────────
+export interface SeoOneTimePlan {
+  id: string;
+  name: string;
+  price: number;
+  features: string[];
+}
+
+export interface SeoMonthlyPlan {
+  id: string;
+  name: string;
+  monthly: number;
+  minMonths: number;
+  popular?: boolean;
+  features: string[];
+}
+
+export const SEO_ONE_TIME: SeoOneTimePlan[] = [
+  {
+    id: "audit",
+    name: "SEO + AI-Readiness Audit",
+    price: 6999,
+    features: [
+      "Full report on your site + up to 3 competitors",
+      "Prioritised fix plan in plain language",
+      "30-minute call to walk through it",
+    ],
+  },
+  {
+    id: "aeo-setup",
+    name: "AI Search Setup",
+    price: 14999,
+    features: [
+      "Allow AI assistants to read your site (robots.txt)",
+      "Structured data for your business, services and FAQs",
+      "FAQ section written for your customers' real questions",
+      "llms.txt and sitemap",
+      "Google Business Profile setup",
+      "Page basics fixed (titles, descriptions, headings)",
+    ],
+  },
+];
+
+export const SEO_MONTHLY: SeoMonthlyPlan[] = [
+  {
+    id: "local",
+    name: "Local SEO + AI",
+    monthly: 12999,
+    minMonths: 3,
+    features: [
+      "Google Business Profile management",
+      "10 tracked keywords",
+      "On-page fixes and structured data kept up to date",
+      "1 article per month",
+      "Monthly report incl. your AI-readiness score",
+    ],
+  },
+  {
+    id: "growth",
+    name: "Growth SEO + AI",
+    monthly: 24999,
+    minMonths: 3,
+    popular: true,
+    features: [
+      "25 tracked keywords",
+      "2 articles per month",
+      "Technical SEO",
+      "Earning quality links (no paid spam links)",
+      "Monthly check of how ChatGPT, Gemini and Perplexity answer 10 key questions in your field",
+      "Monthly review call",
+    ],
+  },
+];
+
+export const seoOneTime = SEO_ONE_TIME;
+export const seoMonthly = SEO_MONTHLY;
+
 // ─── FAQ Definitions ──────────────────────────────────────────────────────────
 export interface PricingFaq {
   q: string;
@@ -488,6 +569,18 @@ export const PRICING_FAQS: PricingFaq[] = [
   {
     q: "Can you really deliver a website in one week?",
     a: "Yes — Starter websites (up to 5 pages) go live in 7 days once we receive your content. Business websites take 7–10 days, and Premium takes 14–21 days.",
+  },
+  {
+    q: "What's the difference between SEO and AEO?",
+    a: "SEO helps you rank on Google. AEO (answer engine optimisation) helps AI assistants like ChatGPT, Gemini and Perplexity read your site and cite it in their answers. Our plans cover both.",
+  },
+  {
+    q: "How long until I see results?",
+    a: "Technical fixes take effect within weeks; rankings and AI mentions usually build over 3–6 months.",
+  },
+  {
+    q: "Can you guarantee rankings?",
+    a: "No. Anyone who guarantees #1 rankings or AI mentions is overpromising. We guarantee the work we deliver each month and report results honestly.",
   },
   {
     q: "How many revisions are included?",
@@ -510,7 +603,7 @@ export const PRICING_FAQS: PricingFaq[] = [
 // ─── JSON-LD Offer Generator ──────────────────────────────────────────────────
 export function getPricingJsonLdOffers() {
   const plans = getWebPlans();
-  const offers = plans.map((plan) => ({
+  const offers: Array<Record<string, unknown>> = plans.map((plan) => ({
     "@type": "Offer",
     name: `${plan.name} Website Package`,
     price: plan.priceAmount.toString(),
@@ -531,6 +624,39 @@ export function getPricingJsonLdOffers() {
       availability: "https://schema.org/InStock",
       url: `https://techiitfly.com/pricing#apps`,
       description: `${app.name} mobile app package: ${app.timeline}, ${app.support}. ${app.price}.`,
+    });
+  });
+
+  SEO_ONE_TIME.forEach((seo) => {
+    offers.push({
+      "@type": "Offer",
+      name: `${seo.name}`,
+      price: seo.price.toString(),
+      priceCurrency: "INR",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `https://techiitfly.com/pricing#seo`,
+      description: `${seo.name}: ${seo.features.join(". ")}.`,
+    });
+  });
+
+  SEO_MONTHLY.forEach((seo) => {
+    offers.push({
+      "@type": "Offer",
+      name: `${seo.name}`,
+      price: seo.monthly.toString(),
+      priceCurrency: "INR",
+      unitText: "MONTH",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: seo.monthly.toString(),
+        priceCurrency: "INR",
+        unitCode: "MON",
+      },
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `https://techiitfly.com/pricing#seo`,
+      description: `${seo.name}: ${seo.features.join(". ")}. Minimum term ${seo.minMonths} months.`,
     });
   });
 

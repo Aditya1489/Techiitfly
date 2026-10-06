@@ -366,6 +366,19 @@ export default function YogaSchoolsPage() {
           </div>
         </section>
 
+        {/* Existing website SEO callout */}
+        <div style={{ textAlign: "center", padding: "28px 20px", background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
+          <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.96rem", color: "var(--text)", margin: 0 }}>
+            Already have a website?{" "}
+            <Link
+              href="/pricing#seo"
+              style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px", fontWeight: 600 }}
+            >
+              Our SEO &amp; AI search plans help you get found →
+            </Link>
+          </p>
+        </div>
+
         {/* Final CTA */}
         <FinalCta />
       </main>

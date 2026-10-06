@@ -12,6 +12,8 @@ interface ServiceCard {
   bullets: string[];
   ctaText: string;
   ctaHref: string;
+  secondaryHref?: string;
+  secondaryText?: string;
   isExternal?: boolean;
 }
 
@@ -31,6 +33,21 @@ export default function ServicesSection() {
       ],
       ctaText: "Get a quote",
       ctaHref: getConsultUrl(),
+      isExternal: true,
+    },
+    {
+      id: "seo",
+      name: "SEO & AI search visibility",
+      description: "Get found on Google and by AI assistants like ChatGPT.",
+      bullets: [
+        "Google Business Profile",
+        "AI-ready structured data",
+        "Monthly progress reports",
+      ],
+      ctaText: "Get a quote",
+      ctaHref: getConsultUrl(),
+      secondaryHref: "/pricing#seo",
+      secondaryText: "See plans →",
       isExternal: true,
     },
   ];
@@ -216,7 +233,7 @@ export default function ServicesSection() {
                 rel={svc.isExternal ? "noopener noreferrer" : undefined}
                 onClick={() =>
                   trackEvent(
-                    svc.id === "websites" ? "consult_click" : "whatsapp_click",
+                    svc.id === "websites" || svc.id === "seo" ? "consult_click" : "whatsapp_click",
                     `services_${svc.id}`
                   )
                 }
@@ -241,6 +258,24 @@ export default function ServicesSection() {
                 <span>{svc.ctaText}</span>
                 <span>→</span>
               </a>
+
+              {svc.secondaryHref && (
+                <div style={{ textAlign: "center", marginTop: "10px" }}>
+                  <Link
+                    href={svc.secondaryHref}
+                    style={{
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.84rem",
+                      fontWeight: 600,
+                      color: "var(--accent)",
+                      textDecoration: "underline",
+                      textUnderlineOffset: "3px",
+                    }}
+                  >
+                    {svc.secondaryText || "See plans →"}
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>

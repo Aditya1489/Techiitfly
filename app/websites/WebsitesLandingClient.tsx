@@ -929,6 +929,24 @@ export default function WebsitesLandingClient() {
               </a>
             )}
           </div>
+
+          <p
+            style={{
+              fontFamily: "var(--font-geist-sans)",
+              fontSize: "0.92rem",
+              color: "var(--muted)",
+              marginTop: "24px",
+              marginBottom: 0,
+            }}
+          >
+            Already have a website?{" "}
+            <Link
+              href="/pricing#seo"
+              style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px", fontWeight: 600 }}
+            >
+              Our SEO &amp; AI search plans help you get found →
+            </Link>
+          </p>
         </div>
       </section>
 

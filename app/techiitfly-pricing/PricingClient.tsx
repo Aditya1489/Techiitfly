@@ -41,6 +41,8 @@ import {
   ADDONS,
   PRICING_CONFIG,
   PRICING_FAQS,
+  SEO_ONE_TIME,
+  SEO_MONTHLY,
   getWebPlans,
 } from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
@@ -80,12 +82,13 @@ const STEPS: { title: string; desc: React.ReactNode }[] = [
 
 const FAQS = PRICING_FAQS;
 
-type Tab = "web" | "app" | "meet" | "it";
+type Tab = "web" | "seo" | "app" | "meet" | "it";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "web", label: "Websites" },
-  { id: "meet", label: "Mathsy Meet" },
+  { id: "seo", label: "SEO & AI Search" },
   ...(SITE.showAppServices ? [{ id: "app" as Tab, label: "Mobile Apps" }] : []),
+  { id: "meet", label: "Mathsy Meet" },
   ...(SITE.showItServices ? [{ id: "it" as Tab, label: "Managed IT" }] : []),
 ];
 
@@ -581,7 +584,9 @@ export default function PricingClient() {
     function handleHash() {
       if (typeof window === "undefined") return;
       const h = window.location.hash.toLowerCase();
-      if (h === "#meet" || h === "#mathsy-meet" || h === "#mathsy") {
+      if (h === "#seo" || h === "#aeo" || h === "#seo-ai" || h === "#ai-search") {
+        setActiveTab("seo");
+      } else if (h === "#meet" || h === "#mathsy-meet" || h === "#mathsy") {
         setActiveTab("meet");
       } else if (h === "#apps" || h === "#app" || h === "#mobile-apps") {
         setActiveTab("app");
@@ -598,7 +603,8 @@ export default function PricingClient() {
     setActiveTab(tabId);
     if (typeof window !== "undefined") {
       let targetHash = "";
-      if (tabId === "app") targetHash = "#apps";
+      if (tabId === "seo") targetHash = "#seo";
+      else if (tabId === "app") targetHash = "#apps";
       else if (tabId === "meet") targetHash = "#meet";
       if (window.location.hash !== targetHash) {
         if (targetHash) {
@@ -838,7 +844,372 @@ export default function PricingClient() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
             >
-              {activeTab === "meet" ? (
+              {activeTab === "seo" ? (
+                <div id="seo" style={{ scrollMarginTop: "120px" }}>
+                  {/* Intro text */}
+                  <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "clamp(1.05rem, 2.5vw, 1.25rem)",
+                        fontWeight: 600,
+                        color: "var(--text)",
+                        maxWidth: "720px",
+                        margin: "0 auto",
+                        lineHeight: 1.55,
+                      }}
+                    >
+                      Get found on Google and by AI assistants like ChatGPT, Gemini and Perplexity.
+                    </p>
+                  </div>
+
+                  {/* Section: One-time */}
+                  <div style={{ marginBottom: "56px" }}>
+                    <div style={{ marginBottom: "20px", textAlign: "left" }}>
+                      <span className="section-label">FOUNDATIONAL AUDITS &amp; SETUP</span>
+                      <h3
+                        style={{
+                          fontFamily: "var(--font-instrument-serif)",
+                          fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)",
+                          fontWeight: 400,
+                          color: "var(--text)",
+                          margin: "6px 0 0",
+                        }}
+                      >
+                        One-time
+                      </h3>
+                    </div>
+
+                    <div className="seo-pricing-grid">
+                      {SEO_ONE_TIME.map((plan, idx) => (
+                        <motion.article
+                          key={plan.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: idx * 0.08 }}
+                          style={{
+                            position: "relative",
+                            background: "var(--surface)",
+                            border: "1px solid var(--border)",
+                            borderRadius: "var(--radius-lg)",
+                            padding: "32px 28px",
+                            display: "flex",
+                            flexDirection: "column",
+                            boxShadow: "var(--card-shadow)",
+                          }}
+                        >
+                          <h4
+                            style={{
+                              fontFamily: "var(--font-geist-sans)",
+                              fontSize: "1.3rem",
+                              fontWeight: 700,
+                              color: "var(--text)",
+                              margin: "0 0 10px",
+                            }}
+                          >
+                            {plan.name}
+                          </h4>
+
+                          {/* Price */}
+                          <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "20px" }}>
+                            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "2.1rem", fontWeight: 800, color: "var(--text)", lineHeight: 1 }}>
+                              ₹{plan.price.toLocaleString("en-IN")}
+                            </span>
+                            <span style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.85rem", color: "var(--muted)" }}>
+                              one-time
+                            </span>
+                          </div>
+
+                          {/* Feature List */}
+                          <ul
+                            style={{
+                              listStyle: "none",
+                              margin: "0 0 28px",
+                              padding: 0,
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "12px",
+                              flex: 1,
+                            }}
+                          >
+                            {plan.features.map((feat) => (
+                              <li
+                                key={feat}
+                                style={{
+                                  display: "flex",
+                                  gap: "10px",
+                                  fontFamily: "var(--font-geist-sans)",
+                                  fontSize: "0.9rem",
+                                  color: "var(--text)",
+                                  lineHeight: 1.5,
+                                }}
+                              >
+                                <span style={{ color: "var(--accent)", fontWeight: 800, flexShrink: 0 }}>✓</span>
+                                <span>{feat}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          {/* WhatsApp CTA: Book this */}
+                          <a
+                            href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+                              `Hi techiitfly, I'd like the ${plan.name}.`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => trackEvent("whatsapp_click", `pricing_seo_${plan.id}`)}
+                            style={{
+                              display: "block",
+                              textAlign: "center",
+                              fontFamily: "var(--font-geist-sans)",
+                              fontWeight: 700,
+                              fontSize: "0.95rem",
+                              textDecoration: "none",
+                              padding: "14px 20px",
+                              borderRadius: "10px",
+                              background: "var(--surface-2)",
+                              border: "1.5px solid var(--border)",
+                              color: "var(--text)",
+                              transition: "all 0.2s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.borderColor = "var(--accent)";
+                              e.currentTarget.style.color = "var(--accent)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.borderColor = "var(--border)";
+                              e.currentTarget.style.color = "var(--text)";
+                            }}
+                          >
+                            Book this →
+                          </a>
+                        </motion.article>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Section: Monthly plans */}
+                  <div>
+                    <div style={{ marginBottom: "20px", textAlign: "left" }}>
+                      <span className="section-label">CONTINUOUS RANKING &amp; CITATION SIGNALS</span>
+                      <h3
+                        style={{
+                          fontFamily: "var(--font-instrument-serif)",
+                          fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)",
+                          fontWeight: 400,
+                          color: "var(--text)",
+                          margin: "6px 0 0",
+                        }}
+                      >
+                        Monthly plans
+                      </h3>
+                    </div>
+
+                    <div className="seo-pricing-grid">
+                      {SEO_MONTHLY.map((plan, idx) => (
+                        <motion.article
+                          key={plan.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: idx * 0.08 }}
+                          style={{
+                            position: "relative",
+                            background: plan.popular ? "var(--surface)" : "var(--bg)",
+                            border: plan.popular ? "1.5px solid var(--accent)" : "1px solid var(--border)",
+                            borderRadius: "var(--radius-lg)",
+                            padding: "36px 28px 30px",
+                            display: "flex",
+                            flexDirection: "column",
+                            boxShadow: plan.popular ? "var(--card-hover-shadow)" : "var(--card-shadow)",
+                          }}
+                        >
+                          {/* Badges container */}
+                          <div
+                            style={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: "8px",
+                              position: "absolute",
+                              top: "-13px",
+                              left: "24px",
+                            }}
+                          >
+                            {plan.popular && (
+                              <span
+                                style={{
+                                  background: "var(--accent)",
+                                  color: "var(--primary-btn-text)",
+                                  fontSize: "11px",
+                                  fontWeight: 700,
+                                  padding: "4px 12px",
+                                  borderRadius: "999px",
+                                  fontFamily: "var(--font-geist-mono)",
+                                  letterSpacing: "0.06em",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                Most Popular
+                              </span>
+                            )}
+                            <span
+                              style={{
+                                background: "var(--surface-2)",
+                                border: "1px solid var(--border)",
+                                color: "var(--text)",
+                                fontSize: "11px",
+                                fontWeight: 700,
+                                padding: "4px 10px",
+                                borderRadius: "999px",
+                                fontFamily: "var(--font-geist-mono)",
+                                letterSpacing: "0.04em",
+                                textTransform: "uppercase",
+                              }}
+                            >
+                              Minimum 3 months
+                            </span>
+                          </div>
+
+                          <h4
+                            style={{
+                              fontFamily: "var(--font-geist-sans)",
+                              fontSize: "1.3rem",
+                              fontWeight: 700,
+                              color: "var(--text)",
+                              margin: "0 0 10px",
+                            }}
+                          >
+                            {plan.name}
+                          </h4>
+
+                          {/* Price */}
+                          <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "20px" }}>
+                            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "2.1rem", fontWeight: 800, color: "var(--text)", lineHeight: 1 }}>
+                              ₹{plan.monthly.toLocaleString("en-IN")}
+                            </span>
+                            <span style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.85rem", color: "var(--muted)" }}>
+                              / month
+                            </span>
+                          </div>
+
+                          {/* Feature List */}
+                          <ul
+                            style={{
+                              listStyle: "none",
+                              margin: "0 0 28px",
+                              padding: 0,
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "12px",
+                              flex: 1,
+                            }}
+                          >
+                            {plan.features.map((feat) => (
+                              <li
+                                key={feat}
+                                style={{
+                                  display: "flex",
+                                  gap: "10px",
+                                  fontFamily: "var(--font-geist-sans)",
+                                  fontSize: "0.9rem",
+                                  color: "var(--text)",
+                                  lineHeight: 1.5,
+                                }}
+                              >
+                                <span style={{ color: "var(--accent)", fontWeight: 800, flexShrink: 0 }}>✓</span>
+                                <span>{feat}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          {/* Buttons: Primary "Get started" + Secondary "Book a free call" */}
+                          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                            <a
+                              href={getConsultUrl()}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => trackEvent("consult_click", `pricing_seo_${plan.id}_get_started`)}
+                              style={{
+                                display: "block",
+                                textAlign: "center",
+                                fontFamily: "var(--font-geist-sans)",
+                                fontWeight: 700,
+                                fontSize: "0.95rem",
+                                textDecoration: "none",
+                                padding: "13px 18px",
+                                borderRadius: "10px",
+                                background: plan.popular ? "var(--accent)" : "var(--surface-2)",
+                                border: plan.popular ? "none" : "1.5px solid var(--border)",
+                                color: plan.popular ? "var(--primary-btn-text)" : "var(--text)",
+                                transition: "all 0.2s ease",
+                              }}
+                            >
+                              Get started →
+                            </a>
+                            <a
+                              href={getConsultUrl()}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => trackEvent("consult_click", `pricing_seo_${plan.id}_free_call`)}
+                              style={{
+                                display: "block",
+                                textAlign: "center",
+                                fontFamily: "var(--font-geist-sans)",
+                                fontWeight: 600,
+                                fontSize: "0.85rem",
+                                textDecoration: "none",
+                                padding: "9px 14px",
+                                borderRadius: "8px",
+                                background: "transparent",
+                                border: "1px solid var(--border)",
+                                color: "var(--muted)",
+                                transition: "all 0.2s ease",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.color = "var(--text)";
+                                e.currentTarget.style.borderColor = "var(--accent)";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.color = "var(--muted)";
+                                e.currentTarget.style.borderColor = "var(--border)";
+                              }}
+                            >
+                              Book a free call ↗
+                            </a>
+                          </div>
+                        </motion.article>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Notes under the plans */}
+                  <div
+                    style={{
+                      marginTop: "38px",
+                      textAlign: "center",
+                      color: "var(--muted)",
+                      fontSize: "0.88rem",
+                      lineHeight: 1.6,
+                      maxWidth: "760px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                  >
+                    <p style={{ margin: "0 0 8px" }}>
+                      SEO and AI search results build over months, not days.
+                    </p>
+                    <p style={{ margin: "0 0 8px" }}>
+                      We don&apos;t promise #1 rankings or that any AI assistant will mention you — nobody honestly can. We improve the signals they rely on and report progress every month.{" "}
+                      <Link href="/terms#no-results-guarantee" style={{ color: "var(--accent)", textDecoration: "underline", fontWeight: 600 }}>
+                        See our Terms
+                      </Link>
+                      .
+                    </p>
+                    <p style={{ margin: 0, fontFamily: "var(--font-geist-mono)", fontSize: "0.8rem" }}>
+                      Prices in INR, excluding GST.
+                    </p>
+                  </div>
+                </div>
+              ) : activeTab === "meet" ? (
                 <div id="meet" style={{ scrollMarginTop: "120px" }}>
                   <MeetPlanCards location="pricing_page_meet" showHeader={false} />
                 </div>
@@ -1299,6 +1670,11 @@ export default function PricingClient() {
 
       {/* Responsive grid styles */}
       <style>{`
+        .seo-pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+        }
         @media (max-width: 900px) {
           .pricing-grid {
             grid-template-columns: 1fr !important;
@@ -1308,6 +1684,14 @@ export default function PricingClient() {
           }
           .steps-grid {
             grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .seo-pricing-grid {
+            grid-template-columns: 1fr !important;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
           }
         }
         @media (max-width: 520px) {

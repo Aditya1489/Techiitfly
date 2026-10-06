@@ -17,7 +17,8 @@ export type TrackingEventType =
   | "xray_compare_completed"
   | "xray_share"
   | "xray_pdf"
-  | "xray_whatsapp";
+  | "xray_whatsapp"
+  | "xray_to_seo_plans";
 
 export function getStoredUtmSource(): string | null {
   if (typeof window === "undefined") return null;

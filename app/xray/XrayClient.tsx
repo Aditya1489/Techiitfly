@@ -2508,6 +2508,28 @@ export default function XrayClient() {
                     <span>→</span>
                   </a>
 
+                  <Link
+                    href="/pricing#seo"
+                    onClick={() => trackEvent("xray_to_seo_plans", "xray_results_cta")}
+                    style={{
+                      background: "var(--surface)",
+                      color: "var(--text)",
+                      border: "1px solid var(--border)",
+                      padding: "15px 24px",
+                      borderRadius: "10px",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.98rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      transition: "all 0.15s ease",
+                    }}
+                  >
+                    <span>Want to fix these? See SEO &amp; AI search plans →</span>
+                  </Link>
+
                   <a
                     href={getConsultUrl()}
                     target="_blank"
