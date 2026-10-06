@@ -71,41 +71,99 @@ async function verifyAndCapture() {
       }
     }
 
-    // 2. Services Section (#services - showing no prices)
+    // 1. Hero
+    console.log(`Capturing Hero for ${vp.name}...`);
+    const heroEl = await page.$("#hero");
+    if (heroEl) {
+      await heroEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_hero_${vp.name}.png`),
+      });
+    }
+
+    // 2. How It Works
+    console.log(`Capturing How It Works for ${vp.name}...`);
+    const howEl = await page.$("#how-it-works");
+    if (howEl) {
+      await howEl.scrollIntoView();
+      await new Promise((r) => setTimeout(r, 600));
+      await howEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_how_it_works_${vp.name}.png`),
+      });
+    }
+
+    // 3. Services Section (#services - showing no prices)
     console.log(`Capturing Home Services Section for ${vp.name}...`);
     const servicesEl = await page.$("#services");
     if (servicesEl) {
       await servicesEl.scrollIntoView();
       await new Promise((r) => setTimeout(r, 600));
       await servicesEl.screenshot({
-        path: path.join(OUTPUT_DIR, `home_services_${vp.name}.png`),
+        path: path.join(OUTPUT_DIR, `phase3_services_${vp.name}.png`),
       });
     }
 
-    // 3. Products Section (#products - no price)
-    console.log(`Capturing Home Products Section for ${vp.name}...`);
-    const productsEl = await page.$("#products");
-    if (productsEl) {
-      await productsEl.scrollIntoView();
+    // 4. Selected Work
+    console.log(`Capturing Selected Work for ${vp.name}...`);
+    const workEl = await page.$("#work");
+    if (workEl) {
+      await workEl.scrollIntoView();
       await new Promise((r) => setTimeout(r, 600));
-      await productsEl.screenshot({
-        path: path.join(OUTPUT_DIR, `home_products_${vp.name}.png`),
+      await workEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_work_${vp.name}.png`),
       });
-    } else {
-      console.warn("Could not find #products element!");
     }
 
-    // 4. Footer
+    // 5. Comparison Table
+    console.log(`Capturing Comparison Table for ${vp.name}...`);
+    const compEl = await page.$("#comparison");
+    if (compEl) {
+      await compEl.scrollIntoView();
+      await new Promise((r) => setTimeout(r, 600));
+      await compEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_comparison_${vp.name}.png`),
+      });
+    }
+
+    // 6. Guarantee & Consultation Band
+    console.log(`Capturing Guarantee & Consultation Band for ${vp.name}...`);
+    const guarEl = await page.$("#guarantee");
+    if (guarEl) {
+      await guarEl.scrollIntoView();
+      await new Promise((r) => setTimeout(r, 600));
+      await guarEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_guarantee_${vp.name}.png`),
+      });
+    }
+
+    const consultBandEl = await page.$("#consultation");
+    if (consultBandEl) {
+      await consultBandEl.scrollIntoView();
+      await new Promise((r) => setTimeout(r, 600));
+      await consultBandEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_consultation_${vp.name}.png`),
+      });
+    }
+
+    // 7. Final CTA
+    console.log(`Capturing Final CTA for ${vp.name}...`);
+    const ctaEl = await page.$("#contact");
+    if (ctaEl) {
+      await ctaEl.scrollIntoView();
+      await new Promise((r) => setTimeout(r, 600));
+      await ctaEl.screenshot({
+        path: path.join(OUTPUT_DIR, `phase3_final_cta_${vp.name}.png`),
+      });
+    }
+
+    // 8. Footer
     console.log(`Capturing Footer for ${vp.name}...`);
     const footerEl = await page.$("footer");
     if (footerEl) {
       await footerEl.scrollIntoView();
       await new Promise((r) => setTimeout(r, 600));
       await footerEl.screenshot({
-        path: path.join(OUTPUT_DIR, `footer_${vp.name}.png`),
+        path: path.join(OUTPUT_DIR, `phase3_footer_${vp.name}.png`),
       });
-    } else {
-      console.warn("Could not find footer element!");
     }
   }
 

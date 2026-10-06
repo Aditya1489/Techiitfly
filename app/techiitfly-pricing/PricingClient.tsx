@@ -338,10 +338,10 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
             Book &amp; pay advance →
           </Link>
           <a
-            href={waLink(plan.waLabel)}
+            href={getConsultUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent("whatsapp_click", `pricing_quote_${plan.name.toLowerCase()}`)}
+            onClick={() => trackEvent("consult_click", `pricing_quote_${plan.name.toLowerCase()}`)}
             style={{
               display: "block",
               textAlign: "center",
@@ -678,19 +678,16 @@ export default function PricingClient() {
             transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             style={{
               fontFamily: "var(--font-instrument-serif)",
-              fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
+              fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
               fontWeight: 400,
               lineHeight: 1.1,
               color: "var(--text)",
-              maxWidth: "760px",
+              maxWidth: "800px",
               margin: "0 auto",
               letterSpacing: "-0.02em",
             }}
           >
-            Websites &amp; mobile apps.{" "}
-            <em style={{ color: "var(--accent)", fontStyle: "italic" }}>
-              Delivered on time, at fixed prices.
-            </em>
+            Simple, fixed prices. No surprise bills.
           </motion.h1>
 
           <motion.p
@@ -701,14 +698,12 @@ export default function PricingClient() {
               fontFamily: "var(--font-geist-sans)",
               fontSize: "1.05rem",
               color: "var(--muted)",
-              maxWidth: "540px",
+              maxWidth: "560px",
               margin: "18px auto 0",
               lineHeight: 1.6,
             }}
           >
-            {SITE.showIitClaim
-              ? "An IIT-alumni team building for growing businesses. Pick a package, or tell us what you need — we'll quote it the same day."
-              : "A Pune studio building for growing businesses. Pick a package, or tell us what you need — we'll quote it the same day."}
+            Prices in INR, excluding GST. Fixed-price quotes and guaranteed delivery with no hidden fees.
           </motion.p>
 
           {/* Trust signals */}
@@ -865,7 +860,7 @@ export default function PricingClient() {
                 lineHeight: 1.5,
               }}
             >
-              Final price depends on features and integrations. You get a fixed quote and timeline after a free consultation.
+              Final price depends on features. You get a fixed quote after a free consultation.
             </p>
           )}
         </div>

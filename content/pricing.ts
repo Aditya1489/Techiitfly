@@ -66,28 +66,27 @@ export const PRICING_CONFIG: PricingConfig = {
   addons: [
     { label: "Extra page", price: "₹1,500" },
     {
-      label: "Basic logo design",
+      label: "Basic logo",
       price: "₹3,000",
       note: "2 concepts, 1 revision, files for web and print",
     },
     {
       label: "Domain + hosting (1 year)",
       price: "₹4,000",
-      note: "Business email not included — ₹1,500 per mailbox per year",
     },
     {
-      label: "Business email (per mailbox, 1 year)",
-      price: "₹1,500",
+      label: "Business email",
+      price: "₹1,500 / mailbox / year",
     },
-    { label: "Monthly website maintenance", price: "₹2,500" },
+    { label: "Maintenance", price: "₹2,500 / month" },
     { label: "Express delivery", price: "+30%" },
     {
-      label: "Content writing (standard page, up to ~600 words)",
-      price: "₹800",
+      label: "Content writing (standard page)",
+      price: "₹800 / standard page",
     },
     {
       label: "Content writing (home or landing page)",
-      price: "₹2,000",
+      price: "₹2,000 / page",
     },
   ],
   meet: {
