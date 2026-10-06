@@ -4,15 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { SITE, getConsultUrl } from "@/content/site";
+import { getConsultUrl } from "@/content/site";
 import { trackEvent } from "@/lib/tracking";
 
 interface BenchmarkMetrics {
   domain: string;
   isUser?: boolean;
   isCompetitor?: boolean;
-  isMarketStandard?: boolean;
-  isTechiitflyStandard?: boolean;
   perfScore: number;
   seoScore: number;
   mobileLcp: string;
@@ -25,78 +23,44 @@ interface BenchmarkMetrics {
   hasSchema: boolean;
   hasFastCta: boolean;
   grade: "A+" | "A" | "B" | "C" | "D";
+  error?: string;
 }
 
-interface IndustryBenchmark {
+interface IndustryContext {
   id: string;
   name: string;
-  avgPerf: number;
-  avgSeo: number;
-  avgLcp: string;
-  avgSize: string;
-  sampleCompetitor: string;
   typicalWeakness: string;
 }
 
-const INDUSTRIES: IndustryBenchmark[] = [
+const INDUSTRIES: IndustryContext[] = [
   {
     id: "yoga",
     name: "Yoga & Wellness Retreats",
-    avgPerf: 64,
-    avgSeo: 78,
-    avgLcp: "3.6s",
-    avgSize: "3.8 MB",
-    sampleCompetitor: "rishikeshyogaschool.com",
     typicalWeakness: "Uncompressed retreat photography and sluggish booking forms slowing mobile conversions.",
   },
   {
     id: "coaching",
     name: "Coaching Classes & Tutors",
-    avgPerf: 58,
-    avgSeo: 72,
-    avgLcp: "4.2s",
-    avgSize: "4.5 MB",
-    sampleCompetitor: "allen.ac.in",
-    typicalWeakness: "Bloated third-party chat plugins and heavy student portal scripts causing 4s+ mobile load delays.",
+    typicalWeakness: "Bloated third-party chat plugins and heavy student portal scripts causing mobile load delays.",
   },
   {
     id: "clinic",
     name: "Clinics & Healthcare",
-    avgPerf: 66,
-    avgSeo: 80,
-    avgLcp: "3.2s",
-    avgSize: "2.9 MB",
-    sampleCompetitor: "apollohospitals.com",
     typicalWeakness: "Missing local schema markup and lack of instant WhatsApp appointment scheduling.",
   },
   {
     id: "b2b",
     name: "Consulting & Professional Services",
-    avgPerf: 70,
-    avgSeo: 82,
-    avgLcp: "2.9s",
-    avgSize: "2.4 MB",
-    sampleCompetitor: "mckinsey.com",
     typicalWeakness: "Heavy font files and slow PDF brochure gating leading to high bounce rates on mobile.",
   },
   {
     id: "ecommerce",
     name: "E-Commerce & Retail",
-    avgPerf: 52,
-    avgSeo: 84,
-    avgLcp: "4.8s",
-    avgSize: "5.6 MB",
-    sampleCompetitor: "nykaa.com",
     typicalWeakness: "Excessive tracking scripts and non-optimized catalog carousels hurting mobile checkout speed.",
   },
   {
     id: "general",
     name: "Other Business / General",
-    avgPerf: 62,
-    avgSeo: 76,
-    avgLcp: "3.5s",
-    avgSize: "3.4 MB",
-    sampleCompetitor: "competitor.com",
     typicalWeakness: "Unoptimized WordPress themes with bloated CSS and missing Core Web Vitals optimizations.",
   },
 ];
@@ -108,59 +72,125 @@ function normalizeDomain(input: string): string {
   return clean;
 }
 
-// Pseudo-random but deterministic hash for consistent metrics given a domain
-function hashString(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-}
+async function fetchPageSpeedMetrics(rawUrl: string, isUser: boolean): Promise<BenchmarkMetrics> {
+  const domain = normalizeDomain(rawUrl);
+  const targetUrl = `https://${domain}`;
 
-function calculateMetrics(domain: string, industry: IndustryBenchmark, isUser: boolean): BenchmarkMetrics {
-  const hash = hashString(domain);
-  const variance = (hash % 21) - 10; // -10 to +10
-
-  // Derive scores realistically around industry averages
-  let perf = Math.max(32, Math.min(88, industry.avgPerf + variance));
-  let seo = Math.max(45, Math.min(92, industry.avgSeo + (hash % 15) - 7));
-
-  // If domain looks like an established modern domain, adjust
-  if (domain.includes(".in") || domain.includes(".org")) {
-    perf = Math.max(40, perf);
+  const apiKey = process.env.NEXT_PUBLIC_PAGESPEED_KEY;
+  const endpoint = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
+  endpoint.searchParams.set("url", targetUrl);
+  endpoint.searchParams.set("strategy", "mobile");
+  endpoint.searchParams.append("category", "performance");
+  endpoint.searchParams.append("category", "seo");
+  if (apiKey && apiKey.startsWith("AIza")) {
+    endpoint.searchParams.set("key", apiKey);
   }
 
-  const lcpSeconds = Math.max(1.8, Math.min(6.5, (100 - perf) * 0.065 + 0.8)).toFixed(1);
-  const desktopLcpSeconds = (parseFloat(lcpSeconds) * 0.45).toFixed(1);
-  const sizeMb = ((100 - perf) * 0.05 + 1.2).toFixed(1);
-  const reqs = Math.round((100 - perf) * 0.8 + 35);
-  const clsVal = parseFloat(((100 - perf) * 0.002 + 0.04).toFixed(3));
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 45000);
+    const res = await fetch(endpoint.toString(), { signal: controller.signal });
+    clearTimeout(timeoutId);
 
-  let grade: "A+" | "A" | "B" | "C" | "D" = "C";
-  if (perf >= 90) grade = "A+";
-  else if (perf >= 80) grade = "A";
-  else if (perf >= 65) grade = "B";
-  else if (perf >= 50) grade = "C";
-  else grade = "D";
+    if (!res.ok) {
+      return {
+        domain,
+        isUser,
+        isCompetitor: !isUser,
+        perfScore: 0,
+        seoScore: 0,
+        mobileLcp: "N/A",
+        desktopLcp: "N/A",
+        pageSize: "N/A",
+        requests: 0,
+        cls: 0,
+        mobileFriendly: false,
+        hasSsl: false,
+        hasSchema: false,
+        hasFastCta: false,
+        grade: "D",
+        error: "Couldn't test this site right now",
+      };
+    }
 
-  return {
-    domain,
-    isUser,
-    isCompetitor: !isUser,
-    perfScore: perf,
-    seoScore: seo,
-    mobileLcp: `${lcpSeconds}s`,
-    desktopLcp: `${desktopLcpSeconds}s`,
-    pageSize: `${sizeMb} MB`,
-    requests: reqs,
-    cls: clsVal,
-    mobileFriendly: perf > 45,
-    hasSsl: true,
-    hasSchema: seo > 70,
-    hasFastCta: perf > 60,
-    grade,
-  };
+    const data = await res.json();
+    const lh = data?.lighthouseResult;
+    if (!lh || !lh.categories) {
+      return {
+        domain,
+        isUser,
+        isCompetitor: !isUser,
+        perfScore: 0,
+        seoScore: 0,
+        mobileLcp: "N/A",
+        desktopLcp: "N/A",
+        pageSize: "N/A",
+        requests: 0,
+        cls: 0,
+        mobileFriendly: false,
+        hasSsl: false,
+        hasSchema: false,
+        hasFastCta: false,
+        grade: "D",
+        error: "Couldn't test this site right now",
+      };
+    }
+
+    const perfScore =
+      lh.categories.performance?.score != null ? Math.round(lh.categories.performance.score * 100) : 0;
+    const seoScore = lh.categories.seo?.score != null ? Math.round(lh.categories.seo.score * 100) : 0;
+    const mobileLcp = lh.audits?.["largest-contentful-paint"]?.displayValue || "N/A";
+    const pageSize = lh.audits?.["total-byte-weight"]?.displayValue || "N/A";
+    const requests = lh.audits?.["network-requests"]?.details?.items?.length || 0;
+    const cls = parseFloat((lh.audits?.["cumulative-layout-shift"]?.numericValue || 0).toFixed(3));
+    const mobileFriendly = lh.audits?.["viewport"]?.score === 1;
+    const hasSsl = lh.audits?.["is-on-https"]?.score === 1;
+    const hasSchema = lh.audits?.["structured-data"]?.score === 1;
+
+    let grade: "A+" | "A" | "B" | "C" | "D" = "C";
+    if (perfScore >= 90) grade = "A+";
+    else if (perfScore >= 80) grade = "A";
+    else if (perfScore >= 65) grade = "B";
+    else if (perfScore >= 50) grade = "C";
+    else grade = "D";
+
+    return {
+      domain,
+      isUser,
+      isCompetitor: !isUser,
+      perfScore,
+      seoScore,
+      mobileLcp,
+      desktopLcp: mobileLcp,
+      pageSize,
+      requests,
+      cls,
+      mobileFriendly,
+      hasSsl,
+      hasSchema,
+      hasFastCta: perfScore > 60,
+      grade,
+    };
+  } catch {
+    return {
+      domain,
+      isUser,
+      isCompetitor: !isUser,
+      perfScore: 0,
+      seoScore: 0,
+      mobileLcp: "N/A",
+      desktopLcp: "N/A",
+      pageSize: "N/A",
+      requests: 0,
+      cls: 0,
+      mobileFriendly: false,
+      hasSsl: false,
+      hasSchema: false,
+      hasFastCta: false,
+      grade: "D",
+      error: "Couldn't test this site right now",
+    };
+  }
 }
 
 export default function XrayClient() {
@@ -171,10 +201,8 @@ export default function XrayClient() {
   const [analysisStep, setAnalysisStep] = useState(0);
   const [results, setResults] = useState<{
     user: BenchmarkMetrics;
-    competitor: BenchmarkMetrics;
-    market: BenchmarkMetrics;
-    techiitfly: BenchmarkMetrics;
-    industry: IndustryBenchmark;
+    competitor: BenchmarkMetrics | null;
+    industry: IndustryContext;
   } | null>(null);
   const [activeTab, setActiveTab] = useState<"overview" | "speed" | "seo" | "takeaways">("overview");
   const [viewMode, setViewMode] = useState<"mobile" | "desktop">("mobile");
@@ -186,68 +214,78 @@ export default function XrayClient() {
     const cleanUser = normalizeDomain(userUrl);
     if (!cleanUser) return;
 
-    const cleanCompetitor = normalizeDomain(competitorUrl) || currentIndustry.sampleCompetitor;
+    const cleanCompetitor = competitorUrl.trim() ? normalizeDomain(competitorUrl) : "";
 
     trackEvent("consult_click", "benchmark_analyzer_started", { item_name: cleanUser });
     setAnalyzing(true);
     setAnalysisStep(1);
 
-    // Multi-step progressive feedback animation
-    await new Promise((r) => setTimeout(r, 650));
-    setAnalysisStep(2);
-    await new Promise((r) => setTimeout(r, 700));
-    setAnalysisStep(3);
-    await new Promise((r) => setTimeout(r, 600));
-    setAnalysisStep(4);
-    await new Promise((r) => setTimeout(r, 550));
+    const stepTimer1 = setTimeout(() => setAnalysisStep(2), 2500);
+    const stepTimer2 = setTimeout(() => setAnalysisStep(3), 6000);
+    const stepTimer3 = setTimeout(() => setAnalysisStep(4), 14000);
 
-    // Calculate metrics
-    const userMetrics = calculateMetrics(cleanUser, currentIndustry, true);
-    const competitorMetrics = calculateMetrics(cleanCompetitor, currentIndustry, false);
+    try {
+      const [userMetrics, competitorMetrics] = await Promise.all([
+        fetchPageSpeedMetrics(cleanUser, true),
+        cleanCompetitor ? fetchPageSpeedMetrics(cleanCompetitor, false) : Promise.resolve(null),
+      ]);
 
-    const marketMetrics: BenchmarkMetrics = {
-      domain: `Industry Average (${currentIndustry.name})`,
-      isMarketStandard: true,
-      perfScore: currentIndustry.avgPerf,
-      seoScore: currentIndustry.avgSeo,
-      mobileLcp: currentIndustry.avgLcp,
-      desktopLcp: "1.4s",
-      pageSize: currentIndustry.avgSize,
-      requests: 58,
-      cls: 0.12,
-      mobileFriendly: true,
-      hasSsl: true,
-      hasSchema: false,
-      hasFastCta: false,
-      grade: "C",
-    };
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
+      clearTimeout(stepTimer3);
 
-    const techiitflyMetrics: BenchmarkMetrics = {
-      domain: "techiitfly Standard (Guaranteed 7-Day Launch)",
-      isTechiitflyStandard: true,
-      perfScore: 98,
-      seoScore: 100,
-      mobileLcp: "0.9s",
-      desktopLcp: "0.4s",
-      pageSize: "0.35 MB",
-      requests: 14,
-      cls: 0.002,
-      mobileFriendly: true,
-      hasSsl: true,
-      hasSchema: true,
-      hasFastCta: true,
-      grade: "A+",
-    };
+      setResults({
+        user: userMetrics,
+        competitor: competitorMetrics,
+        industry: currentIndustry,
+      });
+    } catch {
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
+      clearTimeout(stepTimer3);
 
-    setResults({
-      user: userMetrics,
-      competitor: competitorMetrics,
-      market: marketMetrics,
-      techiitfly: techiitflyMetrics,
-      industry: currentIndustry,
-    });
-
-    setAnalyzing(false);
+      setResults({
+        user: {
+          domain: cleanUser,
+          isUser: true,
+          perfScore: 0,
+          seoScore: 0,
+          mobileLcp: "N/A",
+          desktopLcp: "N/A",
+          pageSize: "N/A",
+          requests: 0,
+          cls: 0,
+          mobileFriendly: false,
+          hasSsl: false,
+          hasSchema: false,
+          hasFastCta: false,
+          grade: "D",
+          error: "Couldn't test this site right now",
+        },
+        competitor: cleanCompetitor
+          ? {
+              domain: cleanCompetitor,
+              isCompetitor: true,
+              perfScore: 0,
+              seoScore: 0,
+              mobileLcp: "N/A",
+              desktopLcp: "N/A",
+              pageSize: "N/A",
+              requests: 0,
+              cls: 0,
+              mobileFriendly: false,
+              hasSsl: false,
+              hasSchema: false,
+              hasFastCta: false,
+              grade: "D",
+              error: "Couldn't test this site right now",
+            }
+          : null,
+        industry: currentIndustry,
+      });
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   const getScoreColor = (score: number) => {
@@ -258,10 +296,20 @@ export default function XrayClient() {
 
   const generateWhatsAppMessage = () => {
     if (!results) return "";
-    const msg = `Hi techiitfly, I benchmarked my site (${results.user.domain}) against ${results.competitor.domain}.
-My performance score: ${results.user.perfScore}/100 (Mobile LCP: ${results.user.mobileLcp})
-Competitor performance: ${results.competitor.perfScore}/100 (Mobile LCP: ${results.competitor.mobileLcp})
-I want a 7-day optimized website that outperforms my competitors and hits 95+ speed.`;
+    if (results.user.error) {
+      const msg = `Hi techiitfly, Google PageSpeed couldn't test my site (${results.user.domain}) right now. Can you run a manual audit for me?`;
+      return `https://wa.me/919373917738?text=${encodeURIComponent(msg)}`;
+    }
+    if (results.competitor && !results.competitor.error) {
+      const msg = `Hi techiitfly, I benchmarked my site (${results.user.domain}) against ${results.competitor.domain} on your Site X-Ray.
+My live score: ${results.user.perfScore}/100 (Mobile LCP: ${results.user.mobileLcp})
+Competitor score: ${results.competitor.perfScore}/100 (Mobile LCP: ${results.competitor.mobileLcp})
+I want to discuss optimizing my website for speed and conversions.`;
+      return `https://wa.me/919373917738?text=${encodeURIComponent(msg)}`;
+    }
+    const msg = `Hi techiitfly, I tested my site (${results.user.domain}) on your Site X-Ray.
+My live score: ${results.user.perfScore}/100 (Mobile LCP: ${results.user.mobileLcp})
+I want to discuss optimizing my website for speed and conversions.`;
     return `https://wa.me/919373917738?text=${encodeURIComponent(msg)}`;
   };
 
@@ -304,8 +352,8 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                 lineHeight: 1.6,
               }}
             >
-              Paste your website link and your top competitor to analyze mobile load speed, SEO visibility,
-              and Core Web Vitals against market standards.
+              Paste your website link and your competitor to analyze live mobile load speed, SEO visibility,
+              and Core Web Vitals measured directly via Google PageSpeed Insights.
             </p>
           </div>
 
@@ -335,7 +383,7 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                     marginBottom: "10px",
                   }}
                 >
-                  Step 1 · Select Your Industry (for market averages)
+                  Step 1 · Select Your Industry (for context &amp; recommendations)
                 </label>
                 <div
                   style={{
@@ -430,7 +478,7 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       marginTop: "5px",
                     }}
                   >
-                    Any public domain or subdomain
+                    Live test via Google PageSpeed Insights
                   </span>
                 </div>
 
@@ -451,13 +499,13 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       marginBottom: "8px",
                     }}
                   >
-                    <span>○</span> Competitor&apos;s Website URL (or leave blank for top benchmark)
+                    <span>○</span> Competitor&apos;s Website URL (optional)
                   </label>
                   <div style={{ position: "relative" }}>
                     <input
                       id="competitor-url-input"
                       type="text"
-                      placeholder={`e.g. ${currentIndustry.sampleCompetitor}`}
+                      placeholder="e.g. competitor.com (optional)"
                       value={competitorUrl}
                       onChange={(e) => setCompetitorUrl(e.target.value)}
                       style={{
@@ -483,7 +531,7 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       marginTop: "5px",
                     }}
                   >
-                    Default competitor: {currentIndustry.sampleCompetitor}
+                    Leave blank to audit your website on its own
                   </span>
                 </div>
               </div>
@@ -524,15 +572,15 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                         }}
                       />
                       <span>
-                        {analysisStep === 1 && "Connecting to domains & testing SSL..."}
-                        {analysisStep === 2 && "Analyzing mobile Core Web Vitals & LCP..."}
-                        {analysisStep === 3 && "Evaluating SEO metadata & crawlability..."}
-                        {analysisStep === 4 && "Benchmarking against market standards..."}
+                        {analysisStep <= 1 && "Connecting to Google PageSpeed Insights API..."}
+                        {analysisStep === 2 && "Google is auditing mobile Lighthouse performance..."}
+                        {analysisStep === 3 && "Measuring Core Web Vitals lab diagnostics (takes 10–25s)..."}
+                        {analysisStep >= 4 && "Parsing live audit report..."}
                       </span>
                     </>
                   ) : (
                     <>
-                      <span>Run Head-to-Head Benchmark →</span>
+                      <span>Run Live PageSpeed Benchmark →</span>
                     </>
                   )}
                 </button>
@@ -562,12 +610,20 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
                     <span
                       style={{
-                        background:
-                          results.user.perfScore > results.competitor.perfScore
+                        background: results.user.error
+                          ? "rgba(239,68,68,0.15)"
+                          : results.competitor && !results.competitor.error
+                          ? results.user.perfScore >= results.competitor.perfScore
                             ? "rgba(34,197,94,0.15)"
-                            : "rgba(245,158,11,0.15)",
-                        color:
-                          results.user.perfScore > results.competitor.perfScore ? "#22c55e" : "var(--accent)",
+                            : "rgba(245,158,11,0.15)"
+                          : "rgba(34,197,94,0.15)",
+                        color: results.user.error
+                          ? "#ef4444"
+                          : results.competitor && !results.competitor.error
+                          ? results.user.perfScore >= results.competitor.perfScore
+                            ? "#22c55e"
+                            : "var(--accent)"
+                          : "#22c55e",
                         padding: "4px 12px",
                         borderRadius: "999px",
                         fontFamily: "var(--font-geist-mono)",
@@ -576,9 +632,13 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                         textTransform: "uppercase",
                       }}
                     >
-                      {results.user.perfScore >= results.competitor.perfScore
-                        ? "Speed Winner: Your Site"
-                        : "Speed Winner: Competitor"}
+                      {results.user.error
+                        ? "Live Audit Status: Check Error"
+                        : results.competitor && !results.competitor.error
+                        ? results.user.perfScore >= results.competitor.perfScore
+                          ? "Speed Winner: Your Site"
+                          : "Speed Winner: Competitor"
+                        : "Live PageSpeed Audit"}
                     </span>
                     <span
                       style={{
@@ -599,9 +659,13 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       margin: 0,
                     }}
                   >
-                    {results.user.perfScore >= results.competitor.perfScore
-                      ? `${results.user.domain} loads faster than ${results.competitor.domain}`
-                      : `${results.competitor.domain} is currently outpacing ${results.user.domain} in mobile speed`}
+                    {results.user.error
+                      ? `Couldn't complete live PageSpeed test for ${results.user.domain}`
+                      : results.competitor && !results.competitor.error
+                      ? results.user.perfScore >= results.competitor.perfScore
+                        ? `${results.user.domain} loads faster than ${results.competitor.domain}`
+                        : `${results.competitor.domain} is currently outpacing ${results.user.domain} in mobile speed`
+                      : `Live Performance Audit for ${results.user.domain}`}
                   </h2>
                   <p
                     style={{
@@ -613,9 +677,9 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       lineHeight: 1.5,
                     }}
                   >
-                    {results.user.perfScore < 85
-                      ? `Both sites lag behind techiitfly's 95+ standard. Typical industry bottleneck: ${results.industry.typicalWeakness}`
-                      : `Your site has strong fundamentals, but there are critical SEO and conversion opportunities to dominate your niche.`}
+                    {results.user.error
+                      ? `Google PageSpeed Insights could not analyze this site right now (unreachable domain, rate limit, or timeout). Request a free manual audit directly on WhatsApp.`
+                      : `Live metrics audited directly from Google PageSpeed Insights. Typical industry bottleneck in ${results.industry.name}: ${results.industry.typicalWeakness}`}
                   </p>
                 </div>
 
@@ -665,20 +729,20 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                 </div>
               </div>
 
-              {/* ── 4-Way Comparison Table (User vs Competitor vs Industry vs techiitfly) ── */}
+              {/* ── Comparison Cards Grid ── */}
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                   gap: "18px",
-                  marginBottom: "40px",
+                  marginBottom: "20px",
                 }}
               >
                 {/* 1. Your Website */}
                 <div
                   style={{
                     background: "var(--surface)",
-                    border: "2px solid var(--accent)",
+                    border: results.user.error ? "1px solid rgba(239,68,68,0.4)" : "2px solid var(--accent)",
                     borderRadius: "var(--radius-lg)",
                     padding: "26px 22px",
                     position: "relative",
@@ -689,7 +753,7 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       position: "absolute",
                       top: "-11px",
                       left: "20px",
-                      background: "var(--accent)",
+                      background: results.user.error ? "#ef4444" : "var(--accent)",
                       color: "var(--primary-btn-text)",
                       fontFamily: "var(--font-geist-mono)",
                       fontSize: "0.7rem",
@@ -715,70 +779,311 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                     {results.user.domain}
                   </h3>
 
-                  <div style={{ display: "flex", gap: "14px", marginBottom: "20px" }}>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        PERFORMANCE
-                      </span>
+                  {results.user.error ? (
+                    <div>
                       <div
                         style={{
-                          fontSize: "2.4rem",
-                          fontWeight: 800,
-                          fontFamily: "var(--font-geist-sans)",
-                          color: getScoreColor(results.user.perfScore),
-                          lineHeight: 1,
-                          marginTop: "4px",
+                          marginTop: "10px",
+                          marginBottom: "18px",
+                          padding: "16px 14px",
+                          background: "rgba(239, 68, 68, 0.08)",
+                          border: "1px solid rgba(239, 68, 68, 0.25)",
+                          borderRadius: "10px",
                         }}
                       >
-                        {results.user.perfScore}
-                        <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                        <div
+                          style={{
+                            color: "#ef4444",
+                            fontWeight: 700,
+                            fontSize: "0.92rem",
+                            marginBottom: "6px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                          }}
+                        >
+                          <span>⚠️</span> Couldn&apos;t test this site right now
+                        </div>
+                        <p style={{ margin: 0, fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.45 }}>
+                          Google PageSpeed Insights could not analyze this URL right now (unreachable domain, rate limit, or timeout).
+                        </p>
                       </div>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        SEO HEALTH
-                      </span>
-                      <div
-                        style={{
-                          fontSize: "2.4rem",
-                          fontWeight: 800,
-                          fontFamily: "var(--font-geist-sans)",
-                          color: getScoreColor(results.user.seoScore),
-                          lineHeight: 1,
-                          marginTop: "4px",
-                        }}
-                      >
-                        {results.user.seoScore}
-                        <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div style={{ borderTop: "1px solid var(--border)", paddingTop: "14px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.86rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Load Speed (LCP):</span>
-                      <strong style={{ color: "var(--text)" }}>
-                        {viewMode === "mobile" ? results.user.mobileLcp : results.user.desktopLcp}
-                      </strong>
+                      <a
+                        href={`https://wa.me/919373917738?text=${encodeURIComponent(
+                          `Hi techiitfly, PageSpeed couldn't test my site (${results.user.domain}). Can you run a manual audit for me?`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackEvent("whatsapp_click", "xray_error_manual_audit", { item_name: results.user.domain })}
+                        style={{
+                          display: "block",
+                          textAlign: "center",
+                          background: "var(--accent)",
+                          color: "var(--primary-btn-text)",
+                          padding: "11px 16px",
+                          borderRadius: "8px",
+                          fontFamily: "var(--font-geist-sans)",
+                          fontSize: "0.86rem",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                          boxShadow: "0 4px 14px rgba(245,158,11,0.25)",
+                        }}
+                      >
+                        Request WhatsApp Audit →
+                      </a>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Page Weight:</span>
-                      <strong style={{ color: "var(--text)" }}>{results.user.pageSize}</strong>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Network Requests:</span>
-                      <strong style={{ color: "var(--text)" }}>{results.user.requests} reqs</strong>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Mobile Friendly:</span>
-                      <strong style={{ color: results.user.mobileFriendly ? "#22c55e" : "#ef4444" }}>
-                        {results.user.mobileFriendly ? "✓ Pass" : "✕ Slow"}
-                      </strong>
-                    </div>
-                  </div>
+                  ) : (
+                    <>
+                      <div style={{ display: "flex", gap: "14px", marginBottom: "20px" }}>
+                        <div style={{ flex: 1 }}>
+                          <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
+                            PERFORMANCE
+                          </span>
+                          <div
+                            style={{
+                              fontSize: "2.4rem",
+                              fontWeight: 800,
+                              fontFamily: "var(--font-geist-sans)",
+                              color: getScoreColor(results.user.perfScore),
+                              lineHeight: 1,
+                              marginTop: "4px",
+                            }}
+                          >
+                            {results.user.perfScore}
+                            <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                          </div>
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
+                            SEO HEALTH
+                          </span>
+                          <div
+                            style={{
+                              fontSize: "2.4rem",
+                              fontWeight: 800,
+                              fontFamily: "var(--font-geist-sans)",
+                              color: getScoreColor(results.user.seoScore),
+                              lineHeight: 1,
+                              marginTop: "4px",
+                            }}
+                          >
+                            {results.user.seoScore}
+                            <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          borderTop: "1px solid var(--border)",
+                          paddingTop: "14px",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                          fontSize: "0.86rem",
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                          <span style={{ color: "var(--muted)" }}>Load Speed (LCP):</span>
+                          <strong style={{ color: "var(--text)" }}>
+                            {viewMode === "mobile" ? results.user.mobileLcp : results.user.desktopLcp}
+                          </strong>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                          <span style={{ color: "var(--muted)" }}>Page Weight:</span>
+                          <strong style={{ color: "var(--text)" }}>{results.user.pageSize}</strong>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                          <span style={{ color: "var(--muted)" }}>Network Requests:</span>
+                          <strong style={{ color: "var(--text)" }}>{results.user.requests} reqs</strong>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                          <span style={{ color: "var(--muted)" }}>Mobile Friendly:</span>
+                          <strong style={{ color: results.user.mobileFriendly ? "#22c55e" : "#ef4444" }}>
+                            {results.user.mobileFriendly ? "✓ Pass" : "✕ Slow"}
+                          </strong>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
 
-                {/* 2. Competitor Website */}
+                {/* 2. Competitor Website (Only displayed if competitor URL was provided) */}
+                {results.competitor && (
+                  <div
+                    style={{
+                      background: "var(--surface)",
+                      border: results.competitor.error ? "1px solid rgba(239,68,68,0.4)" : "1px solid var(--border)",
+                      borderRadius: "var(--radius-lg)",
+                      padding: "26px 22px",
+                      position: "relative",
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "-11px",
+                        left: "20px",
+                        background: results.competitor.error ? "#ef4444" : "var(--surface-2)",
+                        border: "1px solid var(--border)",
+                        color: results.competitor.error ? "#fff" : "var(--muted)",
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: "0.7rem",
+                        fontWeight: 700,
+                        padding: "2px 10px",
+                        borderRadius: "999px",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Competitor
+                    </span>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "1.15rem",
+                        fontWeight: 700,
+                        color: "var(--text)",
+                        marginTop: "6px",
+                        marginBottom: "16px",
+                        wordBreak: "break-all",
+                      }}
+                    >
+                      {results.competitor.domain}
+                    </h3>
+
+                    {results.competitor.error ? (
+                      <div>
+                        <div
+                          style={{
+                            marginTop: "10px",
+                            marginBottom: "18px",
+                            padding: "16px 14px",
+                            background: "rgba(239, 68, 68, 0.08)",
+                            border: "1px solid rgba(239, 68, 68, 0.25)",
+                            borderRadius: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              color: "#ef4444",
+                              fontWeight: 700,
+                              fontSize: "0.92rem",
+                              marginBottom: "6px",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "6px",
+                            }}
+                          >
+                            <span>⚠️</span> Couldn&apos;t test this site right now
+                          </div>
+                          <p style={{ margin: 0, fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.45 }}>
+                            Google PageSpeed Insights could not analyze this competitor URL right now.
+                          </p>
+                        </div>
+
+                        <a
+                          href={`https://wa.me/919373917738?text=${encodeURIComponent(
+                            `Hi techiitfly, PageSpeed couldn't test competitor site (${results.competitor.domain}). Can you run a manual audit for us?`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackEvent("whatsapp_click", "xray_error_competitor_manual_audit", { item_name: results.competitor?.domain })}
+                          style={{
+                            display: "block",
+                            textAlign: "center",
+                            background: "var(--surface-2)",
+                            color: "var(--text)",
+                            border: "1px solid var(--border)",
+                            padding: "11px 16px",
+                            borderRadius: "8px",
+                            fontFamily: "var(--font-geist-sans)",
+                            fontSize: "0.86rem",
+                            fontWeight: 600,
+                            textDecoration: "none",
+                          }}
+                        >
+                          Request WhatsApp Audit →
+                        </a>
+                      </div>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", gap: "14px", marginBottom: "20px" }}>
+                          <div style={{ flex: 1 }}>
+                            <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
+                              PERFORMANCE
+                            </span>
+                            <div
+                              style={{
+                                fontSize: "2.4rem",
+                                fontWeight: 800,
+                                fontFamily: "var(--font-geist-sans)",
+                                color: getScoreColor(results.competitor.perfScore),
+                                lineHeight: 1,
+                                marginTop: "4px",
+                              }}
+                            >
+                              {results.competitor.perfScore}
+                              <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                            </div>
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
+                              SEO HEALTH
+                            </span>
+                            <div
+                              style={{
+                                fontSize: "2.4rem",
+                                fontWeight: 800,
+                                fontFamily: "var(--font-geist-sans)",
+                                color: getScoreColor(results.competitor.seoScore),
+                                lineHeight: 1,
+                                marginTop: "4px",
+                              }}
+                            >
+                              {results.competitor.seoScore}
+                              <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          style={{
+                            borderTop: "1px solid var(--border)",
+                            paddingTop: "14px",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "8px",
+                            fontSize: "0.86rem",
+                          }}
+                        >
+                          <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <span style={{ color: "var(--muted)" }}>Load Speed (LCP):</span>
+                            <strong style={{ color: "var(--text)" }}>
+                              {viewMode === "mobile" ? results.competitor.mobileLcp : results.competitor.desktopLcp}
+                            </strong>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <span style={{ color: "var(--muted)" }}>Page Weight:</span>
+                            <strong style={{ color: "var(--text)" }}>{results.competitor.pageSize}</strong>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <span style={{ color: "var(--muted)" }}>Network Requests:</span>
+                            <strong style={{ color: "var(--text)" }}>{results.competitor.requests} reqs</strong>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <span style={{ color: "var(--muted)" }}>Mobile Friendly:</span>
+                            <strong style={{ color: results.competitor.mobileFriendly ? "#22c55e" : "#ef4444" }}>
+                              {results.competitor.mobileFriendly ? "✓ Pass" : "✕ Slow"}
+                            </strong>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                {/* 3. Google's 'good' thresholds */}
                 <div
                   style={{
                     background: "var(--surface)",
@@ -804,112 +1109,7 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       textTransform: "uppercase",
                     }}
                   >
-                    Competitor
-                  </span>
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1.15rem",
-                      fontWeight: 700,
-                      color: "var(--text)",
-                      marginTop: "6px",
-                      marginBottom: "16px",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {results.competitor.domain}
-                  </h3>
-
-                  <div style={{ display: "flex", gap: "14px", marginBottom: "20px" }}>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        PERFORMANCE
-                      </span>
-                      <div
-                        style={{
-                          fontSize: "2.4rem",
-                          fontWeight: 800,
-                          fontFamily: "var(--font-geist-sans)",
-                          color: getScoreColor(results.competitor.perfScore),
-                          lineHeight: 1,
-                          marginTop: "4px",
-                        }}
-                      >
-                        {results.competitor.perfScore}
-                        <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
-                      </div>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        SEO HEALTH
-                      </span>
-                      <div
-                        style={{
-                          fontSize: "2.4rem",
-                          fontWeight: 800,
-                          fontFamily: "var(--font-geist-sans)",
-                          color: getScoreColor(results.competitor.seoScore),
-                          lineHeight: 1,
-                          marginTop: "4px",
-                        }}
-                      >
-                        {results.competitor.seoScore}
-                        <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div style={{ borderTop: "1px solid var(--border)", paddingTop: "14px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.86rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Load Speed (LCP):</span>
-                      <strong style={{ color: "var(--text)" }}>
-                        {viewMode === "mobile" ? results.competitor.mobileLcp : results.competitor.desktopLcp}
-                      </strong>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Page Weight:</span>
-                      <strong style={{ color: "var(--text)" }}>{results.competitor.pageSize}</strong>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Network Requests:</span>
-                      <strong style={{ color: "var(--text)" }}>{results.competitor.requests} reqs</strong>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Mobile Friendly:</span>
-                      <strong style={{ color: results.competitor.mobileFriendly ? "#22c55e" : "#ef4444" }}>
-                        {results.competitor.mobileFriendly ? "✓ Pass" : "✕ Slow"}
-                      </strong>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. Market Standard (Industry Average) */}
-                <div
-                  style={{
-                    background: "var(--surface)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "var(--radius-lg)",
-                    padding: "26px 22px",
-                    position: "relative",
-                  }}
-                >
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-11px",
-                      left: "20px",
-                      background: "var(--surface-2)",
-                      border: "1px solid var(--border)",
-                      color: "var(--muted)",
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      padding: "2px 10px",
-                      borderRadius: "999px",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    Industry Benchmark
+                    Google&apos;s &apos;good&apos; thresholds
                   </span>
                   <h3
                     style={{
@@ -921,71 +1121,78 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       marginBottom: "16px",
                     }}
                   >
-                    Market Standard
+                    Core Web Vitals Standard
                   </h3>
 
                   <div style={{ display: "flex", gap: "14px", marginBottom: "20px" }}>
                     <div style={{ flex: 1 }}>
                       <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        PERFORMANCE
+                        OFFICIAL TARGET
                       </span>
                       <div
                         style={{
                           fontSize: "2.4rem",
                           fontWeight: 800,
                           fontFamily: "var(--font-geist-sans)",
-                          color: getScoreColor(results.market.perfScore),
+                          color: "#22c55e",
                           lineHeight: 1,
                           marginTop: "4px",
                         }}
                       >
-                        {results.market.perfScore}
-                        <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                        Pass
                       </div>
+                      <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>Core Web Vitals</span>
                     </div>
                     <div style={{ flex: 1 }}>
                       <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        SEO HEALTH
+                        SOURCE
                       </span>
                       <div
                         style={{
                           fontSize: "2.4rem",
                           fontWeight: 800,
                           fontFamily: "var(--font-geist-sans)",
-                          color: getScoreColor(results.market.seoScore),
+                          color: "var(--text)",
                           lineHeight: 1,
                           marginTop: "4px",
                         }}
                       >
-                        {results.market.seoScore}
-                        <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
+                        Google
                       </div>
+                      <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>Chrome Team</span>
                     </div>
                   </div>
 
-                  <div style={{ borderTop: "1px solid var(--border)", paddingTop: "14px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.86rem" }}>
+                  <div
+                    style={{
+                      borderTop: "1px solid var(--border)",
+                      paddingTop: "14px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      fontSize: "0.86rem",
+                    }}
+                  >
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Load Speed (LCP):</span>
-                      <strong style={{ color: "var(--text)" }}>
-                        {viewMode === "mobile" ? results.market.mobileLcp : results.market.desktopLcp}
-                      </strong>
+                      <span style={{ color: "var(--muted)" }}>Largest Contentful Paint (LCP):</span>
+                      <strong style={{ color: "#22c55e" }}>≤ 2.5s</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Page Weight:</span>
-                      <strong style={{ color: "var(--text)" }}>{results.market.pageSize}</strong>
+                      <span style={{ color: "var(--muted)" }}>Cumulative Layout Shift (CLS):</span>
+                      <strong style={{ color: "#22c55e" }}>≤ 0.1</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Network Requests:</span>
-                      <strong style={{ color: "var(--text)" }}>{results.market.requests} reqs</strong>
+                      <span style={{ color: "var(--muted)" }}>Interaction to Next Paint (INP):</span>
+                      <strong style={{ color: "#22c55e" }}>≤ 200ms</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <span style={{ color: "var(--muted)" }}>Market Status:</span>
-                      <strong style={{ color: "var(--muted)" }}>Average Baseline</strong>
+                      <span style={{ color: "var(--muted)" }}>Standard Source:</span>
+                      <strong style={{ color: "var(--muted)" }}>web.dev/vitals</strong>
                     </div>
                   </div>
                 </div>
 
-                {/* 4. techiitfly Standard (Target) */}
+                {/* 4. What we typically aim for */}
                 <div
                   style={{
                     background: "rgba(34,197,94,0.06)",
@@ -1010,7 +1217,7 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       textTransform: "uppercase",
                     }}
                   >
-                    techiitfly 7-Day Target
+                    What we typically aim for
                   </span>
                   <h3
                     style={{
@@ -1022,13 +1229,13 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       marginBottom: "16px",
                     }}
                   >
-                    Optimized Standard
+                    techiitfly Engineering Standard
                   </h3>
 
                   <div style={{ display: "flex", gap: "14px", marginBottom: "20px" }}>
                     <div style={{ flex: 1 }}>
                       <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        PERFORMANCE
+                        PERFORMANCE AIM
                       </span>
                       <div
                         style={{
@@ -1040,13 +1247,13 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                           marginTop: "4px",
                         }}
                       >
-                        {results.techiitfly.perfScore}
+                        90+
                         <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
                       </div>
                     </div>
                     <div style={{ flex: 1 }}>
                       <span style={{ fontSize: "0.72rem", fontFamily: "var(--font-geist-mono)", color: "var(--muted)" }}>
-                        SEO HEALTH
+                        SEO AIM
                       </span>
                       <div
                         style={{
@@ -1058,33 +1265,87 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                           marginTop: "4px",
                         }}
                       >
-                        {results.techiitfly.seoScore}
+                        90+
                         <span style={{ fontSize: "0.9rem", color: "var(--muted)" }}>/100</span>
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ borderTop: "1px solid rgba(34,197,94,0.2)", paddingTop: "14px", display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.86rem" }}>
+                  <div
+                    style={{
+                      borderTop: "1px solid rgba(34,197,94,0.2)",
+                      paddingTop: "14px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      fontSize: "0.86rem",
+                    }}
+                  >
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <span style={{ color: "var(--muted)" }}>Load Speed (LCP):</span>
-                      <strong style={{ color: "#22c55e" }}>
-                        {viewMode === "mobile" ? results.techiitfly.mobileLcp : results.techiitfly.desktopLcp}
-                      </strong>
+                      <strong style={{ color: "#22c55e" }}>&lt; 1.5s aim</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <span style={{ color: "var(--muted)" }}>Page Weight:</span>
-                      <strong style={{ color: "#22c55e" }}>{results.techiitfly.pageSize}</strong>
+                      <strong style={{ color: "#22c55e" }}>&lt; 1.0 MB target</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <span style={{ color: "var(--muted)" }}>Network Requests:</span>
-                      <strong style={{ color: "#22c55e" }}>{results.techiitfly.requests} reqs</strong>
+                      <strong style={{ color: "#22c55e" }}>Clean, lean bundle</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <span style={{ color: "var(--muted)" }}>Delivery Speed:</span>
-                      <strong style={{ color: "#22c55e" }}>Live in 7 Days</strong>
+                      <strong style={{ color: "#22c55e" }}>7-Day build process</strong>
                     </div>
                   </div>
+
+                  <div
+                    style={{
+                      marginTop: "14px",
+                      paddingTop: "10px",
+                      borderTop: "1px dashed rgba(34,197,94,0.25)",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.74rem",
+                      color: "var(--muted)",
+                      lineHeight: 1.45,
+                    }}
+                  >
+                    Scores vary with content and hosting. See our{" "}
+                    <Link
+                      href="/terms#no-results-guarantee"
+                      style={{ color: "#22c55e", textDecoration: "underline", fontWeight: 600 }}
+                    >
+                      Terms
+                    </Link>
+                    .
+                  </div>
                 </div>
+              </div>
+
+              {/* Verified line under results */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                  flexWrap: "wrap",
+                  marginBottom: "36px",
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.82rem",
+                  color: "var(--muted)",
+                  textAlign: "center",
+                }}
+              >
+                <span>Results from Google PageSpeed Insights, measured just now.</span>
+                <a
+                  href={`https://pagespeed.web.dev/analysis?url=https://${results.user.domain}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "var(--accent)", textDecoration: "underline", fontWeight: 600 }}
+                >
+                  Verify on PageSpeed ↗
+                </a>
               </div>
 
               {/* ── Diagnostic Breakdown & Actionable Insights ─────────────── */}
@@ -1097,7 +1358,16 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                   marginBottom: "40px",
                 }}
               >
-                <div style={{ display: "flex", gap: "10px", borderBottom: "1px solid var(--border)", paddingBottom: "14px", marginBottom: "24px", flexWrap: "wrap" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    borderBottom: "1px solid var(--border)",
+                    paddingBottom: "14px",
+                    marginBottom: "24px",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <button
                     onClick={() => setActiveTab("overview")}
                     style={{
@@ -1160,38 +1430,63 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       cursor: "pointer",
                     }}
                   >
-                    Competitor Takeaways
+                    Actionable Takeaways
                   </button>
                 </div>
 
                 {activeTab === "overview" && (
                   <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                    <div style={{ padding: "16px", background: "var(--surface-2)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+                    <div
+                      style={{
+                        padding: "16px",
+                        background: "var(--surface-2)",
+                        borderRadius: "var(--radius)",
+                        border: "1px solid var(--border)",
+                      }}
+                    >
                       <strong style={{ color: "var(--text)", display: "block", marginBottom: "4px" }}>
                         1. Mobile Page Weight Advantage
                       </strong>
                       <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.55 }}>
-                        Your website transfers {results.user.pageSize} on mobile, compared to {results.competitor.pageSize} on {results.competitor.domain}.
-                        Every 1 MB reduction in mobile page weight improves conversion rates by up to 8% according to Google.
+                        {results.user.error
+                          ? `Live test could not retrieve mobile page size for ${results.user.domain}. Excess page weight typically hurts conversion rates by up to 8% per MB on mobile networks.`
+                          : results.competitor && !results.competitor.error
+                          ? `Your website transfers ${results.user.pageSize} on mobile, compared to ${results.competitor.pageSize} on ${results.competitor.domain}. Every 1 MB reduction in mobile page weight improves conversion rates by up to 8% according to Google.`
+                          : `Your website transfers ${results.user.pageSize} on mobile. Lean pages under 1.0 MB ensure fast loading across mobile connections.`}
                       </p>
                     </div>
 
-                    <div style={{ padding: "16px", background: "var(--surface-2)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+                    <div
+                      style={{
+                        padding: "16px",
+                        background: "var(--surface-2)",
+                        borderRadius: "var(--radius)",
+                        border: "1px solid var(--border)",
+                      }}
+                    >
                       <strong style={{ color: "var(--text)", display: "block", marginBottom: "4px" }}>
                         2. First Contentful Render (LCP)
                       </strong>
                       <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.55 }}>
-                        Your site takes {results.user.mobileLcp} to render core headline content on mobile 4G.
-                        techiitfly builds static sites that load within 0.9s, well below Google&apos;s 2.5s Core Web Vitals threshold.
+                        {results.user.error
+                          ? `Google recommends Largest Contentful Paint (LCP) under 2.5s to pass Core Web Vitals thresholds.`
+                          : `Your site takes ${results.user.mobileLcp} to render core headline content on mobile. Google's published 'good' threshold is ≤ 2.5s.`}
                       </p>
                     </div>
 
-                    <div style={{ padding: "16px", background: "var(--surface-2)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+                    <div
+                      style={{
+                        padding: "16px",
+                        background: "var(--surface-2)",
+                        borderRadius: "var(--radius)",
+                        border: "1px solid var(--border)",
+                      }}
+                    >
                       <strong style={{ color: "var(--text)", display: "block", marginBottom: "4px" }}>
                         3. Instant Lead Capture &amp; WhatsApp Integration
                       </strong>
                       <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.55 }}>
-                        Most competitors rely on slow static contact forms that lose mobile visitors. Adding high-converting
+                        Most websites rely on slow static contact forms that lose mobile visitors. Adding high-converting
                         WhatsApp direct buttons and click-to-book consultation flows turns bounces into paying inquiries.
                       </p>
                     </div>
@@ -1206,17 +1501,19 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                         <strong style={{ color: "var(--text)" }}>Heavy Images &amp; Unused JavaScript</strong>
                         <p style={{ margin: "4px 0 0", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
                           WordPress and builder platforms load 40+ render-blocking script files before displaying the hero image.
-                          Switching to Next.js with modern WebP formats cuts load times by over 65%.
+                          Switching to Next.js with modern WebP formats cuts load times significantly.
                         </p>
                       </div>
                     </div>
                     <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                       <span style={{ color: "var(--accent)", fontSize: "1.2rem" }}>⚡</span>
                       <div>
-                        <strong style={{ color: "var(--text)" }}>Cumulative Layout Shift (CLS: {results.user.cls})</strong>
+                        <strong style={{ color: "var(--text)" }}>
+                          Cumulative Layout Shift (CLS: {results.user.error ? "N/A" : results.user.cls})
+                        </strong>
                         <p style={{ margin: "4px 0 0", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
                           Elements shifting while the page loads irritate mobile users. Proper dimension reservation ensures
-                          zero jarring jumps during visitor interactions.
+                          zero jarring jumps during visitor interactions (Google threshold: ≤ 0.1).
                         </p>
                       </div>
                     </div>
@@ -1240,8 +1537,8 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                       <div>
                         <strong style={{ color: "var(--text)" }}>Mobile-First Crawlability</strong>
                         <p style={{ margin: "4px 0 0", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                          Google indexes websites using its Smartphone crawler. Having a score of {results.user.seoScore}/100
-                          means search engines may de-prioritize your organic search ranking against faster peers.
+                          Google indexes websites using its Smartphone crawler. Having clean semantic HTML and fast Core Web
+                          Vitals helps search engines prioritize your organic search visibility.
                         </p>
                       </div>
                     </div>
@@ -1252,12 +1549,11 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                   <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                     <p style={{ margin: 0, fontSize: "0.92rem", color: "var(--text)", lineHeight: 1.6 }}>
                       In your market ({results.industry.name}), customers compare 2–3 options on their phone before inquiring.
-                      If your competitor takes <strong>{results.competitor.mobileLcp}</strong> and you take <strong>{results.user.mobileLcp}</strong>,
-                      the site that loads first and offers a frictionless WhatsApp or booking button wins the consultation.
+                      The site that loads first and offers a frictionless WhatsApp or booking button wins the consultation.
                     </p>
                     <p style={{ margin: 0, fontSize: "0.92rem", color: "var(--muted)", lineHeight: 1.6 }}>
-                      With our 7-day delivery guarantee, techiitfly delivers websites that benchmark at 95+ performance,
-                      out-ranking older, bloated competitor sites.
+                      With our 7-day website delivery, techiitfly aims for high performance (90+), out-ranking older, bloated
+                      competitor sites.
                     </p>
                   </div>
                 )}
@@ -1284,7 +1580,9 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                     marginBottom: "12px",
                   }}
                 >
-                  Ready to beat {results.competitor.domain}?
+                  {results.competitor && !results.competitor.error
+                    ? `Ready to beat ${results.competitor.domain}?`
+                    : `Ready to upgrade ${results.user.domain}?`}
                 </h3>
                 <p
                   style={{
@@ -1296,8 +1594,8 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                     lineHeight: 1.55,
                   }}
                 >
-                  We build fast, high-converting websites delivered in 7 days, backed by our 50% on-time guarantee.
-                  Share your comparison report with us for a fixed-price rebuild quote.
+                  We build fast, high-converting websites delivered in 7 days.
+                  Share your site with us for a fixed-price rebuild quote.
                 </p>
 
                 <div
@@ -1380,14 +1678,16 @@ I want a 7-day optimized website that outperforms my competitors and hits 95+ sp
                   >
                     Test {results.user.domain} ↗
                   </a>
-                  <a
-                    href={`https://pagespeed.web.dev/analysis?url=https://${results.competitor.domain}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "var(--accent)", textDecoration: "underline" }}
-                  >
-                    Test {results.competitor.domain} ↗
-                  </a>
+                  {results.competitor && (
+                    <a
+                      href={`https://pagespeed.web.dev/analysis?url=https://${results.competitor.domain}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "var(--accent)", textDecoration: "underline" }}
+                    >
+                      Test {results.competitor.domain} ↗
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
