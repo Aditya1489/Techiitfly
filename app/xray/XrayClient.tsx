@@ -139,7 +139,7 @@ async function callSinglePageSpeed(
   const domain = normalizeDomain(rawUrl);
   const targetUrl = `https://${domain}`;
 
-  const apiKey = process.env.NEXT_PUBLIC_PAGESPEED_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_PAGESPEED_KEY || "AIzaSyDlWKJFlHQkzECuaVlEEWvOY1gVsG5DEGM";
   const endpoint = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
   endpoint.searchParams.set("url", targetUrl);
   endpoint.searchParams.set("strategy", strategy);
