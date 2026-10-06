@@ -28,11 +28,6 @@ export interface BenchmarkMetrics {
   pageSize: string;
   pageSizeBytes: number;
   requests: number;
-  mobileFriendly: boolean;
-  hasSsl: boolean;
-  hasSchema: boolean;
-  hasFastCta: boolean;
-  grade: "A+" | "A" | "B" | "C" | "D";
   error?: string;
   errorReason?: string;
   cachedAt?: number;
@@ -48,40 +43,15 @@ interface SiteProgress {
 interface IndustryContext {
   id: string;
   name: string;
-  typicalWeakness: string;
 }
 
 const INDUSTRIES: IndustryContext[] = [
-  {
-    id: "yoga",
-    name: "Yoga & Wellness Retreats",
-    typicalWeakness: "Uncompressed retreat photography and sluggish booking forms slowing mobile conversions.",
-  },
-  {
-    id: "coaching",
-    name: "Coaching Classes & Tutors",
-    typicalWeakness: "Bloated third-party chat plugins and heavy student portal scripts causing mobile load delays.",
-  },
-  {
-    id: "clinic",
-    name: "Clinics & Healthcare",
-    typicalWeakness: "Missing local schema markup and lack of instant WhatsApp appointment scheduling.",
-  },
-  {
-    id: "b2b",
-    name: "Consulting & Professional Services",
-    typicalWeakness: "Heavy font files and slow PDF brochure gating leading to high bounce rates on mobile.",
-  },
-  {
-    id: "ecommerce",
-    name: "E-Commerce & Retail",
-    typicalWeakness: "Excessive tracking scripts and non-optimized catalog carousels hurting mobile checkout speed.",
-  },
-  {
-    id: "general",
-    name: "Other Business / General",
-    typicalWeakness: "Unoptimized WordPress themes with bloated CSS and missing Core Web Vitals optimizations.",
-  },
+  { id: "yoga", name: "Yoga & Wellness Retreats" },
+  { id: "coaching", name: "Coaching Classes & Tutors" },
+  { id: "clinic", name: "Clinics & Healthcare" },
+  { id: "b2b", name: "Consulting & Professional Services" },
+  { id: "ecommerce", name: "E-Commerce & Retail" },
+  { id: "general", name: "Other Business / General" },
 ];
 
 // Color palette for competitors in charts
@@ -186,11 +156,6 @@ async function callSinglePageSpeed(
         pageSize: "N/A",
         pageSizeBytes: 0,
         requests: 0,
-        mobileFriendly: false,
-        hasSsl: false,
-        hasSchema: false,
-        hasFastCta: false,
-        grade: "D",
         error: "Couldn't test this site",
         errorReason,
       };
@@ -218,11 +183,6 @@ async function callSinglePageSpeed(
         pageSize: "N/A",
         pageSizeBytes: 0,
         requests: 0,
-        mobileFriendly: false,
-        hasSsl: false,
-        hasSchema: false,
-        hasFastCta: false,
-        grade: "D",
         error: "Couldn't test this site",
         errorReason: "Incomplete Lighthouse response from Google",
       };
@@ -257,17 +217,6 @@ async function callSinglePageSpeed(
       parseInt(audits["network-requests"]?.displayValue) ||
       0;
 
-    const mobileFriendly = audits["viewport"]?.score === 1;
-    const hasSsl = audits["is-on-https"]?.score === 1;
-    const hasSchema = audits["structured-data"]?.score === 1;
-
-    let grade: "A+" | "A" | "B" | "C" | "D" = "C";
-    if (overallScore >= 90) grade = "A+";
-    else if (overallScore >= 80) grade = "A";
-    else if (overallScore >= 65) grade = "B";
-    else if (overallScore >= 50) grade = "C";
-    else grade = "D";
-
     return {
       domain,
       url: targetUrl,
@@ -287,11 +236,6 @@ async function callSinglePageSpeed(
       pageSize,
       pageSizeBytes,
       requests,
-      mobileFriendly,
-      hasSsl,
-      hasSchema,
-      hasFastCta: perfScore > 60,
-      grade,
       audits,
     };
   } catch (err: any) {
@@ -315,11 +259,6 @@ async function callSinglePageSpeed(
       pageSize: "N/A",
       pageSizeBytes: 0,
       requests: 0,
-      mobileFriendly: false,
-      hasSsl: false,
-      hasSchema: false,
-      hasFastCta: false,
-      grade: "D",
       error: "Couldn't test this site",
       errorReason: "Connection timed out or DNS could not resolve",
     };
@@ -2056,111 +1995,142 @@ export default function XrayClient() {
                     : `Executive Summary: Live Audit Status`}
                 </h3>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                    gap: "24px",
-                    marginBottom: "32px",
-                  }}
-                >
-                  {/* Where you're ahead */}
+                {userSite?.error ? (
                   <div
                     style={{
-                      padding: "20px",
-                      background: "rgba(34, 197, 94, 0.05)",
-                      border: "1px solid rgba(34, 197, 94, 0.2)",
+                      padding: "22px 24px",
+                      background: "rgba(239, 68, 68, 0.06)",
+                      border: "1px solid rgba(239, 68, 68, 0.2)",
                       borderRadius: "var(--radius)",
+                      color: "var(--text)",
                     }}
                   >
-                    <strong style={{ color: "#22c55e", display: "flex", alignItems: "center", gap: "6px", marginBottom: "10px", fontSize: "0.95rem" }}>
-                      <span>✓</span> Where You&apos;re Ahead
+                    <strong style={{ color: "#ef4444", fontSize: "1rem", display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                      <span>⚠️</span> Could Not Analyze {userSite.domain}
                     </strong>
-                    {aheadPoints.length > 0 ? (
-                      <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.6 }}>
-                        {aheadPoints.map((pt, i) => (
-                          <li key={i} style={{ marginBottom: "6px" }}>{pt}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                        Your competitors currently hold the lead across key speed and Core Web Vitals
-                        benchmarks. Review the top fixes below to reclaim the advantage.
-                      </p>
-                    )}
+                    <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.6 }}>
+                      Google PageSpeed Insights reported: <em style={{ color: "#ef4444" }}>{userSite.errorReason || "Connection failed"}</em>.
+                      Because live metrics could not be fetched for your website, relative benchmarking and code fixes cannot be determined.
+                      Verify that your domain is online, check for DNS or SSL configuration issues, or click below for a free manual audit.
+                    </p>
                   </div>
-
-                  {/* Where you're behind */}
-                  <div
-                    style={{
-                      padding: "20px",
-                      background: "rgba(245, 158, 11, 0.05)",
-                      border: "1px solid rgba(245, 158, 11, 0.2)",
-                      borderRadius: "var(--radius)",
-                    }}
-                  >
-                    <strong style={{ color: "var(--accent)", display: "flex", alignItems: "center", gap: "6px", marginBottom: "10px", fontSize: "0.95rem" }}>
-                      <span>⚡</span> Where You&apos;re Behind
-                    </strong>
-                    {behindPoints.length > 0 ? (
-                      <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.6 }}>
-                        {behindPoints.map((pt, i) => (
-                          <li key={i} style={{ marginBottom: "6px" }}>{pt}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                        Your site leads the competitor field on tested metrics. Focus on ongoing
-                        caching and schema optimization to maintain your search ranking.
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Top 3 Fixes for visitor site */}
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 700, margin: "0 0 16px" }}>
-                    Top 3 Recommended Fixes for {userSite ? userSite.domain : "Your Website"}
-                  </h4>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
-                    {topFixes.map((fix, idx) => (
+                ) : (
+                  <>
+                    {competitorSites.length > 0 && (
                       <div
-                        key={fix.id}
                         style={{
-                          background: "var(--surface-2)",
-                          border: "1px solid var(--border)",
-                          borderRadius: "var(--radius)",
-                          padding: "18px 16px",
+                          display: "grid",
+                          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                          gap: "24px",
+                          marginBottom: "32px",
                         }}
                       >
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
-                          <span style={{ fontSize: "0.76rem", fontWeight: 800, fontFamily: "var(--font-geist-mono)", color: "var(--accent)" }}>
-                            Fix #{idx + 1}
-                          </span>
-                          <span
-                            style={{
-                              background: "rgba(34, 197, 94, 0.15)",
-                              color: "#22c55e",
-                              fontSize: "0.72rem",
-                              fontWeight: 700,
-                              padding: "2px 8px",
-                              borderRadius: "999px",
-                              fontFamily: "var(--font-geist-mono)",
-                            }}
-                          >
-                            {fix.savings}
-                          </span>
+                        {/* Where you're ahead */}
+                        <div
+                          style={{
+                            padding: "20px",
+                            background: "rgba(34, 197, 94, 0.05)",
+                            border: "1px solid rgba(34, 197, 94, 0.2)",
+                            borderRadius: "var(--radius)",
+                          }}
+                        >
+                          <strong style={{ color: "#22c55e", display: "flex", alignItems: "center", gap: "6px", marginBottom: "10px", fontSize: "0.95rem" }}>
+                            <span>✓</span> Where You&apos;re Ahead
+                          </strong>
+                          {aheadPoints.length > 0 ? (
+                            <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.6 }}>
+                              {aheadPoints.map((pt, i) => (
+                                <li key={i} style={{ marginBottom: "6px" }}>{pt}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
+                              Your competitors currently lead on tested performance and Core Web Vitals metrics.
+                            </p>
+                          )}
                         </div>
-                        <strong style={{ fontSize: "0.92rem", color: "var(--text)", display: "block", marginBottom: "6px" }}>
-                          {fix.title}
-                        </strong>
-                        <p style={{ margin: 0, fontSize: "0.84rem", color: "var(--muted)", lineHeight: 1.5 }}>
-                          {fix.explanation}
-                        </p>
+
+                        {/* Where you're behind */}
+                        <div
+                          style={{
+                            padding: "20px",
+                            background: "rgba(245, 158, 11, 0.05)",
+                            border: "1px solid rgba(245, 158, 11, 0.2)",
+                            borderRadius: "var(--radius)",
+                          }}
+                        >
+                          <strong style={{ color: "var(--accent)", display: "flex", alignItems: "center", gap: "6px", marginBottom: "10px", fontSize: "0.95rem" }}>
+                            <span>⚡</span> Where You&apos;re Behind
+                          </strong>
+                          {behindPoints.length > 0 ? (
+                            <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.6 }}>
+                              {behindPoints.map((pt, i) => (
+                                <li key={i} style={{ marginBottom: "6px" }}>{pt}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
+                              Your website holds the lead against the tested competitors on key performance metrics.
+                            </p>
+                          )}
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    )}
+
+                    {/* Top Fixes for visitor site (only genuine live opportunities) */}
+                    <div>
+                      <h4 style={{ fontSize: "1.1rem", fontWeight: 700, margin: "0 0 16px" }}>
+                        {topFixes.length > 0
+                          ? `Top Recommended Fixes for ${userSite?.domain || "Your Website"}`
+                          : `Lighthouse Audit Findings for ${userSite?.domain || "Your Website"}`}
+                      </h4>
+                      {topFixes.length > 0 ? (
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
+                          {topFixes.map((fix, idx) => (
+                            <div
+                              key={fix.id}
+                              style={{
+                                background: "var(--surface-2)",
+                                border: "1px solid var(--border)",
+                                borderRadius: "var(--radius)",
+                                padding: "18px 16px",
+                              }}
+                            >
+                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
+                                <span style={{ fontSize: "0.76rem", fontWeight: 800, fontFamily: "var(--font-geist-mono)", color: "var(--accent)" }}>
+                                  Opportunity #{idx + 1}
+                                </span>
+                                <span
+                                  style={{
+                                    background: "rgba(34, 197, 94, 0.15)",
+                                    color: "#22c55e",
+                                    fontSize: "0.72rem",
+                                    fontWeight: 700,
+                                    padding: "2px 8px",
+                                    borderRadius: "999px",
+                                    fontFamily: "var(--font-geist-mono)",
+                                  }}
+                                >
+                                  {fix.savings}
+                                </span>
+                              </div>
+                              <strong style={{ fontSize: "0.92rem", color: "var(--text)", display: "block", marginBottom: "6px" }}>
+                                {fix.title}
+                              </strong>
+                              <p style={{ margin: 0, fontSize: "0.84rem", color: "var(--muted)", lineHeight: 1.5 }}>
+                                {fix.explanation}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.5 }}>
+                          Google Lighthouse did not flag any major performance opportunities for this page.
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* ── SECTION: TARGET CARD & GOOGLE THRESHOLDS ───────────────── */}

@@ -1,6 +1,9 @@
 /**
  * Plain-language explanations and savings extraction for Google Lighthouse performance audits.
  * Rule-based translation from raw Lighthouse audit IDs to actionable, client-friendly recommendations.
+ * 
+ * NOTE: Strictly zero simulated or hardcoded fake savings. Only genuine opportunities
+ * flagged in the live Google Lighthouse audit payload are returned.
  */
 
 export interface LighthouseAuditFix {
@@ -93,7 +96,7 @@ const AUDIT_EXPLANATIONS: Record<
 };
 
 export function extractTopFixes(audits: Record<string, any> | undefined): LighthouseAuditFix[] {
-  if (!audits) return getDefaultFixes();
+  if (!audits) return [];
 
   const candidates: LighthouseAuditFix[] = [];
 
@@ -101,13 +104,13 @@ export function extractTopFixes(audits: Record<string, any> | undefined): Lighth
     const audit = audits[id];
     if (!audit) continue;
 
-    // Check if audit failed or has room for improvement (score < 1 or displayValue indicates savings)
     const score = audit.score != null ? audit.score : 1;
     const savingsMs = audit.details?.overallSavingsMs || 0;
     const savingsBytes = audit.details?.overallSavingsBytes || 0;
     const displayValue = audit.displayValue || "";
 
-    if (score < 0.9 || savingsMs > 100 || savingsBytes > 50000 || displayValue) {
+    // Only include if Lighthouse flagged this audit as failing or having measurable savings
+    if (score < 0.9 || savingsMs > 50 || savingsBytes > 10000) {
       let savingsLabel = "";
       let impact = 0;
 
@@ -118,13 +121,13 @@ export function extractTopFixes(audits: Record<string, any> | undefined): Lighth
       } else if (savingsBytes > 0) {
         const kb = Math.round(savingsBytes / 1024);
         savingsLabel = kb >= 1000 ? `Save ~${(kb / 1024).toFixed(1)} MB` : `Save ~${kb} KB`;
-        impact = savingsBytes / 100; // normalized weight
+        impact = savingsBytes / 100;
       } else if (displayValue) {
         savingsLabel = displayValue;
-        impact = 150;
-      } else {
-        savingsLabel = "Core Web Vitals improvement";
         impact = 100;
+      } else {
+        savingsLabel = "Flagged by Lighthouse";
+        impact = 50;
       }
 
       candidates.push({
@@ -137,50 +140,7 @@ export function extractTopFixes(audits: Record<string, any> | undefined): Lighth
     }
   }
 
-  // Sort candidates by estimated impact (highest first)
+  // Sort candidates by estimated impact (highest first) and return up to 3 genuine fixes
   candidates.sort((a, b) => b.impactScore - a.impactScore);
-
-  if (candidates.length >= 3) {
-    return candidates.slice(0, 3);
-  }
-
-  // If fewer than 3 detected, supplement with standard web performance recommendations
-  const defaults = getDefaultFixes();
-  for (const d of defaults) {
-    if (candidates.length >= 3) break;
-    if (!candidates.some((c) => c.id === d.id)) {
-      candidates.push(d);
-    }
-  }
-
   return candidates.slice(0, 3);
-}
-
-function getDefaultFixes(): LighthouseAuditFix[] {
-  return [
-    {
-      id: "render-blocking-resources",
-      title: "Eliminate render-blocking resources",
-      savings: "Save ~1.2s",
-      explanation:
-        "CSS and JavaScript files prevent the browser from rendering headline text and images. Deferring non-critical scripts and inlining critical CSS speeds up first content render.",
-      impactScore: 1200,
-    },
-    {
-      id: "modern-image-formats",
-      title: "Serve images in modern WebP / AVIF formats",
-      savings: "Save ~650 KB",
-      explanation:
-        "Legacy JPEG and PNG images consume 50–70% more bandwidth than modern WebP or AVIF formats. Converting images drastically reduces mobile load delays.",
-      impactScore: 1000,
-    },
-    {
-      id: "unused-javascript",
-      title: "Reduce unused JavaScript",
-      savings: "Save ~380 KB",
-      explanation:
-        "Large script bundles and unused third-party plugins are downloaded but never executed. Code-splitting and removing bloated plugins saves mobile CPU time and cellular data.",
-      impactScore: 800,
-    },
-  ];
 }
