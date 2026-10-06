@@ -10,24 +10,32 @@ interface FaqItem {
 
 const FAQS: FaqItem[] = [
   {
-    q: "Can you really deliver a website in one week?",
-    a: "Yes — Starter websites (up to 5 pages) go live in 7 days once we receive your content. Business websites take 7–10 days.",
+    q: "How much does a website cost?",
+    a: "Every project gets a fixed price after a free 15-minute call. You can also see our starting packages on the Pricing page.",
   },
   {
-    q: "How many revisions are included?",
-    a: "Starter package includes one round of design changes. Business and Premium packages include two rounds of revisions. Extra rounds are charged separately.",
+    q: "How fast is it really?",
+    a: "Starter websites (up to 5 pages) launch in 7 days guaranteed, counted from the day we receive your content. Business websites typically launch in 7–10 days.",
+  },
+  {
+    q: "How many revisions do I get?",
+    a: "Our Starter package includes one round of design changes. Business and custom packages include two rounds of revisions. Extra rounds or scope changes are quoted separately before any work begins.",
   },
   {
     q: "How does payment work?",
-    a: "50% advance to start, 50% on delivery. For monthly IT services, billing is monthly.",
+    a: "50% advance to start, and 50% on delivery once the site is tested and approved. For monthly maintenance, billing is month-to-month.",
   },
   {
-    q: "Do I own the source code?",
-    a: "Yes. After the final payment, the code and design files are yours.",
+    q: "Do I own the website?",
+    a: "Yes. Once the final payment is complete, full ownership of the code, content, and design files is transferred to you. No vendor lock-in.",
   },
   {
-    q: "Do you offer support after launch?",
-    a: "Every package has free support for a set period. After that you can choose a monthly maintenance plan.",
+    q: "What's not included?",
+    a: "Domain registration, third-party software subscriptions, and payment gateway transaction fees are paid directly to providers. Extra pages, blog platforms, or custom web apps are quoted separately.",
+  },
+  {
+    q: "What happens after launch?",
+    a: "Every website includes 14 to 30 days of post-launch bug fixing and support. After that, you can subscribe to our monthly maintenance plan for updates, backups, and security, or manage the site yourself.",
   },
 ];
 

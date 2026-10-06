@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { SITE } from "@/content/site";
+import { SITE, getConsultUrl } from "@/content/site";
 import { hasFounderBio } from "@/content/about";
 import { trackEvent } from "@/lib/tracking";
 
@@ -82,6 +82,7 @@ const NAV_LINKS: NavItem[] = [
   { id: "work", label: "Work", href: "/#work" },
   { id: "pricing", label: "Pricing", href: "/pricing" },
   { id: "mathsy-meet", label: "Mathsy Meet", href: "/mathsy-meet" },
+  ...(hasFounderBio ? [{ id: "about", label: "About", href: "/#about" }] : []),
   { id: "contact", label: "Contact", href: "/#contact" },
 ];
 
@@ -335,11 +336,12 @@ export default function Header() {
         <ThemeToggle />
 
         <motion.a
-          href={SITE.whatsappUrl}
+          href={getConsultUrl()}
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
+          onClick={() => trackEvent("consult_click", "header_nav")}
           className="desktop-nav"
           style={{
             fontFamily: "var(--font-geist-sans)",
@@ -353,7 +355,7 @@ export default function Header() {
             whiteSpace: "nowrap",
           }}
         >
-          Let&apos;s talk
+          Book a free call
         </motion.a>
 
         {/* Mobile menu hamburger toggle */}
@@ -449,10 +451,13 @@ export default function Header() {
               );
             })}
             <a
-              href={SITE.whatsappUrl}
+              href={getConsultUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                trackEvent("consult_click", "header_mobile");
+                setMobileMenuOpen(false);
+              }}
               style={{
                 fontFamily: "var(--font-geist-sans)",
                 fontSize: "0.95rem",
@@ -466,7 +471,7 @@ export default function Header() {
                 marginTop: "8px",
               }}
             >
-              Let&apos;s talk on WhatsApp
+              Book a free call
             </a>
           </motion.div>
         )}

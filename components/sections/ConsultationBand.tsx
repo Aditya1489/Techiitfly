@@ -1,13 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { SITE, getConsultUrl } from "@/content/site";
 import { getWhatsAppHref, trackEvent } from "@/lib/tracking";
 
 export default function ConsultationBand() {
   const points = [
-    "Tell us about your business and goals",
-    "Get honest advice on what you actually need",
-    "Leave with a clear plan and a fixed-price quote",
+    "Tell us about your business",
+    "Get honest advice",
+    "Leave with a fixed-price quote",
   ];
 
   return (
@@ -110,16 +111,16 @@ export default function ConsultationBand() {
             ))}
           </div>
 
-          {/* Actions: Button + WhatsApp Text Link */}
+          {/* Actions: Button "Book my free call" + text link "/xray" */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "14px",
+              gap: "16px",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap", justifyContent: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", justifyContent: "center" }}>
               <a
                 href={getConsultUrl()}
                 target="_blank"
@@ -130,7 +131,7 @@ export default function ConsultationBand() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  padding: "15px 30px",
+                  padding: "15px 32px",
                   borderRadius: "8px",
                   fontFamily: "var(--font-geist-sans)",
                   fontSize: "1rem",
@@ -140,35 +141,32 @@ export default function ConsultationBand() {
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
               >
-                <span>Book my free consultation</span>
+                <span>Book my free call</span>
                 <span>→</span>
               </a>
 
-              <a
-                href={getWhatsAppHref("Hi techiitfly, I'd like to book a free 15-minute consultation.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("whatsapp_click", "consultation_band")}
+              <Link
+                href="/xray"
                 className="consultation-wa-link"
                 style={{
                   fontFamily: "var(--font-geist-sans)",
-                  fontSize: "0.92rem",
+                  fontSize: "0.95rem",
                   fontWeight: 600,
                   textDecoration: "underline",
                   textUnderlineOffset: "4px",
                 }}
               >
-                Prefer WhatsApp? Message us
-              </a>
+                Or get a free audit of your current website →
+              </Link>
             </div>
 
             {/* Desktop (≥1024px) Phone & Email note */}
             <div
               className="desktop-only"
               style={{
-                fontSize: "0.76rem",
+                fontSize: "0.8rem",
                 fontFamily: "var(--font-geist-mono)",
-                marginTop: "4px",
+                marginTop: "6px",
                 opacity: 0.85,
               }}
             >

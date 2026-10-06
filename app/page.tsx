@@ -2,14 +2,17 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/hero/Hero";
+import ClientLogos from "@/components/sections/ClientLogos";
+import HowItWorks from "@/components/sections/HowItWorks";
 import ServicesSection from "@/components/sections/ServicesSection";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Testimonials from "@/components/sections/Testimonials";
+import FounderSection from "@/components/sections/FounderSection";
+import ComparisonTable from "@/components/sections/ComparisonTable";
 import Guarantee from "@/components/sections/Guarantee";
 import ConsultationBand from "@/components/sections/ConsultationBand";
-import CompactProducts from "@/components/sections/CompactProducts";
 import FaqSection from "@/components/sections/FaqSection";
-import Contact from "@/components/sections/Contact";
+import FinalCta from "@/components/sections/FinalCta";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
 import { SITE } from "@/content/site";
 
@@ -36,36 +39,45 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main style={{ paddingBottom: "40px" }}>
-        {/* 1. Hero */}
+      <main style={{ paddingBottom: "20px" }}>
+        {/* 1. HERO */}
         <Hero />
 
-        {/* 2. Services & Packages */}
+        {/* 2. CLIENT LOGOS (from clients.ts; hidden if fewer than 2) */}
+        <ClientLogos />
+
+        {/* 3. HOW IT WORKS */}
+        <HowItWorks />
+
+        {/* 4. OUR SERVICES (no prices on home) */}
         <ServicesSection />
 
-        {/* 3. Selected Work (Client websites only) */}
+        {/* 5. OUR WORK (YogaGarhi, Yogic Path, Mathsy Meet) */}
         <SelectedWork />
 
-        {/* 4. Testimonials (Hidden if empty in content/testimonials.ts) */}
+        {/* 6. REVIEWS (hidden while empty) */}
         <Testimonials />
 
-        {/* 5. 7-Day Guarantee */}
+        {/* 7. FOUNDER (hidden while empty) */}
+        <FounderSection />
+
+        {/* 8. COMPARISON TABLE */}
+        <ComparisonTable />
+
+        {/* 9. GUARANTEE */}
         <Guarantee />
 
-        {/* 6. Free Consultation Band */}
+        {/* 10. FREE CONSULTATION BAND */}
         <ConsultationBand />
 
-        {/* 7. Our Products (Compact) */}
-        <CompactProducts />
-
-        {/* 8. FAQ */}
+        {/* 11. FAQ */}
         <FaqSection />
 
-        {/* 9. Contact */}
-        <Contact />
+        {/* 12. FINAL CTA */}
+        <FinalCta />
       </main>
 
-      {/* Mobile Sticky Bar (Free Consultation + WhatsApp) */}
+      {/* Mobile Sticky Bar (Free consultation + WhatsApp) */}
       <MobileStickyBar />
 
       <Footer />

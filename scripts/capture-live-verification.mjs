@@ -59,19 +59,30 @@ async function verifyAndCapture() {
     // If mobile, open mobile menu to capture full nav links
     if (vp.width < 768) {
       console.log(`Opening mobile menu for ${vp.name}...`);
-      const menuBtn = await page.$('button[aria-label="Toggle menu"]');
+      const menuBtn = await page.$('button[aria-label="Toggle navigation menu"]');
       if (menuBtn) {
         await menuBtn.click();
-        await new Promise((r) => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 600));
         await page.screenshot({
           path: path.join(OUTPUT_DIR, `nav_mobile_menu_open_${vp.name}.png`),
         });
         await menuBtn.click(); // close menu
-        await new Promise((r) => setTimeout(r, 300));
+        await new Promise((r) => setTimeout(r, 400));
       }
     }
 
-    // 2. Products Section (#products)
+    // 2. Services Section (#services - showing no prices)
+    console.log(`Capturing Home Services Section for ${vp.name}...`);
+    const servicesEl = await page.$("#services");
+    if (servicesEl) {
+      await servicesEl.scrollIntoView();
+      await new Promise((r) => setTimeout(r, 600));
+      await servicesEl.screenshot({
+        path: path.join(OUTPUT_DIR, `home_services_${vp.name}.png`),
+      });
+    }
+
+    // 3. Products Section (#products - no price)
     console.log(`Capturing Home Products Section for ${vp.name}...`);
     const productsEl = await page.$("#products");
     if (productsEl) {
@@ -84,7 +95,7 @@ async function verifyAndCapture() {
       console.warn("Could not find #products element!");
     }
 
-    // 3. Footer
+    // 4. Footer
     console.log(`Capturing Footer for ${vp.name}...`);
     const footerEl = await page.$("footer");
     if (footerEl) {

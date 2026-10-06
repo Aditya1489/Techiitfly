@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getConsultUrl } from "@/content/site";
+import { SITE, getConsultUrl } from "@/content/site";
 import { trackEvent } from "@/lib/tracking";
 
 interface HeroSlide {
@@ -38,17 +38,6 @@ const HERO_SLIDES: HeroSlide[] = [
     desktopImg: "/screenshots/yogicpath-desktop.webp",
     mobileImg: "/screenshots/yogicpath-mobile.webp",
     alt: "Yogic Path client website desktop preview",
-  },
-  {
-    id: "mathsy",
-    name: "Mathsy",
-    domain: "mathsy.in",
-    badge: "● Live Platform",
-    badgeColor: "#38bdf8",
-    url: "https://mathsy.in",
-    desktopImg: "/screenshots/mathsy-homepage.png",
-    mobileImg: "/screenshots/mathsy-mobile.webp",
-    alt: "Mathsy Learning Platform front page preview",
   },
 ];
 
@@ -168,8 +157,7 @@ export default function Hero() {
               marginBottom: "16px",
             }}
           >
-            We build websites that{" "}
-            <em style={{ color: "var(--accent)", fontStyle: "italic" }}>prove</em> themselves.
+            Websites that bring you customers. Live in 7 days.
           </h1>
 
           {/* Subline */}
@@ -182,19 +170,22 @@ export default function Hero() {
               marginBottom: "28px",
             }}
           >
-            Fast, mobile-friendly websites for growing businesses — fixed prices, live in 7 days, guaranteed.
+            Fast, mobile-friendly websites for growing businesses, built by Aditya Chavhan. Fixed-price quotes and guaranteed delivery.
           </p>
 
           {/* CTAs */}
           <div style={{ marginBottom: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-              {/* Primary Filled CTA (scrolls to Services) */}
+              {/* Primary Filled CTA (consultUrl) */}
               <a
-                href="#services"
+                href={getConsultUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("consult_click", "hero")}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "10px",
+                  gap: "8px",
                   padding: "14px 26px",
                   borderRadius: "8px",
                   background: "var(--accent)",
@@ -207,15 +198,13 @@ export default function Hero() {
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
               >
-                <span>Get my website in 7 days →</span>
+                <span>Book a free 15-min consultation</span>
+                <span>↗</span>
               </a>
 
-              {/* Secondary Consultation Button (Outlined) */}
+              {/* Secondary CTA (scrolls to Work) */}
               <a
-                href={getConsultUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("consult_click", "hero")}
+                href="#work"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -240,17 +229,18 @@ export default function Hero() {
                   e.currentTarget.style.color = "var(--text)";
                 }}
               >
-                <span>Book a free 15-min consultation</span>
-                <span style={{ color: "var(--accent)" }}>↗</span>
+                <span>See our work</span>
+                <span>↓</span>
               </a>
             </div>
           </div>
 
-          {/* Small mono text under buttons */}
+          {/* Trust line */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
+              flexWrap: "wrap",
               gap: "8px",
               fontFamily: "var(--font-geist-mono)",
               fontSize: "0.78rem",
@@ -259,11 +249,19 @@ export default function Hero() {
               paddingTop: "6px",
             }}
           >
-            <span>Free consultation</span>
+            <span>Fixed-price quote in 24 hours</span>
             <span>·</span>
-            <span>Fixed prices</span>
+            <span>7-day delivery guarantee</span>
             <span>·</span>
-            <span>Live in 7 days</span>
+            <span>You own the code</span>
+            {SITE.googleRating && SITE.googleReviewCount ? (
+              <>
+                <span>·</span>
+                <span style={{ color: "var(--accent)" }}>
+                  ★ {SITE.googleRating} ({SITE.googleReviewCount} reviews)
+                </span>
+              </>
+            ) : null}
           </div>
         </div>
 

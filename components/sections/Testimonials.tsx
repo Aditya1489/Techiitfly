@@ -22,7 +22,7 @@ export default function Testimonials() {
       <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <p className="section-label" style={{ marginBottom: "12px", display: "inline-block" }}>
-            CLIENT FEEDBACK
+            REVIEWS
           </p>
           <h2
             style={{
@@ -34,7 +34,7 @@ export default function Testimonials() {
               marginBottom: "12px",
             }}
           >
-            Real results from growing businesses.
+            What our clients say
           </h2>
           {SITE.googleReviewsUrl && (
             <p style={{ marginTop: "12px" }}>
@@ -49,7 +49,7 @@ export default function Testimonials() {
                   textDecoration: "none",
                 }}
               >
-                Read our reviews on Google →
+                Read all reviews on Google →
               </a>
             </p>
           )}
