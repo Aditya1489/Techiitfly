@@ -9,7 +9,10 @@ export type TrackingEventType =
   | "consult_click"
   | "begin_checkout"
   | "terms_accepted"
-  | "purchase";
+  | "purchase"
+  | "meet_plan_click"
+  | "feature_request"
+  | "meet_walkthrough_click";
 
 export function getStoredUtmSource(): string | null {
   if (typeof window === "undefined") return null;
@@ -47,6 +50,8 @@ export function trackEvent(
     transaction_id?: string;
     item_name?: string;
     terms_version?: string;
+    plan?: string;
+    billing?: string;
   }
 ) {
   if (typeof window === "undefined") return;

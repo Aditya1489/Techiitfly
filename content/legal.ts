@@ -230,6 +230,7 @@ export function getLegalText(): {
         `16.1 Mathsy Meet is a software product owned by techiitfly. Using it does not transfer ownership of the software to you.`,
         `16.2 Access is licensed, not sold, under a separate subscription or licence agreement that sets out pricing, usage limits, support and data terms. That agreement applies in addition to these Terms.`,
         `16.3 Free demos, trials and walkthroughs are provided as-is and may be changed or ended at any time.`,
+        `16.4 Custom features. Solo Tutor and Pro Tutor subscribers can request custom features, which are quoted and charged separately. For the Academy plan, custom features are included as agreed in writing during onboarding. Custom features become part of Mathsy Meet and remain owned by techiitfly, unless we agree otherwise in writing.`,
       ],
     },
     {

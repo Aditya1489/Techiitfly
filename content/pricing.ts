@@ -35,6 +35,26 @@ export interface AddonItem {
   note?: string;
 }
 
+export interface MeetPlanItem {
+  id: "solo" | "pro" | "academy";
+  name: string;
+  monthly?: number;
+  yearly?: number;
+  custom?: boolean;
+  maxStudents?: number;
+  customFeatures: "paid" | "included";
+  includedDevHoursPerMonth?: number;
+  popular?: boolean;
+}
+
+export interface MeetOffersConfig {
+  foundingPrice: { enabled: boolean; seats: number; seatsLeft: number };
+  referral: { enabled: boolean; reward: string };
+  moneyBack: { enabled: boolean; days: number };
+  freeTrialDays: number;
+  freeSetupCall: { enabled: boolean };
+}
+
 export interface MeetPricing {
   meetMonthly: number;
   priceText: string;
@@ -44,6 +64,13 @@ export interface MeetPricing {
   bullets: string[];
   primaryCtaText: string;
   trialCtaText: string;
+  customFeatureFrom: number | null;
+  plans: {
+    solo: MeetPlanItem;
+    pro: MeetPlanItem;
+    academy: MeetPlanItem;
+  };
+  offers: MeetOffersConfig;
 }
 
 export interface PricingConfig {
@@ -101,8 +128,45 @@ export const PRICING_CONFIG: PricingConfig = {
     ],
     primaryCtaText: "Book a free walkthrough",
     trialCtaText: "Start your free trial",
+    customFeatureFrom: 4999,
+    plans: {
+      solo: {
+        id: "solo",
+        name: "Solo Tutor",
+        monthly: 999,
+        yearly: 9990,
+        maxStudents: 30,
+        customFeatures: "paid",
+      },
+      pro: {
+        id: "pro",
+        name: "Pro Tutor",
+        monthly: 1999,
+        yearly: 19990,
+        maxStudents: 100,
+        customFeatures: "paid",
+        popular: true,
+      },
+      academy: {
+        id: "academy",
+        name: "Academy",
+        custom: true,
+        customFeatures: "included",
+        includedDevHoursPerMonth: 10,
+      },
+    },
+    offers: {
+      foundingPrice: { enabled: false, seats: 50, seatsLeft: 50 },
+      referral: { enabled: false, reward: "1 month free" },
+      moneyBack: { enabled: false, days: 7 },
+      freeTrialDays: 0,
+      freeSetupCall: { enabled: true },
+    },
   },
 };
+
+export const MEET_PLANS = PRICING_CONFIG.meet.plans;
+export const MEET_OFFERS = PRICING_CONFIG.meet.offers;
 
 /**
  * Returns true if launchOffer is enabled AND endsOn is a valid future date.

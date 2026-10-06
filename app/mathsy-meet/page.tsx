@@ -4,6 +4,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MeetLabEmbed from "@/components/meet/MeetLabEmbed";
 import MeetWalkthroughButton from "@/components/meet/MeetWalkthroughButton";
+import MeetBenefitsSection from "@/components/meet/MeetBenefitsSection";
+import MeetCustomiseSection from "@/components/meet/MeetCustomiseSection";
+import MeetOffersStrip from "@/components/meet/MeetOffersStrip";
+import MeetPlanCards from "@/components/meet/MeetPlanCards";
+import MeetFaqSection from "@/components/meet/MeetFaqSection";
 import { SITE, getConsultUrl } from "@/content/site";
 import { PRICING_CONFIG } from "@/content/pricing";
 
@@ -184,6 +189,9 @@ export default function MathsyMeetPage() {
           </div>
         </section>
 
+        {/* ─── a2) Why Tutors Choose Mathsy Meet ─────────────────────────── */}
+        <MeetBenefitsSection />
+
         {/* ─── b) The Math Tools (Interactive Live Lab Embed) ─────────────── */}
         <section
           id="tools"
@@ -316,215 +324,29 @@ export default function MathsyMeetPage() {
           </div>
         </section>
 
-        {/* ─── d) Plans & Access ─────────────────────────────────────────── */}
-        <section
-          id="plans"
-          style={{
-            padding: "80px 24px",
-            borderBottom: "1px solid var(--border)",
-            background: "var(--bg)",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: "800px",
-              margin: "0 auto",
-              textAlign: "center",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius-lg)",
-              padding: "48px 32px",
-            }}
-          >
-            <span className="section-label">GET ACCESS</span>
-            <h2
-              style={{
-                fontFamily: "var(--font-instrument-serif)",
-                fontSize: "clamp(2.1rem, 4vw, 3.2rem)",
-                fontWeight: 400,
-                color: "var(--text)",
-                marginTop: "8px",
-                marginBottom: "16px",
-              }}
-            >
-              Get access for your teaching practice.
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "1.05rem",
-                color: "var(--muted)",
-                lineHeight: 1.6,
-                maxWidth: "600px",
-                margin: "0 auto 28px",
-              }}
-            >
-              Tutor subscription tiers and classroom room plans are available for solo math tutors, tutoring pairs, and educators.
-            </p>
+        {/* ─── d) Shape Mathsy Meet to Your Teaching (Customise) ──────────── */}
+        <MeetCustomiseSection />
 
-            <a
-              href={SITE.whatsappTutorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: "var(--accent)",
-                color: "var(--primary-btn-text)",
-                padding: "14px 28px",
-                borderRadius: "8px",
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "1rem",
-                fontWeight: 600,
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <span>Get Access on WhatsApp</span>
-              <span>→</span>
-            </a>
-          </div>
-        </section>
-
-        {/* ─── d2) Pricing ───────────────────────────────────────────────── */}
+        {/* ─── e) Pricing & Plans ─────────────────────────────────────────── */}
         <section
           id="pricing"
           style={{
-            padding: "80px 24px",
+            padding: "85px 24px",
             borderBottom: "1px solid var(--border)",
             background: "var(--bg)",
           }}
         >
-          <div
-            style={{
-              maxWidth: "800px",
-              margin: "0 auto",
-              textAlign: "center",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius-lg)",
-              padding: "48px 32px",
-            }}
-          >
-            <span className="section-label">SIMPLE PRICING</span>
-            <h2
-              style={{
-                fontFamily: "var(--font-instrument-serif)",
-                fontSize: "clamp(2.1rem, 4vw, 3.2rem)",
-                fontWeight: 400,
-                color: "var(--text)",
-                marginTop: "8px",
-                marginBottom: "16px",
-              }}
-            >
-              Teach without screen-sharing limits.
-            </h2>
-            <div
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "clamp(1.5rem, 3.2vw, 2.2rem)",
-                fontWeight: 800,
-                color: "var(--accent)",
-                marginBottom: "24px",
-              }}
-            >
-              {PRICING_CONFIG.meet.priceText}
-            </div>
+          {/* Conditional Offers Strip (only enabled items shown) */}
+          <MeetOffersStrip />
 
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: "0 auto 36px",
-                maxWidth: "600px",
-                textAlign: "left",
-                display: "flex",
-                flexDirection: "column",
-                gap: "12px",
-              }}
-            >
-              {[
-                ...(PRICING_CONFIG.meet.meetUnlimitedClasses ? ["Unlimited classes"] : []),
-                ...PRICING_CONFIG.meet.bullets,
-              ].map((bullet) => (
-                <li
-                  key={bullet}
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "10px",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.95rem",
-                    color: "var(--text)",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  <span style={{ color: "var(--accent)", fontWeight: 800, flexShrink: 0, lineHeight: 1.2 }}>✓</span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px", alignItems: "center" }}>
-              {PRICING_CONFIG.meet.freeTrialDays > 0 ? (
-                <a
-                  href={`https://wa.me/${SITE.phoneRaw.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-                    "Hi techiitfly, I'd like to start the Mathsy Meet free trial."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    background: "var(--accent)",
-                    color: "var(--primary-btn-text)",
-                    padding: "14px 28px",
-                    borderRadius: "8px",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    boxShadow: "0 0 24px rgba(245,158,11,0.25)",
-                  }}
-                >
-                  <span>Start your {PRICING_CONFIG.meet.freeTrialDays}-day free trial</span>
-                  <span>→</span>
-                </a>
-              ) : (
-                <MeetWalkthroughButton
-                  label={PRICING_CONFIG.meet.primaryCtaText}
-                  location="meet_pricing"
-                />
-              )}
-
-              <a
-                href={SITE.whatsappTutorUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: PRICING_CONFIG.meet.freeTrialDays > 0 ? "var(--surface)" : "var(--accent)",
-                  color: PRICING_CONFIG.meet.freeTrialDays > 0 ? "var(--text)" : "var(--primary-btn-text)",
-                  border: PRICING_CONFIG.meet.freeTrialDays > 0 ? "1px solid var(--border)" : "none",
-                  padding: "14px 28px",
-                  borderRadius: "8px",
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                <span>Get Access on WhatsApp</span>
-                <span>→</span>
-              </a>
-            </div>
-          </div>
+          {/* Shared 3-tier Plan Cards with billing toggle */}
+          <MeetPlanCards location="meet_page_pricing" showHeader={true} />
         </section>
 
-        {/* ─── e) Final CTA ───────────────────────────────────────────────── */}
+        {/* ─── f) Common Questions (FAQ) ─────────────────────────────────── */}
+        <MeetFaqSection />
+
+        {/* ─── g) Final CTA ───────────────────────────────────────────────── */}
         <section
           style={{
             padding: "90px 24px 110px",

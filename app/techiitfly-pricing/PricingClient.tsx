@@ -45,6 +45,8 @@ import {
 } from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
 
+import MeetPlanCards from "@/components/meet/MeetPlanCards";
+
 // ─── WhatsApp number ──────────────────────────────────────────────────────────
 const WHATSAPP = SITE.phone.replace(/[^0-9]/g, "");
 function waLink(plan: string) {
@@ -78,15 +80,16 @@ const STEPS: { title: string; desc: React.ReactNode }[] = [
 
 const FAQS = PRICING_FAQS;
 
-type Tab = "web" | "app" | "it";
+type Tab = "web" | "app" | "meet" | "it";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "web", label: "Websites" },
+  { id: "meet", label: "Mathsy Meet" },
   ...(SITE.showAppServices ? [{ id: "app" as Tab, label: "Mobile Apps" }] : []),
   ...(SITE.showItServices ? [{ id: "it" as Tab, label: "Managed IT" }] : []),
 ];
 
-const PLAN_MAP: Record<Tab, Plan[]> = {
+const PLAN_MAP: Record<"web" | "app" | "it", Plan[]> = {
   web: getWebPlans(),
   app: APP_PLANS,
   it: IT_PLANS,
@@ -578,7 +581,9 @@ export default function PricingClient() {
     function handleHash() {
       if (typeof window === "undefined") return;
       const h = window.location.hash.toLowerCase();
-      if (h === "#apps" || h === "#app" || h === "#mobile-apps") {
+      if (h === "#meet" || h === "#mathsy-meet" || h === "#mathsy") {
+        setActiveTab("meet");
+      } else if (h === "#apps" || h === "#app" || h === "#mobile-apps") {
         setActiveTab("app");
       } else if (h === "#web" || h === "#websites") {
         setActiveTab("web");
@@ -592,7 +597,9 @@ export default function PricingClient() {
   const handleTabChange = (tabId: Tab) => {
     setActiveTab(tabId);
     if (typeof window !== "undefined") {
-      const targetHash = tabId === "app" ? "#apps" : "";
+      let targetHash = "";
+      if (tabId === "app") targetHash = "#apps";
+      else if (tabId === "meet") targetHash = "#meet";
       if (window.location.hash !== targetHash) {
         if (targetHash) {
           window.history.replaceState(null, "", targetHash);
@@ -831,19 +838,25 @@ export default function PricingClient() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "20px",
-                  alignItems: "stretch",
-                }}
-                className="pricing-grid"
-              >
-                {PLAN_MAP[activeTab].map((plan, i) => (
-                  <PlanCard key={plan.name} plan={plan} index={i} />
-                ))}
-              </div>
+              {activeTab === "meet" ? (
+                <div id="meet" style={{ scrollMarginTop: "120px" }}>
+                  <MeetPlanCards location="pricing_page_meet" showHeader={false} />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: "20px",
+                    alignItems: "stretch",
+                  }}
+                  className="pricing-grid"
+                >
+                  {PLAN_MAP[activeTab].map((plan, i) => (
+                    <PlanCard key={plan.name} plan={plan} index={i} />
+                  ))}
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
 

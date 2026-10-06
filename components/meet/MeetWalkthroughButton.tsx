@@ -19,7 +19,10 @@ export default function MeetWalkthroughButton({
       href={getConsultUrl()}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackEvent("consult_click", location)}
+      onClick={() => {
+        trackEvent("consult_click", location);
+        trackEvent("meet_walkthrough_click", location);
+      }}
       style={{
         background: "var(--accent-dim)",
         color: "var(--accent)",
