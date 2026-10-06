@@ -39,6 +39,17 @@ const HERO_SLIDES: HeroSlide[] = [
     mobileImg: "/screenshots/yogicpath-mobile.webp",
     alt: "Yogic Path client website desktop preview",
   },
+  {
+    id: "mathsy",
+    name: "Mathsy",
+    domain: "mathsy.in",
+    badge: "● Platform we built",
+    badgeColor: "var(--accent)",
+    url: "https://www.mathsy.in",
+    desktopImg: "/screenshots/hero/mathsy-desktop.webp",
+    mobileImg: "/screenshots/hero/mathsy-mobile.webp",
+    alt: "Homepage of Mathsy, an online learning platform built by techiitfly",
+  },
 ];
 
 export default function Hero() {
@@ -64,16 +75,16 @@ export default function Hero() {
     };
   }, []);
 
-  // Auto-advance slides every 4.2 seconds unless paused
+  // Auto-advance slides every 4.2 seconds unless paused or prefers-reduced-motion
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isMobileOrReducedMotion) return;
 
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     }, 4200);
 
     return () => clearInterval(timer);
-  }, [isPaused, activeSlide]);
+  }, [isPaused, isMobileOrReducedMotion, activeSlide]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (isMobileOrReducedMotion) return;
@@ -280,6 +291,8 @@ export default function Hero() {
           {/* Animated Slide Selector Row */}
           <div
             className="hero-slide-row"
+            role="tablist"
+            aria-label="Portfolio projects showcase"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -301,7 +314,20 @@ export default function Hero() {
                 <button
                   key={slide.id}
                   type="button"
+                  role="tab"
+                  id={`hero-tab-${slide.id}`}
+                  aria-selected={isActive}
+                  aria-controls={`hero-panel-${slide.id}`}
                   onClick={() => setActiveSlide(idx)}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowRight") {
+                      e.preventDefault();
+                      handleNext();
+                    } else if (e.key === "ArrowLeft") {
+                      e.preventDefault();
+                      handlePrev();
+                    }
+                  }}
                   style={{
                     position: "relative",
                     display: "inline-flex",
@@ -349,7 +375,7 @@ export default function Hero() {
                     </span>
                   )}
                   {/* Progress bar on active tab */}
-                  {isActive && !isPaused && (
+                  {isActive && !isPaused && !isMobileOrReducedMotion && (
                     <span
                       key={`progress-${idx}`}
                       className="tab-progress-bar"
@@ -431,13 +457,24 @@ export default function Hero() {
                       {nextSlide.domain}
                     </span>
                   </div>
-                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.62rem", color: "#10b981" }}>
-                    Up next
+                  <span
+                    style={{
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.62rem",
+                      color: nextSlide.badgeColor,
+                      background: "rgba(255,255,255,0.06)",
+                      padding: "2px 8px",
+                      borderRadius: "4px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {nextSlide.badge}
                   </span>
                 </div>
                 <img
                   src={nextSlide.desktopImg}
                   alt={nextSlide.alt}
+                  loading="lazy"
                   style={{ width: "100%", height: "calc(100% - 31px)", objectFit: "cover", objectPosition: "top" }}
                 />
               </div>
@@ -445,6 +482,9 @@ export default function Hero() {
               {/* 2. Front Frame: Active Live Slide with smooth keyframe animation */}
               <div
                 key={`front-${current.id}`}
+                id={`hero-panel-${current.id}`}
+                role="tabpanel"
+                aria-labelledby={`hero-tab-${current.id}`}
                 className="force-dark hero-front-card"
                 data-theme="dark"
                 style={{
@@ -477,7 +517,11 @@ export default function Hero() {
                     <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#ef4444" }} />
                     <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#f59e0b" }} />
                     <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#10b981" }} />
-                    <span
+                    <a
+                      href={current.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${current.name} at ${current.domain} (opens in new tab)`}
                       style={{
                         fontFamily: "var(--font-geist-mono)",
                         fontSize: "0.65rem",
@@ -486,36 +530,69 @@ export default function Hero() {
                         display: "flex",
                         alignItems: "center",
                         gap: "4px",
+                        textDecoration: "none",
                       }}
                     >
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>
-                      {current.domain}
+                      <span>{current.domain}</span>
+                    </a>
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <a
+                      href={current.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: "0.62rem",
+                        color: "var(--muted)",
+                        textDecoration: "underline",
+                        textUnderlineOffset: "2px",
+                      }}
+                    >
+                      Visit site ↗
+                    </a>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: "0.62rem",
+                        color: current.badgeColor,
+                        background: "rgba(245,158,11,0.12)",
+                        padding: "2px 8px",
+                        borderRadius: "4px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {current.badge}
                     </span>
                   </div>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.62rem",
-                      color: current.badgeColor,
-                      background: "rgba(245,158,11,0.12)",
-                      padding: "2px 8px",
-                      borderRadius: "4px",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {current.badge}
-                  </span>
                 </div>
 
                 {/* Screenshot Image */}
-                <img
-                  src={current.desktopImg}
-                  alt={current.alt}
-                  style={{ width: "100%", height: "calc(100% - 31px)", objectFit: "cover", objectPosition: "top" }}
-                />
+                <a
+                  href={current.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${current.name} at ${current.url}`}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    height: "calc(100% - 31px)",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                  }}
+                >
+                  <img
+                    src={current.desktopImg}
+                    alt={current.alt}
+                    fetchPriority="high"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
+                  />
+                </a>
               </div>
 
               {/* 3. Third Frame: Active Site Mobile View */}
@@ -553,11 +630,26 @@ export default function Hero() {
                 >
                   <div style={{ width: "32px", height: "4px", borderRadius: "999px", background: "rgba(255,255,255,0.3)" }} />
                 </div>
-                <img
-                  src={current.mobileImg}
-                  alt={`${current.name} mobile view`}
-                  style={{ width: "100%", height: "calc(100% - 17px)", objectFit: "cover", objectPosition: "top" }}
-                />
+                <a
+                  href={current.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${current.name} mobile view`}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    height: "calc(100% - 17px)",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                  }}
+                >
+                  <img
+                    src={current.mobileImg}
+                    alt={`${current.name} mobile view`}
+                    loading="lazy"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
+                  />
+                </a>
               </div>
             </div>
 
