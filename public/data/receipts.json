@@ -3,18 +3,84 @@
     "mathsy": {
       "name": "Mathsy",
       "url": "https://www.mathsy.in",
-      "history": []
+      "history": [
+        {
+          "timestamp": "2026-10-06T10:54:06.956Z",
+          "mobile": {
+            "performance": "unavailable",
+            "accessibility": "unavailable",
+            "bestPractices": "unavailable",
+            "seo": "unavailable",
+            "lcp": "unavailable",
+            "cls": "unavailable",
+            "inp": "unavailable"
+          },
+          "desktop": {
+            "performance": "unavailable",
+            "accessibility": "unavailable",
+            "bestPractices": "unavailable",
+            "seo": "unavailable",
+            "lcp": "unavailable",
+            "cls": "unavailable",
+            "inp": "unavailable"
+          }
+        }
+      ]
     },
     "yogagarhi": {
       "name": "YogaGarhi",
       "url": "https://www.yogagarhi.com",
-      "history": []
+      "history": [
+        {
+          "timestamp": "2026-10-06T10:54:06.956Z",
+          "mobile": {
+            "performance": "unavailable",
+            "accessibility": "unavailable",
+            "bestPractices": "unavailable",
+            "seo": "unavailable",
+            "lcp": "unavailable",
+            "cls": "unavailable",
+            "inp": "unavailable"
+          },
+          "desktop": {
+            "performance": "unavailable",
+            "accessibility": "unavailable",
+            "bestPractices": "unavailable",
+            "seo": "unavailable",
+            "lcp": "unavailable",
+            "cls": "unavailable",
+            "inp": "unavailable"
+          }
+        }
+      ]
     },
     "yogicpath": {
       "name": "Yogic Path",
       "url": "https://yogicpathytt.com",
-      "history": []
+      "history": [
+        {
+          "timestamp": "2026-10-06T10:54:06.956Z",
+          "mobile": {
+            "performance": "unavailable",
+            "accessibility": "unavailable",
+            "bestPractices": "unavailable",
+            "seo": "unavailable",
+            "lcp": "unavailable",
+            "cls": "unavailable",
+            "inp": "unavailable"
+          },
+          "desktop": {
+            "performance": "unavailable",
+            "accessibility": "unavailable",
+            "bestPractices": "unavailable",
+            "seo": "unavailable",
+            "lcp": "unavailable",
+            "cls": "unavailable",
+            "inp": "unavailable"
+          }
+        }
+      ]
     }
   },
-  "lastUpdated": null
+  "lastUpdated": "2026-10-06T10:54:06.956Z"
 }
