@@ -541,17 +541,19 @@ export default function Hero() {
                     </a>
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
                     <a
                       href={current.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hero-visit-site-link"
                       style={{
                         fontFamily: "var(--font-geist-mono)",
                         fontSize: "0.62rem",
                         color: "var(--muted)",
                         textDecoration: "underline",
                         textUnderlineOffset: "2px",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       Visit site ↗
@@ -565,6 +567,7 @@ export default function Hero() {
                         padding: "2px 8px",
                         borderRadius: "4px",
                         fontWeight: 600,
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {current.badge}
@@ -753,6 +756,9 @@ export default function Hero() {
         }
         @media (max-width: 640px) {
           :global(.hero-slide-badge) {
+            display: none !important;
+          }
+          :global(.hero-visit-site-link) {
             display: none !important;
           }
         }
