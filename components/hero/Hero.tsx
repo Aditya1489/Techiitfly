@@ -475,6 +475,9 @@ export default function Hero() {
                   src={nextSlide.desktopImg}
                   alt={nextSlide.alt}
                   loading="lazy"
+                  decoding="async"
+                  width={500}
+                  height={289}
                   style={{ width: "100%", height: "calc(100% - 31px)", objectFit: "cover", objectPosition: "top" }}
                 />
               </div>
@@ -593,6 +596,9 @@ export default function Hero() {
                     src={current.desktopImg}
                     alt={current.alt}
                     fetchPriority="high"
+                    decoding="async"
+                    width={500}
+                    height={289}
                     style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
                   />
                 </a>
@@ -650,6 +656,9 @@ export default function Hero() {
                     src={current.mobileImg}
                     alt={`${current.name} mobile view`}
                     loading="lazy"
+                    decoding="async"
+                    width={150}
+                    height={243}
                     style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
                   />
                 </a>
