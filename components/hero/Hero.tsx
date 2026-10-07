@@ -43,12 +43,12 @@ const HERO_SLIDES: HeroSlide[] = [
     id: "mathsy",
     name: "Mathsy",
     domain: "mathsy.in",
-    badge: "● Live Client Platform",
+    badge: "● Live Client Site",
     badgeColor: "var(--accent)",
     url: "https://www.mathsy.in",
     desktopImg: "/screenshots/hero/mathsy-desktop.webp",
     mobileImg: "/screenshots/hero/mathsy-mobile.webp",
-    alt: "Homepage of Mathsy, a 4-portal online learning platform built for an EdTech client",
+    alt: "Mathsy client website desktop preview",
   },
 ];
 

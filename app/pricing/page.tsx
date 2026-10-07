@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PricingClient from "@/app/techiitfly-pricing/PricingClient";
+import PricingClient from "./PricingClient";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { SITE } from "@/content/site";

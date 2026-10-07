@@ -1,50 +1,18 @@
-export interface ProjectPortal {
-  title: string;
-  description: string;
-  features: string[];
-}
-
-export interface GlorifiedScreenshot {
-  id: string;
-  title: string;
-  badge: string;
-  description: string;
-  src: string;
-  url?: string;
-  tag?: string;
-  eyebrow?: string;
-}
-
 export interface CaseStudy {
   slug: string;
   title: string;
   client: string;
   tagline: string;
-  category: "EdTech client platform" | "EdTech Platform" | "Wellness & Retreats" | "Teacher Training" | "Our Product";
+  category: "EdTech Platform" | "Wellness & Retreats" | "Teacher Training";
   role: string;
   liveUrl: string;
-  isFlagship?: boolean;
   featuredScreenshots: {
     desktop?: string;
     mobile?: string;
   };
-  portalScreenshot?: string;
-  glorifiedScreenshots?: GlorifiedScreenshot[];
   summary: string;
   challenge: string;
   solution: string;
-  portals?: ProjectPortal[];
-  flagshipModule?: {
-    name: string;
-    subtitle: string;
-    screenshots?: {
-      desktop?: string;
-      mobile?: string;
-    };
-    description: string;
-    highlights: string[];
-    stack: string[];
-  };
   keyFeatures: string[];
   stack: string[];
   metrics: {
@@ -55,137 +23,6 @@ export interface CaseStudy {
 }
 
 export const PROJECTS: CaseStudy[] = [
-  {
-    slug: "mathsy",
-    title: "Mathsy",
-    client: "Mathsy (mathsy.in)",
-    tagline: "4-portal learning platform with live classes, proctored exams, and parent progress tracking",
-    category: "EdTech client platform",
-    role: "Product design, architecture & full-stack development",
-    liveUrl: "https://www.mathsy.in",
-    isFlagship: true,
-    featuredScreenshots: {
-      desktop: "/screenshots/mathsy-desktop.webp",
-      mobile: "/screenshots/mathsy-mobile.webp",
-    },
-    portalScreenshot: "/screenshots/mathsy-portal.webp",
-    glorifiedScreenshots: [
-      {
-        id: "student-dashboard",
-        eyebrow: "STUDENT PORTAL",
-        title: "Student Portal Learning Deck",
-        badge: "Student Portal",
-        tag: "STUDENT PORTAL",
-        description: "Student dashboard showing study streaks, upcoming classes, chapter progress, and subject practice feeds.",
-        src: "/screenshots/mathsy-screens/student-dashboard.webp",
-      },
-      {
-        id: "proctored-exams",
-        eyebrow: "EXAM ENGINE",
-        title: "Scheduled Examination & Test Series",
-        badge: "Exam Engine",
-        tag: "EXAM ENGINE",
-        description: "Test series catalog showing duration timers, total marks, syllabus coverage, and submission statuses.",
-        src: "/screenshots/mathsy-screens/proctored-exams.webp",
-      },
-      {
-        id: "exam-interface",
-        eyebrow: "TEST PALETTE",
-        title: "Proctored Exam Interface & Question Palette",
-        badge: "Exam Engine",
-        tag: "EXAM ENGINE",
-        description: "Live exam screen with question navigation palette, countdown timer, and KaTeX math equation rendering.",
-        src: "/screenshots/mathsy-screens/exam-engine.webp",
-      },
-      {
-        id: "tutor-evaluation",
-        eyebrow: "EVALUATION QUEUE",
-        title: "Digital Booklet Evaluation & Grading Queue",
-        badge: "Tutor Portal",
-        tag: "EVALUATION",
-        description: "Subjective booklet evaluation table where tutors review student answer sheets, annotate marks, and submit feedback.",
-        src: "/screenshots/mathsy-screens/evaluation-scorecard.webp",
-      },
-      {
-        id: "study-resources",
-        eyebrow: "RESOURCES PORTAL",
-        title: "NCERT Chapter Library & Practice Resources",
-        badge: "Resources",
-        tag: "RESOURCES",
-        description: "Interactive practice resources across Mathematics, Physics, and Chemistry with chapter-wise curriculum organization.",
-        src: "/screenshots/mathsy-screens/study-resources.webp",
-      },
-    ],
-    summary:
-      "A 4-portal EdTech platform (student, tutor, parent, and admin) with live classes, proctored exams, digital answer-sheet evaluation, parent progress tracking, and report cards.",
-    challenge:
-      "An online maths and science academy needed one platform for students, tutors, parents and admins — including live classes built for teaching maths.",
-    solution:
-      "A 4-portal learning platform with live classes, proctored exams, digital answer-sheet evaluation, parent progress tracking and report cards.",
-    portals: [
-      {
-        title: "Student Portal",
-        description:
-          "Live classes with interactive whiteboard, proctored exams, digital answer-sheet review, and progress reports.",
-        features: [
-          "Live class entry with one-click room access",
-          "Automatic PDF notes delivered after class",
-          "Proctored exam engine with KaTeX math rendering",
-          "Digital answer-sheet review and report cards",
-        ],
-      },
-      {
-        title: "Tutor Portal",
-        description:
-          "Live class orchestration, digital answer-sheet evaluation, and tablet pairing for handwriting.",
-        features: [
-          "Tablet pairing for tutors for stylus sketching",
-          "Slide-to-poll interactive question broadcaster",
-          "Digital answer-sheet evaluation interface",
-          "Attendance tracking and lecture management",
-        ],
-      },
-      {
-        title: "Parent Portal",
-        description:
-          "Progress tracking giving parents direct visibility into attendance and report cards.",
-        features: [
-          "Class attendance and punctuality records",
-          "Parent progress tracking and test scores",
-          "Auto-generated student report cards",
-        ],
-      },
-      {
-        title: "Admin Portal",
-        description:
-          "Operational oversight for batch scheduling, tutor management, and platform oversight.",
-        features: [
-          "Granular role-based permissions",
-          "Centralized timetable and batch scheduling",
-          "Tutor management and course allocation",
-        ],
-      },
-    ],
-    flagshipModule: undefined,
-    keyFeatures: [
-      "4 role-based portals (Student, Tutor, Parent, Admin)",
-      "Dedicated live classroom with geometry instruments and tablet pen input",
-      "Proctored exam engine and digital answer-sheet evaluation",
-      "Parent progress tracking and automatic report cards",
-      "NCERT syllabus chapter library and practice feeds",
-    ],
-    stack: [
-      "React 18",
-      "TypeScript",
-      "Vite",
-      "Supabase",
-      "TanStack Query",
-      "Zustand",
-      "Tailwind CSS",
-      "KaTeX",
-    ],
-    metrics: [],
-  },
   {
     slug: "yogagarhi",
     title: "YogaGarhi",
@@ -287,6 +124,50 @@ export const PROJECTS: CaseStudy[] = [
       },
     ],
   },
+  {
+    slug: "mathsy",
+    title: "Mathsy",
+    client: "Mathsy",
+    tagline: "Online learning platform for a maths & science academy",
+    category: "EdTech Platform",
+    role: "Product Design, Full-Stack Development & Live Classes",
+    liveUrl: "https://www.mathsy.in",
+    featuredScreenshots: {
+      desktop: "/screenshots/mathsy-desktop.webp",
+      mobile: "/screenshots/mathsy-mobile.webp",
+    },
+    summary:
+      "A learning platform for an online maths and science academy, with separate portals for students, tutors, parents and admins.",
+    challenge:
+      "The academy was juggling separate tools for live classes, tests and parent updates, and general video tools had no way to draw geometry properly during class.",
+    solution:
+      "We built one platform with four role-based portals, live classes with a maths whiteboard, proctored online tests, digital answer-sheet evaluation and automatic parent progress reports.",
+    keyFeatures: [
+      "Role-based portals for students, tutors, parents and admins",
+      "Live classes with a maths whiteboard (compass, protractor, ruler)",
+      "Proctored online tests with timers",
+      "Digital answer-sheet evaluation by tutors",
+      "Parent progress tracking and report cards",
+    ],
+    stack: ["React", "TypeScript", "Supabase", "WebRTC", "KaTeX"],
+    metrics: [
+      {
+        label: "Portals",
+        value: "4 Portals",
+        note: "Student, Tutor, Parent, Admin",
+      },
+      {
+        label: "Live Classes",
+        value: "Built in",
+        note: "Maths whiteboard with geometry tools",
+      },
+      {
+        label: "Tests",
+        value: "Proctored",
+        note: "Online tests with digital evaluation",
+      },
+    ],
+  },
 ];
 
 export function getAllProjects(): CaseStudy[] {
@@ -298,4 +179,3 @@ export function getProjectBySlug(slug: string): CaseStudy | undefined {
 }
 
 export * from "./work";
-

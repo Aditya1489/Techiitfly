@@ -11,8 +11,8 @@ interface FeatureBlock {
   summary: string;
   bullets: string[];
   note?: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export default function MeetFeatureShowcase() {
@@ -30,8 +30,8 @@ export default function MeetFeatureShowcase() {
         "Dark, light, and high-contrast blackboard modes",
         "One-click fullscreen board",
       ],
-      image: "/screenshots/mathsy-screens/study-resources.webp",
-      imageAlt: "Mathsy Meet PDF slide deck and whiteboard notes preview",
+      image: "/screenshots/mathsy-meet-desktop.webp",
+      imageAlt: "Mathsy Meet live whiteboard interface preview",
     },
     {
       id: "maths-instruments",
@@ -44,7 +44,7 @@ export default function MeetFeatureShowcase() {
         "Ruler with clear mm and cm markings for drawing to scale",
         "30-60-90° and 45-45-90° set-squares for coordinate geometry and triangles",
       ],
-      image: "/screenshots/mathsy-meet-desktop.webp",
+      image: "/screenshots/mathsy-meet-instruments.webp",
       imageAlt: "Mathsy Meet geometry instruments on whiteboard canvas",
     },
     {
@@ -58,7 +58,7 @@ export default function MeetFeatureShowcase() {
         "Smooth audio pass-through for video walkthroughs and physics simulations",
       ],
       image: "/screenshots/mathsy-meet-desktop.webp",
-      imageAlt: "Mathsy Meet screen sharing interface",
+      imageAlt: "Mathsy Meet screen sharing controls",
     },
     {
       id: "tablet-paper-writing",
@@ -70,8 +70,8 @@ export default function MeetFeatureShowcase() {
         "Works as a silent pen on the whiteboard with zero lag",
         "No audio feedback or echo between your laptop and tablet",
       ],
-      image: "/screenshots/mathsy-screens/exam-engine.webp",
-      imageAlt: "Tablet writing paired with whiteboard canvas",
+      image: "/screenshots/mathsy-meet-tablet.webp",
+      imageAlt: "Mathsy Meet companion tablet pairing dialog",
     },
     {
       id: "student-involvement",
@@ -85,8 +85,8 @@ export default function MeetFeatureShowcase() {
         "Structured raise-hand queue to answer student questions one by one",
         "Emoji reactions and chat lock controls for focused discussion",
       ],
-      image: "/screenshots/mathsy/mathsy-tutor-poll-bank-desktop.webp",
-      imageAlt: "Mathsy Meet live poll question bank and timer controls",
+      image: "/screenshots/mathsy-meet-polls.webp",
+      imageAlt: "Mathsy Meet classroom poll creator controls",
     },
     ...(SITE.showMeetAiFeatures
       ? [
@@ -100,8 +100,6 @@ export default function MeetFeatureShowcase() {
               "Generate practice questions on demand from your class topic",
             ],
             note: "Always review AI-generated questions before sharing.",
-            image: "/screenshots/mathsy-screens/student-dashboard.webp",
-            imageAlt: "AI teaching helpers question generator preview",
           },
         ]
       : []),
@@ -115,8 +113,6 @@ export default function MeetFeatureShowcase() {
         "Cloud upload that automatically resumes even after a dropped connection",
         "Publish directly to YouTube (public, unlisted, or private)",
       ],
-      image: "/screenshots/mathsy-screens/proctored-exams.webp",
-      imageAlt: "Mathsy Meet recording and YouTube live broadcast controls",
     },
     {
       id: "popout-whiteboard",
@@ -128,8 +124,6 @@ export default function MeetFeatureShowcase() {
         "Place the board on a second monitor or pen display while keeping student videos on your laptop",
         "Clean full-bleed view ideal for OBS recording or virtual camera feeds",
       ],
-      image: "/screenshots/mathsy-meet-desktop.webp",
-      imageAlt: "Pop-out whiteboard in independent window",
     },
   ];
 
@@ -180,6 +174,7 @@ export default function MeetFeatureShowcase() {
         {/* Alternating Feature Showcase Blocks */}
         <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
           {allFeatures.map((f, idx) => {
+            const hasImage = Boolean(f.image && f.imageAlt);
             const isEven = idx % 2 === 1;
 
             return (
@@ -187,13 +182,15 @@ export default function MeetFeatureShowcase() {
                 key={f.id}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
+                  gridTemplateColumns: hasImage ? "repeat(auto-fit, minmax(310px, 1fr))" : "1fr",
                   gap: "44px",
                   alignItems: "center",
+                  maxWidth: hasImage ? "100%" : "780px",
+                  margin: hasImage ? "0" : "0 auto",
                 }}
               >
                 {/* Content Block */}
-                <div style={{ order: isEven ? 2 : 1 }}>
+                <div style={{ order: hasImage && isEven ? 2 : 1 }}>
                   <div
                     style={{
                       fontFamily: "var(--font-geist-mono)",
@@ -305,65 +302,67 @@ export default function MeetFeatureShowcase() {
                   </a>
                 </div>
 
-                {/* Screenshot Frame Block */}
-                <div
-                  style={{
-                    order: isEven ? 1 : 2,
-                    background: "var(--surface)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "var(--radius-lg)",
-                    overflow: "hidden",
-                    boxShadow: "var(--card-shadow)",
-                  }}
-                >
-                  {/* Browser Bar */}
+                {/* Screenshot Frame Block (Only rendered if image exists) */}
+                {hasImage && f.image && f.imageAlt && (
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "10px 14px",
-                      background: "#16130F",
-                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      order: isEven ? 1 : 2,
+                      background: "var(--surface)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "var(--radius-lg)",
+                      overflow: "hidden",
+                      boxShadow: "var(--card-shadow)",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444" }} />
-                      <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#f59e0b" }} />
-                      <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
+                    {/* Browser Bar */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "10px 14px",
+                        background: "#16130F",
+                        borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444" }} />
+                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#f59e0b" }} />
+                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
+                        <span
+                          style={{
+                            fontFamily: "var(--font-geist-mono)",
+                            fontSize: "0.7rem",
+                            color: "var(--muted)",
+                            marginLeft: "6px",
+                          }}
+                        >
+                          Mathsy Meet Classroom
+                        </span>
+                      </div>
                       <span
                         style={{
                           fontFamily: "var(--font-geist-mono)",
-                          fontSize: "0.7rem",
-                          color: "var(--muted)",
-                          marginLeft: "6px",
+                          fontSize: "0.68rem",
+                          color: "var(--accent)",
                         }}
                       >
-                        Mathsy Meet Classroom
+                        Live Room
                       </span>
                     </div>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "0.68rem",
-                        color: "var(--accent)",
-                      }}
-                    >
-                      Live Room
-                    </span>
-                  </div>
 
-                  {/* Image View */}
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 10", background: "#0e0d0b" }}>
-                    <Image
-                      src={f.image}
-                      alt={f.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 540px"
-                      style={{ objectFit: "cover", objectPosition: "top" }}
-                    />
+                    {/* Image View */}
+                    <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 10", background: "#0e0d0b" }}>
+                      <Image
+                        src={f.image}
+                        alt={f.imageAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 540px"
+                        style={{ objectFit: "cover", objectPosition: "top" }}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}

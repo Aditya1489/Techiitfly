@@ -65,14 +65,6 @@ const PACKAGES = getWebPlans().map((p) => ({
 
 const PROOF_CARDS = [
   {
-    name: "Mathsy",
-    category: "EdTech Platform",
-    url: "https://www.mathsy.in",
-    displayUrl: "mathsy.in",
-    screenshot: "/screenshots/mathsy-desktop.webp",
-    note: "4-portal learning platform with real-time proctored testing.",
-  },
-  {
     name: "YogaGarhi",
     category: "Retreat & Wellness",
     url: "https://www.yogagarhi.com",
@@ -87,6 +79,14 @@ const PROOF_CARDS = [
     displayUrl: "yogicpathytt.com",
     screenshot: "/screenshots/yogicpath-desktop.webp",
     note: "Curriculum showcase and student lead generation portal.",
+  },
+  {
+    name: "Mathsy",
+    category: "EdTech Platform",
+    url: "https://www.mathsy.in",
+    displayUrl: "mathsy.in",
+    screenshot: "/screenshots/mathsy-desktop.webp",
+    note: "Learning platform for an online maths & science academy.",
   },
 ];
 

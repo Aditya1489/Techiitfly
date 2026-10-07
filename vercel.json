@@ -4,6 +4,21 @@
       "source": "/mathsy-for-institutes",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/lab",
+      "destination": "/mathsy-meet",
+      "permanent": true
+    },
+    {
+      "source": "/techiitfly-pricing",
+      "destination": "/pricing",
+      "permanent": true
+    },
+    {
+      "source": "/work/mathsy-meet",
+      "destination": "/mathsy-meet",
+      "permanent": true
     }
   ]
 }

@@ -170,7 +170,7 @@ export default function YogaSchoolsPage() {
         {/* Real Yoga School Projects Showcase */}
         <section style={{ padding: "40px 24px 80px", maxWidth: "1140px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
-            <span className="section-label">PROVEN IN ACTIVE PRODUCTION</span>
+            <span className="section-label">OUR YOGA PROJECTS</span>
             <h2
               style={{
                 fontFamily: "var(--font-instrument-serif)",

@@ -109,7 +109,32 @@ async function callSinglePageSpeed(
   const domain = normalizeDomain(rawUrl);
   const targetUrl = `https://${domain}`;
 
-  const apiKey = process.env.NEXT_PUBLIC_PAGESPEED_KEY || "AIzaSyDlWKJFlHQkzECuaVlEEWvOY1gVsG5DEGM";
+  const apiKey = (process.env.NEXT_PUBLIC_PAGESPEED_KEY || "").trim();
+  if (!apiKey) {
+    return {
+      domain,
+      url: targetUrl,
+      isUser,
+      strategy,
+      perfScore: 0,
+      seoScore: 0,
+      a11yScore: 0,
+      bestPracticesScore: 0,
+      overallScore: 0,
+      lcp: "N/A",
+      lcpMs: 0,
+      cls: 0,
+      clsDisplay: "N/A",
+      tbt: "N/A",
+      tbtMs: 0,
+      pageSize: "N/A",
+      pageSizeBytes: 0,
+      requests: 0,
+      error: "Couldn't test this site",
+      errorReason: "The free tester is busy right now. Try again shortly, or WhatsApp us for a manual audit.",
+    };
+  }
+
   const endpoint = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
   endpoint.searchParams.set("url", targetUrl);
   endpoint.searchParams.set("strategy", strategy);
@@ -117,9 +142,7 @@ async function callSinglePageSpeed(
   endpoint.searchParams.append("category", "accessibility");
   endpoint.searchParams.append("category", "best-practices");
   endpoint.searchParams.append("category", "seo");
-  if (apiKey && apiKey.startsWith("AIza")) {
-    endpoint.searchParams.set("key", apiKey);
-  }
+  endpoint.searchParams.set("key", apiKey);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 45000);

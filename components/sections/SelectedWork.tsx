@@ -94,26 +94,6 @@ export default function SelectedWork() {
                     sizes="(max-width: 768px) 100vw, 380px"
                     style={{ objectFit: "cover", objectPosition: "top center" }}
                   />
-                  {project.label && (
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "10px",
-                        left: "10px",
-                        background: "rgba(0, 0, 0, 0.75)",
-                        color: "var(--accent)",
-                        border: "1px solid var(--accent)",
-                        padding: "3px 8px",
-                        borderRadius: "4px",
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "0.72rem",
-                        fontWeight: 600,
-                        backdropFilter: "blur(6px)",
-                      }}
-                    >
-                      {project.label}
-                    </span>
-                  )}
                 </div>
 
                 {/* Client Name & Title */}

@@ -2,7 +2,6 @@ export interface WorkProject {
   slug: string;
   title: string;
   client: string;
-  label?: string; // e.g. "EDTECH CLIENT · MATHSY.IN" for Mathsy
   tagline: string;
   problem: string;
   built: string;
@@ -73,13 +72,12 @@ export const WORK_PROJECTS: WorkProject[] = [
   {
     slug: "mathsy",
     title: "Mathsy",
-    client: "Mathsy (mathsy.in)",
-    label: "EDTECH CLIENT · MATHSY.IN",
-    tagline: "4-portal learning platform with live classes and proctored exam engine",
+    client: "Mathsy",
+    tagline: "Online learning platform for a maths & science academy",
     problem:
-      "An online maths and science academy needed one platform for students, tutors, parents and admins — including live classes built for teaching maths.",
+      "An online maths and science academy needed one place for students, tutors, parents and admins to run live classes, tests and progress tracking.",
     built:
-      "A 4-portal learning platform with live classes, proctored exams, digital answer-sheet evaluation, parent progress tracking and report cards.",
+      "A 4-portal learning platform with live classes, proctored online tests, digital answer-sheet evaluation, parent progress tracking and report cards.",
     result: "", // empty = hide that line
     clientQuote: undefined, // empty = hide
     screenshots: {
@@ -87,12 +85,12 @@ export const WORK_PROJECTS: WorkProject[] = [
       mobile: "/screenshots/mathsy-mobile.webp",
     },
     liveUrl: "https://www.mathsy.in",
-    stack: ["React 18", "TypeScript", "Mediasoup SFU", "Supabase", "KaTeX"],
+    stack: ["React", "TypeScript", "Supabase", "WebRTC"],
     keyFeatures: [
-      "Custom virtual classroom with real-time video and audio",
-      "Interactive whiteboard geometry instrumentation (compass, protractor, ruler)",
-      "Proctored testing engine and digital answer-sheet evaluation",
-      "Student learning dashboard and parent progress tracking",
+      "Separate portals for students, tutors, parents and admins",
+      "Live classes with a maths whiteboard (compass, protractor, ruler)",
+      "Proctored online tests with digital answer-sheet evaluation",
+      "Parent progress tracking and report cards",
     ],
   },
 ];

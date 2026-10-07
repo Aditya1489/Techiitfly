@@ -32,7 +32,7 @@ const COACHING_FAQS = [
   },
   {
     q: "Can you build custom learning platforms or coaching portals?",
-    a: "Yes. For example, we designed and built Mathsy, a 4-portal learning platform we built for an EdTech client (read our case study at /work/mathsy). For educators teaching maths online, we also offer Mathsy Meet (/mathsy-meet), our own live classroom product with on-screen geometry tools and tablet pairing.",
+    a: "Yes. For example, we designed and engineered Mathsy, a 4-portal learning platform for an education academy (read our case study at /work/mathsy). For educators teaching maths online, we also offer Mathsy Meet (/mathsy-meet), our own live classroom product with on-screen geometry tools and tablet pairing.",
   },
   {
     q: "How fast will our coaching class website be ready?",
@@ -231,7 +231,7 @@ export default function CoachingClassesPage() {
                 CUSTOM PLATFORMS &amp; LIVE CLASSROOM SOFTWARE
               </span>
               <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.95rem", color: "var(--text)", margin: "4px 0 0", fontWeight: 500 }}>
-                Explore Mathsy, a 4-portal learning platform we built for an EdTech client, or Mathsy Meet, our own live classroom product.
+                Explore Mathsy, a 4-portal learning platform for an education academy, or Mathsy Meet, our own live classroom product.
               </p>
             </div>
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>

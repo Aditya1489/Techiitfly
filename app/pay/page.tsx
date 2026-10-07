@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: "Pay Your Quote",
   description:
     "Securely pay your project advance or milestone invoice for written quotes from techiitfly.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function PayPage() {

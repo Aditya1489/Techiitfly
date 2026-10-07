@@ -25,6 +25,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Book ${name} Website Package`,
     description: `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`,
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 

@@ -41,7 +41,7 @@ const PUNE_FAQS = [
   },
   {
     q: "Do you build custom web applications and platforms?",
-    a: "Yes. In addition to high-converting websites, we engineered Mathsy, a 4-portal learning platform we built for an EdTech client (read our case study at /work/mathsy). We also build and offer Mathsy Meet (/mathsy-meet), our own live classroom product.",
+    a: "Yes. In addition to high-converting websites, we engineered Mathsy, a 4-portal learning platform for an education academy (read our case study at /work/mathsy). We also build and offer Mathsy Meet (/mathsy-meet), our own live classroom product.",
   },
 ];
 
@@ -222,7 +222,7 @@ export default function PuneWebDevPage() {
                 FULL-STACK PLATFORMS &amp; SAAS
               </span>
               <p style={{ fontFamily: "var(--font-geist-sans)", fontSize: "0.95rem", color: "var(--text)", margin: "4px 0 0", fontWeight: 500 }}>
-                Need more than a website? We built Mathsy, a 4-portal learning platform we built for an EdTech client, and we build Mathsy Meet, our own live classroom product.
+                Need more than a website? We engineered Mathsy, a 4-portal learning platform for an education academy, and we build Mathsy Meet, our own live classroom product.
               </p>
             </div>
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
