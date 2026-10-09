@@ -2,10 +2,11 @@ export interface GalleryItem {
   id: string;
   label: string;
   path: string;
+  group?: string;
   desktop: string;
   desktopPoster: string;
-  mobile: string;
-  mobilePoster: string;
+  mobile?: string;
+  mobilePoster?: string;
   caption: string;
 }
 
@@ -273,8 +274,10 @@ export const PROJECTS: CaseStudy[] = [
       mobile: "/screenshots/mathsy-mobile.webp",
     },
     gallery: [
+      // 1. Public website
       {
         id: "home",
+        group: "Public website",
         label: "Home",
         path: "/",
         desktop: "/screenshots/work/mathsy/home-desktop.webp",
@@ -285,33 +288,126 @@ export const PROJECTS: CaseStudy[] = [
       },
       {
         id: "test-series",
+        group: "Public website",
         label: "NEET Test Series",
         path: "/test-series",
         desktop: "/screenshots/work/mathsy/test-series-desktop.webp",
         desktopPoster: "/screenshots/work/mathsy/test-series-desktop-poster.webp",
         mobile: "/screenshots/work/mathsy/test-series-mobile.webp",
         mobilePoster: "/screenshots/work/mathsy/test-series-mobile-poster.webp",
-        caption: "NCERT-aligned practice series directory with 140+ mock exams, chapter syllabus, and exam simulation overview.",
+        caption: "NCERT-aligned practice series directory with 140+ mock exams, chapter syllabus breakdowns, and exam simulation overview.",
+      },
+      // 2. Student portal
+      {
+        id: "student-dashboard",
+        group: "Student portal",
+        label: "Student Dashboard",
+        path: "/student/dashboard",
+        desktop: "/screenshots/work/mathsy/student-dashboard-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/student-dashboard-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/student-dashboard-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/student-dashboard-mobile-poster.webp",
+        caption: "Student home dashboard tracking active learning streaks, pending questions, accuracy benchmarks, and topic mastery modules.",
       },
       {
-        id: "current-affairs",
-        label: "Current Affairs",
-        path: "/current-affairs",
-        desktop: "/screenshots/work/mathsy/current-affairs-desktop.webp",
-        desktopPoster: "/screenshots/work/mathsy/current-affairs-desktop-poster.webp",
-        mobile: "/screenshots/work/mathsy/current-affairs-mobile.webp",
-        mobilePoster: "/screenshots/work/mathsy/current-affairs-mobile-poster.webp",
-        caption: "Monthly curated educational knowledge compendiums and downloadable PDF digests for exam candidates.",
+        id: "student-exams",
+        group: "Student portal",
+        label: "Proctored Exams",
+        path: "/student/exams",
+        desktop: "/screenshots/work/mathsy/student-exams-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/student-exams-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/student-exams-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/student-exams-mobile-poster.webp",
+        caption: "Scheduled proctored examination hub with timed papers, violation logging, submission status, and evaluated scorecards.",
       },
       {
-        id: "login",
-        label: "Sign In Portal",
-        path: "/login",
-        desktop: "/screenshots/work/mathsy/login-desktop.webp",
-        desktopPoster: "/screenshots/work/mathsy/login-desktop-poster.webp",
-        mobile: "/screenshots/work/mathsy/login-mobile.webp",
-        mobilePoster: "/screenshots/work/mathsy/login-mobile-poster.webp",
-        caption: "Public authentication gateway offering separate sign-in paths for students, parents, and academy mentors.",
+        id: "student-practice",
+        group: "Student portal",
+        label: "Practice Modules",
+        path: "/student/practice",
+        desktop: "/screenshots/work/mathsy/student-practice-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/student-practice-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/student-practice-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/student-practice-mobile-poster.webp",
+        caption: "Subject-wise interactive practice workspace with chapter accuracy percentages, session history, and unlocked feed modules.",
+      },
+      {
+        id: "student-study-materials",
+        group: "Student portal",
+        label: "Study Library",
+        path: "/student/library",
+        desktop: "/screenshots/work/mathsy/student-study-materials-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/student-study-materials-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/student-study-materials-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/student-study-materials-mobile-poster.webp",
+        caption: "Curated NCERT study resources directory organized across science and mathematics disciplines with chapter guides and revision notes.",
+      },
+      {
+        id: "student-progress",
+        group: "Student portal",
+        label: "Learning Analytics",
+        path: "/student/analytics",
+        desktop: "/screenshots/work/mathsy/student-progress-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/student-progress-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/student-progress-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/student-progress-mobile-poster.webp",
+        caption: "Comprehensive student progress analytics detailing attempt volumes, question accuracy trends, and mastery timelines.",
+      },
+      // 3. Tutor portal
+      {
+        id: "tutor-dashboard",
+        group: "Tutor portal",
+        label: "Mentor Overview",
+        path: "/tutor/dashboard",
+        desktop: "/screenshots/work/mathsy/tutor-dashboard-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/tutor-dashboard-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/tutor-dashboard-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/tutor-dashboard-mobile-poster.webp",
+        caption: "Faculty command center summarizing active student cohorts, validated curriculum topics, cohort accuracy rates, and quick action hubs.",
+      },
+      {
+        id: "tutor-evaluation",
+        group: "Tutor portal",
+        label: "Evaluation Queue",
+        path: "/tutor/evaluations",
+        desktop: "/screenshots/work/mathsy/tutor-evaluation-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/tutor-evaluation-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/tutor-evaluation-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/tutor-evaluation-mobile-poster.webp",
+        caption: "Centralized answer-sheet evaluation queue displaying student submissions, examination tiers, proctoring violations, and digital grading workflows.",
+      },
+      {
+        id: "tutor-questions",
+        group: "Tutor portal",
+        label: "Question Bank",
+        path: "/tutor/question-bank",
+        desktop: "/screenshots/work/mathsy/tutor-questions-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/tutor-questions-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/tutor-questions-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/tutor-questions-mobile-poster.webp",
+        caption: "Multi-board question bank categorized across CBSE, ICSE, and SSC syllabi with difficulty breakdowns and NCERT import tools.",
+      },
+      {
+        id: "tutor-exams",
+        group: "Tutor portal",
+        label: "Exam Control Deck",
+        path: "/tutor/exams",
+        desktop: "/screenshots/work/mathsy/tutor-exams-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/tutor-exams-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/tutor-exams-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/tutor-exams-mobile-poster.webp",
+        caption: "Assessment management deck enabling tutors to schedule proctored exams, configure paper durations, monitor completions, and manage question weighting.",
+      },
+      {
+        id: "tutor-progress",
+        group: "Tutor portal",
+        label: "Cohort Performance",
+        path: "/tutor/cohort-reports",
+        desktop: "/screenshots/work/mathsy/tutor-progress-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/tutor-progress-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/tutor-progress-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/tutor-progress-mobile-poster.webp",
+        caption: "Student cohort performance tracking with board-wise student filters, accuracy ratings, and one-click access to student academic dossiers.",
       },
     ],
     summary:

@@ -105,19 +105,7 @@ export const GALLERY_CONFIG = [
         id: 'test-series',
         label: 'NEET Test Series',
         path: '/test-series',
-        caption: 'NCERT-aligned practice series directory with 140+ mock exams, chapter breakdowns, and simulated exam interfaces.',
-      },
-      {
-        id: 'current-affairs',
-        label: 'Current Affairs',
-        path: '/current-affairs',
-        caption: 'Monthly curated knowledge dossiers and downloadable current affairs digests for competitive exam aspirants.',
-      },
-      {
-        id: 'login',
-        label: 'Sign In Portal',
-        path: '/login',
-        caption: 'Public authentication gateway with role-based sign-in options for students, parents, and academy faculty.',
+        caption: 'NCERT-aligned practice series directory with 140+ mock exams, chapter syllabus breakdowns, and simulated exam interfaces.',
       },
     ],
   },
@@ -326,8 +314,17 @@ export async function runCapture(targetSlug = null) {
 
 if (process.argv[1] && process.argv[1].endsWith('capture-work-gallery.mjs')) {
   const target = process.argv[2] || null;
-  runCapture(target).catch((err) => {
-    console.error('Fatal capture error:', err);
-    process.exit(1);
-  });
+  if (target === 'mathsy-portals') {
+    import('./capture-mathsy-portals.mjs').then(({ captureAllPortals }) => {
+      return captureAllPortals();
+    }).catch((err) => {
+      console.error('Fatal portal capture error:', err);
+      process.exit(1);
+    });
+  } else {
+    runCapture(target).catch((err) => {
+      console.error('Fatal capture error:', err);
+      process.exit(1);
+    });
+  }
 }

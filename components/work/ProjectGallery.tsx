@@ -139,10 +139,14 @@ function ActiveGallery({
     const nextIdx = (activeTab + 1) % gallery.length;
     const nextItem = gallery[nextIdx];
     if (nextItem) {
-      const imgD = new window.Image();
-      imgD.src = nextItem.desktopPoster;
-      const imgM = new window.Image();
-      imgM.src = nextItem.mobilePoster;
+      if (nextItem.desktopPoster) {
+        const imgD = new window.Image();
+        imgD.src = nextItem.desktopPoster;
+      }
+      if (nextItem.mobilePoster) {
+        const imgM = new window.Image();
+        imgM.src = nextItem.mobilePoster;
+      }
     }
   }, [activeTab, gallery]);
 
@@ -226,6 +230,15 @@ function ActiveGallery({
   const currentPage = gallery[activeTab];
   const domain = project.liveUrl.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
   const livePageUrl = `${project.liveUrl.replace(/\/$/, "")}${currentPage.path.startsWith("/") ? "" : "/"}${currentPage.path}`;
+  const hasMobile = Boolean(currentPage.mobile);
+  const effectiveViewMode: ViewMode = !hasMobile && (viewMode === "mobile" || viewMode === "both")
+    ? "desktop"
+    : viewMode;
+
+  const hasGroups = gallery.some((item) => Boolean(item.group));
+  const uniqueGroups = hasGroups
+    ? Array.from(new Set(gallery.map((item) => item.group).filter(Boolean) as string[]))
+    : [];
 
   return (
     <section
@@ -288,11 +301,11 @@ function ActiveGallery({
               gap: "4px",
             }}
           >
-            {!isMobileScreen && (
+            {!isMobileScreen && hasMobile && (
               <button
                 type="button"
                 onClick={() => setViewMode("both")}
-                aria-pressed={viewMode === "both"}
+                aria-pressed={effectiveViewMode === "both"}
                 style={{
                   fontFamily: "var(--font-geist-mono)",
                   fontSize: "0.78rem",
@@ -300,9 +313,9 @@ function ActiveGallery({
                   borderRadius: "999px",
                   border: "none",
                   cursor: "pointer",
-                  background: viewMode === "both" ? "var(--accent)" : "transparent",
-                  color: viewMode === "both" ? "var(--primary-btn-text)" : "var(--muted)",
-                  fontWeight: viewMode === "both" ? 600 : 400,
+                  background: effectiveViewMode === "both" ? "var(--accent)" : "transparent",
+                  color: effectiveViewMode === "both" ? "var(--primary-btn-text)" : "var(--muted)",
+                  fontWeight: effectiveViewMode === "both" ? 600 : 400,
                   transition: "all 0.15s ease",
                 }}
               >
@@ -312,7 +325,7 @@ function ActiveGallery({
             <button
               type="button"
               onClick={() => setViewMode("desktop")}
-              aria-pressed={viewMode === "desktop"}
+              aria-pressed={effectiveViewMode === "desktop"}
               style={{
                 fontFamily: "var(--font-geist-mono)",
                 fontSize: "0.78rem",
@@ -320,36 +333,85 @@ function ActiveGallery({
                 borderRadius: "999px",
                 border: "none",
                 cursor: "pointer",
-                background: viewMode === "desktop" ? "var(--accent)" : "transparent",
-                color: viewMode === "desktop" ? "var(--primary-btn-text)" : "var(--muted)",
-                fontWeight: viewMode === "desktop" ? 600 : 400,
+                background: effectiveViewMode === "desktop" ? "var(--accent)" : "transparent",
+                color: effectiveViewMode === "desktop" ? "var(--primary-btn-text)" : "var(--muted)",
+                fontWeight: effectiveViewMode === "desktop" ? 600 : 400,
                 transition: "all 0.15s ease",
               }}
             >
               Desktop
             </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("mobile")}
-              aria-pressed={viewMode === "mobile"}
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "0.78rem",
-                padding: "5px 14px",
-                borderRadius: "999px",
-                border: "none",
-                cursor: "pointer",
-                background: viewMode === "mobile" ? "var(--accent)" : "transparent",
-                color: viewMode === "mobile" ? "var(--primary-btn-text)" : "var(--muted)",
-                fontWeight: viewMode === "mobile" ? 600 : 400,
-                transition: "all 0.15s ease",
-              }}
-            >
-              Mobile
-            </button>
+            {hasMobile && (
+              <button
+                type="button"
+                onClick={() => setViewMode("mobile")}
+                aria-pressed={effectiveViewMode === "mobile"}
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.78rem",
+                  padding: "5px 14px",
+                  borderRadius: "999px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: effectiveViewMode === "mobile" ? "var(--accent)" : "transparent",
+                  color: effectiveViewMode === "mobile" ? "var(--primary-btn-text)" : "var(--muted)",
+                  fontWeight: effectiveViewMode === "mobile" ? 600 : 400,
+                  transition: "all 0.15s ease",
+                }}
+              >
+                Mobile
+              </button>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Group chips if project has grouped gallery items */}
+      {hasGroups && (
+        <div
+          role="tablist"
+          aria-label="Filter pages by section"
+          style={{
+            display: "flex",
+            gap: "8px",
+            overflowX: "auto",
+            paddingBottom: "4px",
+            marginBottom: "12px",
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch",
+          }}
+        >
+          {uniqueGroups.map((grpName) => {
+            const isGroupActive = currentPage.group === grpName;
+            const firstIdx = gallery.findIndex((item) => item.group === grpName);
+            return (
+              <button
+                key={grpName}
+                type="button"
+                onClick={() => firstIdx !== -1 && handleSelectTab(firstIdx)}
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.74rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  padding: "5px 12px",
+                  borderRadius: "999px",
+                  border: isGroupActive ? "1px solid var(--accent)" : "1px solid var(--border)",
+                  background: isGroupActive ? "rgba(245, 158, 11, 0.16)" : "var(--surface)",
+                  color: isGroupActive ? "var(--accent)" : "var(--muted)",
+                  fontWeight: isGroupActive ? 600 : 400,
+                  cursor: "pointer",
+                  transition: "all 0.15s ease",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                }}
+              >
+                {grpName}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Page Tabs (Pills) */}
       <div
@@ -429,7 +491,7 @@ function ActiveGallery({
           }}
         >
           {/* VIEW: BOTH (Desktop screen only) */}
-          {viewMode === "both" && !isMobileScreen && (
+          {effectiveViewMode === "both" && !isMobileScreen && hasMobile && (
             <div
               style={{
                 position: "relative",
@@ -479,7 +541,7 @@ function ActiveGallery({
           )}
 
           {/* VIEW: DESKTOP ONLY */}
-          {viewMode === "desktop" && (
+          {effectiveViewMode === "desktop" && (
             <div
               style={{
                 width: "100%",
@@ -498,7 +560,7 @@ function ActiveGallery({
           )}
 
           {/* VIEW: MOBILE ONLY */}
-          {viewMode === "mobile" && (
+          {effectiveViewMode === "mobile" && hasMobile && (
             <div
               style={{
                 width: "100%",
@@ -541,7 +603,7 @@ function ActiveGallery({
                 marginBottom: "4px",
               }}
             >
-              {currentPage.label} · Page Overview
+              {currentPage.group ? `${currentPage.group} · ` : ""}{currentPage.label} · Page Overview
             </span>
             <p
               style={{
@@ -616,6 +678,23 @@ function ActiveGallery({
         </div>
       )}
 
+      {/* Privacy note for Mathsy project only */}
+      {project.slug === "mathsy" && (
+        <p
+          style={{
+            fontFamily: "var(--font-geist-mono)",
+            fontSize: "0.78rem",
+            color: "var(--muted)",
+            textAlign: "center",
+            marginTop: "18px",
+            marginBottom: 0,
+            opacity: 0.85,
+          }}
+        >
+          Real platform screens. Personal details have been changed to protect privacy.
+        </p>
+      )}
+
       {/* FULL-SCREEN LIGHTBOX MODAL */}
       {lightboxOpen && (
         <div
@@ -675,50 +754,52 @@ function ActiveGallery({
             {/* Controls */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               {/* Device Toggle inside Lightbox */}
-              <div
-                style={{
-                  display: "inline-flex",
-                  background: "rgba(0, 0, 0, 0.4)",
-                  borderRadius: "999px",
-                  padding: "3px",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setLightboxDevice("desktop")}
+              {Boolean(gallery[lightboxIndex]?.mobile) && (
+                <div
                   style={{
-                    fontFamily: "var(--font-geist-mono)",
-                    fontSize: "0.72rem",
-                    padding: "4px 10px",
+                    display: "inline-flex",
+                    background: "rgba(0, 0, 0, 0.4)",
                     borderRadius: "999px",
-                    border: "none",
-                    background: lightboxDevice === "desktop" ? "var(--accent)" : "transparent",
-                    color: lightboxDevice === "desktop" ? "#0e0d0b" : "var(--muted)",
-                    fontWeight: 600,
-                    cursor: "pointer",
+                    padding: "3px",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
                   }}
                 >
-                  Desktop
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLightboxDevice("mobile")}
-                  style={{
-                    fontFamily: "var(--font-geist-mono)",
-                    fontSize: "0.72rem",
-                    padding: "4px 10px",
-                    borderRadius: "999px",
-                    border: "none",
-                    background: lightboxDevice === "mobile" ? "var(--accent)" : "transparent",
-                    color: lightboxDevice === "mobile" ? "#0e0d0b" : "var(--muted)",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
-                >
-                  Mobile
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxDevice("desktop")}
+                    style={{
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.72rem",
+                      padding: "4px 10px",
+                      borderRadius: "999px",
+                      border: "none",
+                      background: lightboxDevice === "desktop" ? "var(--accent)" : "transparent",
+                      color: lightboxDevice === "desktop" ? "#0e0d0b" : "var(--muted)",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Desktop
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxDevice("mobile")}
+                    style={{
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.72rem",
+                      padding: "4px 10px",
+                      borderRadius: "999px",
+                      border: "none",
+                      background: lightboxDevice === "mobile" ? "var(--accent)" : "transparent",
+                      color: lightboxDevice === "mobile" ? "#0e0d0b" : "var(--muted)",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Mobile
+                  </button>
+                </div>
+              )}
 
               {/* Prev / Next Page */}
               <button
@@ -804,9 +885,9 @@ function ActiveGallery({
             >
               <img
                 src={
-                  lightboxDevice === "desktop"
+                  lightboxDevice === "desktop" || !gallery[lightboxIndex]?.mobile
                     ? gallery[lightboxIndex].desktop
-                    : gallery[lightboxIndex].mobile
+                    : gallery[lightboxIndex].mobile!
                 }
                 alt={`${project.title} ${gallery[lightboxIndex].label} page on ${lightboxDevice}`}
                 style={{
@@ -1127,7 +1208,7 @@ function PhoneFrame({
       >
         {/* Poster Image (shown first) */}
         <img
-          src={page.mobilePoster}
+          src={page.mobilePoster || ""}
           alt={`${projectTitle} ${page.label} page on mobile`}
           width={390}
           height={844}
@@ -1147,7 +1228,7 @@ function PhoneFrame({
         />
 
         {/* Full-Page Image (loaded on hover/tap, smoothly scrolls top to bottom) */}
-        {loadFullImage && (
+        {loadFullImage && page.mobile && (
           <img
             src={page.mobile}
             alt={`${projectTitle} ${page.label} page on mobile`}
