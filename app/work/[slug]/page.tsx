@@ -3,8 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ProjectGallery from "@/components/work/ProjectGallery";
 import { PROJECTS, getProjectBySlug } from "@/content/projects";
-import { SITE } from "@/content/site";
+import { SITE, getConsultUrl } from "@/content/site";
 
 // Generate static params for all case studies (static export required)
 export function generateStaticParams() {
@@ -33,6 +34,14 @@ export async function generateMetadata({
       images: project.featuredScreenshots.desktop
         ? [{ url: project.featuredScreenshots.desktop, width: 1200, height: 750, alt: project.title }]
         : [{ url: "/og/home.png", width: 1200, height: 630, alt: project.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} Case Study | techiitfly`,
+      description: project.summary,
+      images: project.featuredScreenshots.desktop
+        ? [project.featuredScreenshots.desktop]
+        : ["/og/home.png"],
     },
   };
 }
@@ -300,104 +309,8 @@ export default async function CaseStudyPage({
             </div>
           )}
 
-          {/* Live Screenshots Gallery */}
-          {project.featuredScreenshots?.desktop && (
-            <div style={{ marginBottom: "64px" }}>
-              <span className="section-label">LIVE DEPLOYMENT EVIDENCE</span>
-              <h2
-                style={{
-                  fontFamily: "var(--font-instrument-serif)",
-                  fontSize: "2.2rem",
-                  color: "var(--text)",
-                  marginTop: "8px",
-                  marginBottom: "24px",
-                }}
-              >
-                Production interface
-              </h2>
-              <div
-                style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius-lg)",
-                  overflow: "hidden",
-                  boxShadow: "var(--card-shadow)",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "12px 18px",
-                    background: "var(--surface-2)",
-                    borderBottom: "1px solid var(--border)",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444", opacity: 0.8 }} />
-                    <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b", opacity: 0.8 }} />
-                    <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#10b981", opacity: 0.8 }} />
-                  </div>
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.78rem",
-                      color: "var(--accent)",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {project.liveUrl.replace(/^https?:\/\//, "")} ↗
-                  </a>
-                </div>
-                <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 10", background: "#0e0d0b" }}>
-                  <Image
-                    src={project.featuredScreenshots.desktop}
-                    alt={`${project.title} production desktop interface`}
-                    fill
-                    sizes="(max-width: 1040px) 100vw, 1040px"
-                    style={{ objectFit: "cover", objectPosition: "top center" }}
-                  />
-                </div>
-              </div>
-
-              {project.featuredScreenshots.mobile && (
-                <div
-                  style={{
-                    marginTop: "24px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "100%",
-                      maxWidth: "340px",
-                      background: "var(--surface)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "24px",
-                      overflow: "hidden",
-                      padding: "10px",
-                      boxShadow: "var(--card-shadow)",
-                    }}
-                  >
-                    <div style={{ position: "relative", width: "100%", aspectRatio: "9 / 18", borderRadius: "16px", overflow: "hidden", background: "#0e0d0b" }}>
-                      <Image
-                        src={project.featuredScreenshots.mobile}
-                        alt={`${project.title} mobile interface`}
-                        fill
-                        sizes="340px"
-                        style={{ objectFit: "cover", objectPosition: "top center" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Multi-Page Screenshot Gallery */}
+          <ProjectGallery project={project} />
 
           {/* Key Deliverables & Implemented Features */}
           <section style={{ marginBottom: "64px" }}>
@@ -503,7 +416,7 @@ export default async function CaseStudyPage({
                 margin: "0 auto 28px",
               }}
             >
-              Whether you need a full learning platform, virtual classroom tools, or a high-converting course site, we can build it.
+              Want a website like this? Get a fixed price within 24 hours.
             </p>
             <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap" }}>
               <a
@@ -526,8 +439,10 @@ export default async function CaseStudyPage({
               >
                 Discuss on WhatsApp →
               </a>
-              <Link
-                href="/#contact"
+              <a
+                href={getConsultUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -542,8 +457,8 @@ export default async function CaseStudyPage({
                   textDecoration: "none",
                 }}
               >
-                Contact Form
-              </Link>
+                Book a free call ↗
+              </a>
             </div>
           </div>
         </div>

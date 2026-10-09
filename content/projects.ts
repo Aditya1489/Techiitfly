@@ -1,3 +1,14 @@
+export interface GalleryItem {
+  id: string;
+  label: string;
+  path: string;
+  desktop: string;
+  desktopPoster: string;
+  mobile: string;
+  mobilePoster: string;
+  caption: string;
+}
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -10,6 +21,7 @@ export interface CaseStudy {
     desktop?: string;
     mobile?: string;
   };
+  gallery?: GalleryItem[];
   summary: string;
   challenge: string;
   solution: string;
@@ -35,6 +47,68 @@ export const PROJECTS: CaseStudy[] = [
       desktop: "/screenshots/yogagarhi-desktop.webp",
       mobile: "/screenshots/yogagarhi-mobile.webp",
     },
+    gallery: [
+      {
+        id: "home",
+        label: "Home",
+        path: "/",
+        desktop: "/screenshots/work/yogagarhi/home-desktop.webp",
+        desktopPoster: "/screenshots/work/yogagarhi/home-desktop-poster.webp",
+        mobile: "/screenshots/work/yogagarhi/home-mobile.webp",
+        mobilePoster: "/screenshots/work/yogagarhi/home-mobile-poster.webp",
+        caption: "High-converting homepage presenting Bali & Rishikesh school credentials, course highlights, and direct inquiry channels.",
+      },
+      {
+        id: "about",
+        label: "About School",
+        path: "/about-school",
+        desktop: "/screenshots/work/yogagarhi/about-desktop.webp",
+        desktopPoster: "/screenshots/work/yogagarhi/about-desktop-poster.webp",
+        mobile: "/screenshots/work/yogagarhi/about-mobile.webp",
+        mobilePoster: "/screenshots/work/yogagarhi/about-mobile-poster.webp",
+        caption: "Foundational story, Vedic tradition lineage, master teacher introductions, and Yoga Alliance accreditation credentials.",
+      },
+      {
+        id: "courses",
+        label: "200-Hour Bali YTT",
+        path: "/200-hour-yoga-teacher-training-in-bali",
+        desktop: "/screenshots/work/yogagarhi/courses-desktop.webp",
+        desktopPoster: "/screenshots/work/yogagarhi/courses-desktop-poster.webp",
+        mobile: "/screenshots/work/yogagarhi/courses-mobile.webp",
+        mobilePoster: "/screenshots/work/yogagarhi/courses-mobile-poster.webp",
+        caption: "Residential teacher training syllabus with daily routines, accommodation tiers, curriculum modules, and fee details.",
+      },
+      {
+        id: "retreats",
+        label: "Bali Retreat",
+        path: "/retreat/bali/7-days",
+        desktop: "/screenshots/work/yogagarhi/retreats-desktop.webp",
+        desktopPoster: "/screenshots/work/yogagarhi/retreats-desktop-poster.webp",
+        mobile: "/screenshots/work/yogagarhi/retreats-mobile.webp",
+        mobilePoster: "/screenshots/work/yogagarhi/retreats-mobile-poster.webp",
+        caption: "Wellness retreat program featuring daily restorative yoga, sound baths, cultural excursions, and villa accommodation.",
+      },
+      {
+        id: "gallery",
+        label: "Gallery",
+        path: "/gallery",
+        desktop: "/screenshots/work/yogagarhi/gallery-desktop.webp",
+        desktopPoster: "/screenshots/work/yogagarhi/gallery-desktop-poster.webp",
+        mobile: "/screenshots/work/yogagarhi/gallery-mobile.webp",
+        mobilePoster: "/screenshots/work/yogagarhi/gallery-mobile-poster.webp",
+        caption: "Visual campus showcase highlighting open-air shalas, meditation gardens, cohort sessions, and teacher training moments.",
+      },
+      {
+        id: "contact",
+        label: "Contact",
+        path: "/contact-us",
+        desktop: "/screenshots/work/yogagarhi/contact-desktop.webp",
+        desktopPoster: "/screenshots/work/yogagarhi/contact-desktop-poster.webp",
+        mobile: "/screenshots/work/yogagarhi/contact-mobile.webp",
+        mobilePoster: "/screenshots/work/yogagarhi/contact-mobile-poster.webp",
+        caption: "Campus admission form, campus maps, phone numbers, and WhatsApp chat for course counseling.",
+      },
+    ],
     summary:
       "A conversion-focused site for a Yoga Alliance school in Bali and Rishikesh, featuring an Ayurveda Prakriti quiz, sale countdown, and WhatsApp direct bookings.",
     challenge:
@@ -87,6 +161,68 @@ export const PROJECTS: CaseStudy[] = [
       desktop: "/screenshots/yogicpath-desktop.webp",
       mobile: "/screenshots/yogicpath-mobile.webp",
     },
+    gallery: [
+      {
+        id: "home",
+        label: "Home",
+        path: "/",
+        desktop: "/screenshots/work/yogicpath/home-desktop.webp",
+        desktopPoster: "/screenshots/work/yogicpath/home-desktop-poster.webp",
+        mobile: "/screenshots/work/yogicpath/home-mobile.webp",
+        mobilePoster: "/screenshots/work/yogicpath/home-mobile-poster.webp",
+        caption: "Flagship landing page introducing Yoga Alliance accredited residential teacher trainings in Rishikesh and Kerala.",
+      },
+      {
+        id: "about",
+        label: "About Us",
+        path: "/about-us/",
+        desktop: "/screenshots/work/yogicpath/about-desktop.webp",
+        desktopPoster: "/screenshots/work/yogicpath/about-desktop-poster.webp",
+        mobile: "/screenshots/work/yogicpath/about-mobile.webp",
+        mobilePoster: "/screenshots/work/yogicpath/about-mobile-poster.webp",
+        caption: "School tradition, Himalayan yogic lineage, lead instructor biographies, and worldwide accreditation standards.",
+      },
+      {
+        id: "ytt-200",
+        label: "200-Hour Rishikesh",
+        path: "/200-hour-yoga-teacher-training-rishikesh/",
+        desktop: "/screenshots/work/yogicpath/ytt-200-desktop.webp",
+        desktopPoster: "/screenshots/work/yogicpath/ytt-200-desktop-poster.webp",
+        mobile: "/screenshots/work/yogicpath/ytt-200-mobile.webp",
+        mobilePoster: "/screenshots/work/yogicpath/ytt-200-mobile-poster.webp",
+        caption: "Foundational 200-hour course breakdown with daily schedules, asana modules, ashram amenities, and intake dates.",
+      },
+      {
+        id: "ytt-300",
+        label: "300-Hour Rishikesh",
+        path: "/300-hour-yoga-teacher-training-rishikesh/",
+        desktop: "/screenshots/work/yogicpath/ytt-300-desktop.webp",
+        desktopPoster: "/screenshots/work/yogicpath/ytt-300-desktop-poster.webp",
+        mobile: "/screenshots/work/yogicpath/ytt-300-mobile.webp",
+        mobilePoster: "/screenshots/work/yogicpath/ytt-300-mobile-poster.webp",
+        caption: "Advanced curriculum covering hands-on adjustments, pranayama, therapeutic yoga, and RYT-500 certification progression.",
+      },
+      {
+        id: "events",
+        label: "Events",
+        path: "/events/",
+        desktop: "/screenshots/work/yogicpath/events-desktop.webp",
+        desktopPoster: "/screenshots/work/yogicpath/events-desktop-poster.webp",
+        mobile: "/screenshots/work/yogicpath/events-mobile.webp",
+        mobilePoster: "/screenshots/work/yogicpath/events-mobile-poster.webp",
+        caption: "Upcoming training calendar, course dates across destinations, and scheduled admissions.",
+      },
+      {
+        id: "contact",
+        label: "Contact",
+        path: "/contact-us/",
+        desktop: "/screenshots/work/yogicpath/contact-desktop.webp",
+        desktopPoster: "/screenshots/work/yogicpath/contact-desktop-poster.webp",
+        mobile: "/screenshots/work/yogicpath/contact-mobile.webp",
+        mobilePoster: "/screenshots/work/yogicpath/contact-mobile-poster.webp",
+        caption: "Admissions inquiry form, email contacts, direct phone lines, and campus location guidance.",
+      },
+    ],
     summary:
       "A lead generation architecture for a Yoga Alliance accredited institution offering 200-hour and 300-hour residential teacher training certifications.",
     challenge:
@@ -136,6 +272,48 @@ export const PROJECTS: CaseStudy[] = [
       desktop: "/screenshots/mathsy-desktop.webp",
       mobile: "/screenshots/mathsy-mobile.webp",
     },
+    gallery: [
+      {
+        id: "home",
+        label: "Home",
+        path: "/",
+        desktop: "/screenshots/work/mathsy/home-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/home-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/home-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/home-mobile-poster.webp",
+        caption: "Public learning academy portal presenting mentor faculty, course modes, platform features, and trial sign-ups.",
+      },
+      {
+        id: "test-series",
+        label: "NEET Test Series",
+        path: "/test-series",
+        desktop: "/screenshots/work/mathsy/test-series-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/test-series-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/test-series-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/test-series-mobile-poster.webp",
+        caption: "NCERT-aligned practice series directory with 140+ mock exams, chapter syllabus, and exam simulation overview.",
+      },
+      {
+        id: "current-affairs",
+        label: "Current Affairs",
+        path: "/current-affairs",
+        desktop: "/screenshots/work/mathsy/current-affairs-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/current-affairs-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/current-affairs-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/current-affairs-mobile-poster.webp",
+        caption: "Monthly curated educational knowledge compendiums and downloadable PDF digests for exam candidates.",
+      },
+      {
+        id: "login",
+        label: "Sign In Portal",
+        path: "/login",
+        desktop: "/screenshots/work/mathsy/login-desktop.webp",
+        desktopPoster: "/screenshots/work/mathsy/login-desktop-poster.webp",
+        mobile: "/screenshots/work/mathsy/login-mobile.webp",
+        mobilePoster: "/screenshots/work/mathsy/login-mobile-poster.webp",
+        caption: "Public authentication gateway offering separate sign-in paths for students, parents, and academy mentors.",
+      },
+    ],
     summary:
       "A learning platform for an online maths and science academy, with separate portals for students, tutors, parents and admins.",
     challenge:
