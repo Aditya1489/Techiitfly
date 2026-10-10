@@ -295,7 +295,7 @@ export const PROJECTS: CaseStudy[] = [
         desktopPoster: "/screenshots/work/mathsy/test-series-desktop-poster.webp",
         mobile: "/screenshots/work/mathsy/test-series-mobile.webp",
         mobilePoster: "/screenshots/work/mathsy/test-series-mobile-poster.webp",
-        caption: "NCERT-aligned practice series directory with 140+ mock exams, chapter syllabus breakdowns, and exam simulation overview.",
+        caption: "Curriculum-aligned practice series directory with 140+ mock exams, chapter syllabus breakdowns, and exam simulation overview.",
       },
       // 2. Student portal
       {
@@ -340,7 +340,7 @@ export const PROJECTS: CaseStudy[] = [
         desktopPoster: "/screenshots/work/mathsy/student-study-materials-desktop-poster.webp",
         mobile: "/screenshots/work/mathsy/student-study-materials-mobile.webp",
         mobilePoster: "/screenshots/work/mathsy/student-study-materials-mobile-poster.webp",
-        caption: "Curated NCERT study resources directory organized across science and mathematics disciplines with chapter guides and revision notes.",
+        caption: "Curated textbook study resources directory organized across science and mathematics disciplines with chapter guides and revision notes.",
       },
       {
         id: "student-progress",
@@ -379,13 +379,13 @@ export const PROJECTS: CaseStudy[] = [
       {
         id: "tutor-questions",
         group: "Tutor portal",
-        label: "Question Bank",
+        label: "Question Directory",
         path: "/tutor/question-bank",
         desktop: "/screenshots/work/mathsy/tutor-questions-desktop.webp",
         desktopPoster: "/screenshots/work/mathsy/tutor-questions-desktop-poster.webp",
         mobile: "/screenshots/work/mathsy/tutor-questions-mobile.webp",
         mobilePoster: "/screenshots/work/mathsy/tutor-questions-mobile-poster.webp",
-        caption: "Multi-board question bank categorized across CBSE, ICSE, and SSC syllabi with difficulty breakdowns and NCERT import tools.",
+        caption: "Multi-board question directory categorized across CBSE, ICSE, and SSC syllabi with difficulty breakdowns and curriculum import tools.",
       },
       {
         id: "tutor-exams",

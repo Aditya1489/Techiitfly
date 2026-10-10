@@ -128,8 +128,8 @@ export const PRICING_CONFIG: PricingConfig = {
     meetUnlimitedClasses: false,
     bullets: [
       "Built-in compass, protractor, ruler and set-squares",
-      "Screen sharing, PDF & NCERT slides with notes on each page",
-      "Live polls + question bank and automatic PDF notes",
+      "Video classes, screen sharing & live polls",
+      "Local HD recording saved directly to your computer",
     ],
     primaryCtaText: "Book a free walkthrough",
     trialCtaText: "Start your free trial",

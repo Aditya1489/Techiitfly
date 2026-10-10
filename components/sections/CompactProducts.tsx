@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { getMeetDemoUrl } from "@/content/site";
+import { SITE, getMeetDemoUrl, getConsultUrl } from "@/content/site";
 import { trackEvent } from "@/lib/tracking";
 
 export default function CompactProducts() {
   const handleDemoClick = () => {
     trackEvent("meet_demo_click", "home_product_section");
+  };
+
+  const handleWalkthroughClick = () => {
+    trackEvent("consult_click", "home_product_section");
+    trackEvent("meet_walkthrough_click", "home_product_section");
   };
 
   return (
@@ -145,33 +150,58 @@ export default function CompactProducts() {
                   marginBottom: "26px",
                 }}
               >
-                Live online classroom for maths tutors: teach from PDFs, use a real compass and protractor, share your screen and run live polls.
+                Live online classroom for maths tutors with a real compass, protractor and ruler, screen sharing and live polls.
               </p>
 
-              {/* Buttons: Try a free demo class → and Learn more */}
+              {/* Primary action + Learn more */}
               <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", alignItems: "center" }}>
-                <a
-                  href={getMeetDemoUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleDemoClick}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "12px 22px",
-                    borderRadius: "8px",
-                    background: "var(--accent)",
-                    color: "var(--primary-btn-text)",
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.92rem",
-                    fontWeight: 600,
-                    textDecoration: "none",
-                  }}
-                >
-                  <span>Try a free demo class</span>
-                  <span>→</span>
-                </a>
+                {SITE.meetDemoReady ? (
+                  <a
+                    href={getMeetDemoUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleDemoClick}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "12px 22px",
+                      borderRadius: "8px",
+                      background: "var(--accent)",
+                      color: "var(--primary-btn-text)",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.92rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <span>Try a free demo class</span>
+                    <span>→</span>
+                  </a>
+                ) : (
+                  <a
+                    href={getConsultUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleWalkthroughClick}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "12px 22px",
+                      borderRadius: "8px",
+                      background: "var(--accent)",
+                      color: "var(--primary-btn-text)",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.92rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <span>Book a free walkthrough</span>
+                    <span>↗</span>
+                  </a>
+                )}
 
                 <Link
                   href="/mathsy-meet"

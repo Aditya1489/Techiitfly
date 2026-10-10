@@ -2,46 +2,23 @@
 
 import Image from "next/image";
 import { SITE, getMeetDemoUrl } from "@/content/site";
+import { MEET_FEATURES, COMING_SOON_MEET_FEATURES } from "@/content/meetFeatures";
+import MeetWalkthroughButton from "@/components/meet/MeetWalkthroughButton";
 import { trackEvent } from "@/lib/tracking";
 
-interface FeatureBlock {
-  id: string;
-  number: string;
-  title: string;
-  summary: string;
-  bullets: string[];
-  note?: string;
-  image?: string;
-  imageAlt?: string;
-}
-
 export default function MeetFeatureShowcase() {
-  const allFeatures: FeatureBlock[] = [
+  // Main showcase blocks from live features
+  const showcaseBlocks = [
     {
-      id: "pdf-ncert-slides",
+      id: "maths-whiteboard",
       number: "01",
-      title: "Teach straight from your PDFs and NCERT chapters",
-      summary: "Import textbooks and question sheets directly into your live board as presentation slides.",
-      bullets: [
-        "Load PDFs as slides with visual page thumbnails",
-        "Write on each page — your notes and annotations stay permanently on that page",
-        "Add another PDF or worksheet mid-class without losing your work",
-        "Laser pointer for highlighting terms and diagrams",
-        "Dark, light, and high-contrast blackboard modes",
-        "One-click fullscreen board",
-      ],
-      image: "/screenshots/mathsy-meet-desktop.webp",
-      imageAlt: "Mathsy Meet live whiteboard interface preview",
-    },
-    {
-      id: "maths-instruments",
-      number: "02",
-      title: "Real maths instruments on the board",
-      summary: "True geometric instruments that mimic physical classroom tools on your screen.",
+      title: "Whiteboard with compass, protractor, ruler and set-square",
+      summary:
+        "True geometric instruments that mimic physical classroom tools right on your whiteboard canvas.",
       bullets: [
         "Compass with adjustable radius for constructing accurate circles and arcs",
-        "180° protractor with rotating pointer and angle readouts",
-        "Ruler with clear mm and cm markings for drawing to scale",
+        "180° protractor with rotating pointer and angle degree readouts",
+        "Ruler with clear metric markings for drawing straight lines to scale",
         "30-60-90° and 45-45-90° set-squares for coordinate geometry and triangles",
       ],
       image: "/screenshots/mathsy-meet-instruments.webp",
@@ -49,80 +26,79 @@ export default function MeetFeatureShowcase() {
     },
     {
       id: "screen-sharing",
-      number: "03",
-      title: "Share your screen",
-      summary: "Seamless display sharing for interactive simulations, software demos, and problem walkthroughs.",
+      number: "02",
+      title: "Screen sharing & fullscreen mode",
+      summary:
+        "Seamless display sharing for interactive simulations, software demos, and problem walkthroughs.",
       bullets: [
         "Tutors and students can share their screen in one click",
         "Share entire monitor, a single software window, or a specific browser tab",
-        "Smooth audio pass-through for video walkthroughs and physics simulations",
+        "Full-bleed fullscreen display maximizing canvas and video visibility",
       ],
       image: "/screenshots/mathsy-meet-desktop.webp",
-      imageAlt: "Mathsy Meet screen sharing controls",
+      imageAlt: "Mathsy Meet screen sharing controls and classroom view",
     },
     {
-      id: "tablet-paper-writing",
-      number: "04",
-      title: "Write with your tablet like paper",
-      summary: "Turn an iPad, Android tablet, or drawing pad into a natural pen without extra software.",
+      id: "live-polls",
+      number: "03",
+      title: "Live polls (up to 6 options) with live results",
+      summary:
+        "Run multiple-choice polls during live class and track student comprehension with instant tally feedback.",
       bullets: [
-        "Pair a secondary tablet with a simple short code in seconds",
-        "Works as a silent pen on the whiteboard with zero lag",
-        "No audio feedback or echo between your laptop and tablet",
-      ],
-      image: "/screenshots/mathsy-meet-tablet.webp",
-      imageAlt: "Mathsy Meet companion tablet pairing dialog",
-    },
-    {
-      id: "student-involvement",
-      number: "05",
-      title: "Keep every student involved",
-      summary: "Interactive checks and structured participation tools to ensure active understanding.",
-      bullets: [
-        "Live polls: MCQ, multi-correct, true/false and written answers",
-        "Timers, real-time live results, and instant answer reveal",
-        "Reusable question bank organized by subject, chapter, and difficulty",
-        "Structured raise-hand queue to answer student questions one by one",
-        "Emoji reactions and chat lock controls for focused discussion",
+        "Create quick polls with 2 to 6 custom answer choices",
+        "Real-time live vote counts and response percentages as students submit",
+        "Instant answer reveal to discuss solutions and review core concepts together",
       ],
       image: "/screenshots/mathsy-meet-polls.webp",
-      imageAlt: "Mathsy Meet classroom poll creator controls",
+      imageAlt: "Mathsy Meet live poll creation and real-time response tallies",
     },
-    ...(SITE.showMeetAiFeatures
-      ? [
-          {
-            id: "ai-teaching-helpers",
-            number: "06",
-            title: "AI teaching helpers",
-            summary: "Accelerate lesson preparation and classroom polling with assistive generation tools.",
-            bullets: [
-              "Turn a question on your slide into a live interactive poll in one step",
-              "Generate practice questions on demand from your class topic",
-            ],
-            note: "Always review AI-generated questions before sharing.",
-          },
-        ]
-      : []),
     {
-      id: "record-upload-live",
-      number: SITE.showMeetAiFeatures ? "07" : "06",
-      title: "Record, upload and go live",
-      summary: "Preserve every lecture for revision, batch replays, or public YouTube masterclasses.",
+      id: "video-classes",
+      number: "04",
+      title: "Video classes on our own media server",
+      summary:
+        "High-performance WebRTC video routing hosted on our dedicated media server for low-latency tutoring.",
       bullets: [
-        "Reliable recording that saves continuously as you teach",
-        "Cloud upload that automatically resumes even after a dropped connection",
-        "Publish directly to YouTube (public, unlisted, or private)",
+        "Grid and spotlight views with active participant pinning",
+        "Visual speaking indicator highlighting whoever is currently speaking",
+        "Consistent video quality optimized for two-way tutoring interactions",
       ],
     },
     {
-      id: "popout-whiteboard",
-      number: SITE.showMeetAiFeatures ? "08" : "07",
-      title: "Pop-out whiteboard",
-      summary: "Detachable board view designed for high-productivity multi-display workstation setups.",
+      id: "lobby-and-access",
+      number: "05",
+      title: "Pre-join lobby and shareable class link",
+      summary:
+        "Frictionless browser-based onboarding for students with full pre-flight audio and camera testing.",
       bullets: [
-        "Open the whiteboard canvas in its own dedicated browser window",
-        "Place the board on a second monitor or pen display while keeping student videos on your laptop",
-        "Clean full-bleed view ideal for OBS recording or virtual camera feeds",
+        "Students join directly from a shared browser link with zero app downloads",
+        "Pre-join lobby with live microphone and camera testing before entering",
+        "Clear tutor and student role selection upon entering the room",
+        "Fast Google sign-in for secure educator authentication",
+      ],
+    },
+    {
+      id: "chat-and-reactions",
+      number: "06",
+      title: "Chat with a pinned message, raise hand and emoji reactions",
+      summary:
+        "Structured classroom participation tools designed to keep every student focused and engaged.",
+      bullets: [
+        "Classroom text chat with pinned messages for formulas, links, and homework notices",
+        "Structured raise-hand queue so tutors can address questions systematically",
+        "Emoji reactions for immediate pulse checks without interrupting audio",
+      ],
+    },
+    {
+      id: "recording-and-streaming",
+      number: "07",
+      title: "Local HD recording download and YouTube Live streaming",
+      summary:
+        "Preserve every class for revision and archive lectures or broadcast live sessions to YouTube.",
+      bullets: [
+        "Local HD recording download saved directly to your computer immediately after class",
+        "YouTube Live streaming for public, private, or unlisted broadcasts",
+        "Zero cloud storage fees or third-party download expirations",
       ],
     },
   ];
@@ -155,7 +131,7 @@ export default function MeetFeatureShowcase() {
               marginBottom: "14px",
             }}
           >
-            Everything you need to teach math live.
+            Live features built for online maths classes.
           </h2>
           <p
             style={{
@@ -167,13 +143,13 @@ export default function MeetFeatureShowcase() {
               margin: "0 auto",
             }}
           >
-            Purpose-built tools for mathematical drawings, slide annotations, interactive polling, and stylus writing.
+            Purpose-built tools that work directly in the app today: real geometry instruments, screen sharing, live polls, and local HD recording.
           </p>
         </div>
 
-        {/* Alternating Feature Showcase Blocks */}
+        {/* Live Feature Showcase Blocks */}
         <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
-          {allFeatures.map((f, idx) => {
+          {showcaseBlocks.map((f, idx) => {
             const hasImage = Boolean(f.image && f.imageAlt);
             const isEven = idx % 2 === 1;
 
@@ -201,7 +177,7 @@ export default function MeetFeatureShowcase() {
                       marginBottom: "10px",
                     }}
                   >
-                    FEATURE {f.number}
+                    FEATURE {f.number} · LIVE IN APP
                   </div>
 
                   <h3
@@ -258,48 +234,42 @@ export default function MeetFeatureShowcase() {
                     ))}
                   </ul>
 
-                  {f.note && (
-                    <div
+                  {/* Primary Action Button */}
+                  {SITE.meetDemoReady ? (
+                    <a
+                      href={getMeetDemoUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => handleDemoClick(f.id)}
                       style={{
-                        padding: "10px 14px",
-                        background: "rgba(245, 158, 11, 0.08)",
-                        border: "1px solid rgba(245, 158, 11, 0.25)",
-                        borderRadius: "6px",
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "0.78rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        padding: "11px 20px",
+                        borderRadius: "8px",
+                        background: "var(--surface)",
                         color: "var(--accent)",
-                        marginBottom: "24px",
+                        border: "1px solid var(--border)",
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.92rem",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                        transition: "all 0.15s ease",
                       }}
                     >
-                      Note: {f.note}
-                    </div>
+                      <span>Try it in the demo class</span>
+                      <span>→</span>
+                    </a>
+                  ) : (
+                    <MeetWalkthroughButton
+                      label="Book a free walkthrough"
+                      location={`meet_feature_${f.id}`}
+                      style={{
+                        padding: "11px 20px",
+                        fontSize: "0.92rem",
+                      }}
+                    />
                   )}
-
-                  {/* Each block ends with 'Try it in the demo class →' */}
-                  <a
-                    href={getMeetDemoUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => handleDemoClick(f.id)}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "11px 20px",
-                      borderRadius: "8px",
-                      background: "var(--surface)",
-                      color: "var(--accent)",
-                      border: "1px solid var(--border)",
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.92rem",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      transition: "all 0.15s ease",
-                    }}
-                  >
-                    <span>Try it in the demo class</span>
-                    <span>→</span>
-                  </a>
                 </div>
 
                 {/* Screenshot Frame Block (Only rendered if image exists) */}
@@ -366,6 +336,132 @@ export default function MeetFeatureShowcase() {
               </div>
             );
           })}
+        </div>
+
+        {/* ─── Compact "Coming soon" strip (No screenshots, clearly labelled) ─── */}
+        <div
+          style={{
+            marginTop: "90px",
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "36px 32px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "12px",
+              marginBottom: "20px",
+              paddingBottom: "16px",
+              borderBottom: "1px solid var(--border)",
+            }}
+          >
+            <div>
+              <span
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.74rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--accent)",
+                  background: "rgba(245, 158, 11, 0.12)",
+                  padding: "4px 10px",
+                  borderRadius: "4px",
+                  display: "inline-block",
+                  marginBottom: "8px",
+                }}
+              >
+                In Active Development
+              </span>
+              <h3
+                style={{
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "1.35rem",
+                  fontWeight: 700,
+                  color: "var(--text)",
+                  margin: 0,
+                }}
+              >
+                Coming soon to Mathsy Meet
+              </h3>
+            </div>
+            <p
+              style={{
+                fontFamily: "var(--font-geist-sans)",
+                fontSize: "0.88rem",
+                color: "var(--muted)",
+                margin: 0,
+                maxWidth: "480px",
+              }}
+            >
+              These features are currently in engineering and will roll out directly to all active tutor accounts.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "14px",
+            }}
+          >
+            {COMING_SOON_MEET_FEATURES.map((item) => (
+              <div
+                key={item.id}
+                style={{
+                  background: "var(--bg)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "8px",
+                  padding: "16px 18px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "0.95rem",
+                      fontWeight: 600,
+                      color: "var(--text)",
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-geist-mono)",
+                      fontSize: "0.68rem",
+                      fontWeight: 600,
+                      color: "var(--muted)",
+                      background: "var(--surface)",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    Soon
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.82rem",
+                    color: "var(--muted)",
+                    lineHeight: 1.45,
+                    margin: 0,
+                  }}
+                >
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

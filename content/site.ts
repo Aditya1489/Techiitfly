@@ -26,6 +26,7 @@ export interface SiteConfig {
   showMathsyMeetOrigin: boolean;
   meetAppUrl: string;
   meetDemoUrl: string;
+  meetDemoReady: boolean;
   mathsyMeetPrice: string;
   legalEntityType: string;
   registeredAddress: string;
@@ -72,6 +73,7 @@ export const SITE: SiteConfig = {
   showMathsyMeetOrigin: false,
   meetAppUrl: "https://classroom-meet.vercel.app",
   meetDemoUrl: "",
+  meetDemoReady: false,
   mathsyMeetPrice: "₹999 / month per tutor",
   legalEntityType: "",
   registeredAddress: "",

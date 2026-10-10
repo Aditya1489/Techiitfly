@@ -14,22 +14,22 @@ export default function MeetBenefitsSection() {
     },
     {
       title: "Built for maths teaching",
-      desc: "Compass, protractor, ruler, set-squares built right into the whiteboard with true-arc snapping.",
-      badge: "Math-First",
+      desc: "Purpose-built for educators who need precise tools for explanations, diagrams, and problem walkthroughs.",
+      badge: "Educator-First",
     },
     {
-      title: "Write naturally with a tablet",
-      desc: "Silent pen pairing with Apple Pencil, iPad, and Wacom graphics tablets while monitoring student video feeds on your laptop.",
-      badge: "Hardware Agnostic",
+      title: "Real maths instruments",
+      desc: "Compass, protractor, ruler, and set-squares built right into the whiteboard with true-arc and degree snapping.",
+      badge: "Geometry",
     },
     {
-      title: "Notes done for you",
-      desc: "PDF after class packaged automatically with every stroke and geometric annotation the moment your lecture ends.",
-      badge: "Automated",
+      title: "Live polls in class",
+      desc: "Launch multiple-choice polls during live lectures with up to 6 options and track instant answer tallies.",
+      badge: "Interactive",
     },
     {
       title: "Made for your needs",
-      desc: "Request features; we build them. Need custom question tools or parent reports? We tailor the classroom to you.",
+      desc: "Request features; we build them. Need custom question tools or room rules? We tailor the classroom to you.",
       badge: "Customizable",
     },
   ];

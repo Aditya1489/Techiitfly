@@ -313,7 +313,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Screen sharing</span>
+              <span>Video classes on dedicated media server</span>
             </li>
             <li
               style={{
@@ -325,7 +325,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>PDF &amp; NCERT slides with notes on each page</span>
+              <span>Screen sharing &amp; fullscreen board</span>
             </li>
             <li
               style={{
@@ -337,7 +337,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Live polls + question bank</span>
+              <span>Live polls (up to 6 options) with live results</span>
             </li>
             <li
               style={{
@@ -349,7 +349,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Automatic post-class PDF notes</span>
+              <span>Chat with pinned message, raise hand &amp; emoji reactions</span>
             </li>
             <li
               style={{
@@ -361,7 +361,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Tablet pairing (iPad &amp; stylus like paper)</span>
+              <span>Local HD recording saved directly to your computer</span>
             </li>
             <li
               style={{
@@ -581,7 +581,7 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>YouTube publishing</span>
+              <span>YouTube Live streaming</span>
             </li>
             <li
               style={{
@@ -593,22 +593,8 @@ export default function MeetPlanCards({
               }}
             >
               <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-              <span>Pop-out whiteboard for OBS</span>
+              <span>Larger classes (up to 100 students)</span>
             </li>
-            {SITE.showMeetAiFeatures && (
-              <li
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  fontSize: "0.88rem",
-                  color: "var(--text)",
-                  lineHeight: 1.45,
-                }}
-              >
-                <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-                <span>AI teaching helpers</span>
-              </li>
-            )}
             <li
               style={{
                 display: "flex",

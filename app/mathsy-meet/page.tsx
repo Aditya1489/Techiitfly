@@ -14,7 +14,7 @@ import MeetDemoHeroButton from "@/components/meet/MeetDemoHeroButton";
 export const metadata: Metadata = {
   title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
   description:
-    "Teach maths online from your PDFs with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
+    "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
   keywords: [
     "online whiteboard for math teaching",
     "online class platform for tutors India",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
     description:
-      "Teach maths online from your PDFs with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
+      "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
     url: `${SITE.siteUrl}/mathsy-meet`,
     images: [{ url: "/og/mathsy-meet.png", width: 1200, height: 630, alt: "Mathsy Meet" }],
   },
@@ -33,12 +33,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
     description:
-      "Teach maths online from your PDFs with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
+      "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
     images: ["/og/mathsy-meet.png"],
   },
 };
 
 export default function MathsyMeetPage() {
+  const metaDescription =
+    "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -52,8 +55,7 @@ export default function MathsyMeetPage() {
       availability: "https://schema.org/InStock",
       description: `Mathsy Meet: ${PRICING_CONFIG.meet.priceText}`,
     },
-    description:
-      "Teach maths online from your PDFs with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
+    description: metaDescription,
   };
 
   return (
@@ -104,7 +106,7 @@ export default function MathsyMeetPage() {
                 margin: "0 auto 32px",
               }}
             >
-              No clunky third-party screen-sharing. Draw circles with a true digital compass, measure degrees with an on-screen protractor, teach from PDFs, and poll students in real time.
+              No clunky third-party screen-sharing. Draw circles with a true digital compass, measure degrees with an on-screen protractor, share your screen, and poll students in real time.
             </p>
 
             {/* If showMathsyMeetOrigin is true, add under the hero: "Already powering live classes on mathsy.in." */}
@@ -131,10 +133,24 @@ export default function MathsyMeetPage() {
                 alignItems: "center",
               }}
             >
-              {/* Primary Demo Class Button */}
-              <MeetDemoHeroButton />
-
-              <MeetWalkthroughButton label="Book a free walkthrough" location="meet_hero" />
+              {/* Primary Action Button */}
+              {SITE.meetDemoReady ? (
+                <>
+                  <MeetDemoHeroButton />
+                  <MeetWalkthroughButton label="Book a free walkthrough" location="meet_hero" />
+                </>
+              ) : (
+                <MeetWalkthroughButton
+                  label="Book a free walkthrough"
+                  location="meet_hero"
+                  style={{
+                    background: "var(--accent)",
+                    color: "var(--primary-btn-text)",
+                    border: "none",
+                    boxShadow: "0 0 24px rgba(245, 158, 11, 0.25)",
+                  }}
+                />
+              )}
 
               <a
                 href={SITE.whatsappTutorUrl}
@@ -162,10 +178,10 @@ export default function MathsyMeetPage() {
           </div>
         </section>
 
-        {/* ─── b) Feature Showcase (8 Alternating Blocks) ─────────────────── */}
+        {/* ─── b) Feature Showcase ────────────────────────────────────────── */}
         <MeetFeatureShowcase />
 
-        {/* ─── c) Comparison Table (Mathsy Meet vs Google Meet vs Zoom) ───── */}
+        {/* ─── c) Comparison Table ────────────────────────────────────────── */}
         <MeetComparisonTable />
 
         {/* ─── d) Pricing & Plans ─────────────────────────────────────────── */}
@@ -216,60 +232,105 @@ export default function MathsyMeetPage() {
                 marginBottom: "32px",
               }}
             >
-              Try the live classroom in our free demo room, or contact founder Aditya Chavhan for an onboarding walkthrough.
+              {SITE.meetDemoReady
+                ? "Try the live classroom in our free demo room, or contact founder Aditya Chavhan for an onboarding walkthrough."
+                : "Book a personalized walkthrough with founder Aditya Chavhan to see the live classroom in action."}
             </p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
-              <a
-                href={getMeetDemoUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "var(--accent)",
-                  color: "var(--primary-btn-text)",
-                  padding: "16px 32px",
-                  borderRadius: "8px",
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "1.05rem",
-                  fontWeight: 600,
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  boxShadow: "0 0 32px rgba(245,158,11,0.3)",
-                }}
-              >
-                <span>Try a free demo class</span>
-                <span>→</span>
-              </a>
+              {SITE.meetDemoReady ? (
+                <>
+                  <a
+                    href={getMeetDemoUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      background: "var(--accent)",
+                      color: "var(--primary-btn-text)",
+                      padding: "16px 32px",
+                      borderRadius: "8px",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "1.05rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      boxShadow: "0 0 32px rgba(245,158,11,0.3)",
+                    }}
+                  >
+                    <span>Try a free demo class</span>
+                    <span>→</span>
+                  </a>
 
-              <a
-                href={SITE.whatsappTutorUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "var(--surface-2)",
-                  color: "var(--text)",
-                  border: "1px solid var(--border)",
-                  padding: "16px 28px",
-                  borderRadius: "8px",
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                <span>WhatsApp Enquiry</span>
-                <span>→</span>
-              </a>
+                  <a
+                    href={SITE.whatsappTutorUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      background: "var(--surface-2)",
+                      color: "var(--text)",
+                      border: "1px solid var(--border)",
+                      padding: "16px 28px",
+                      borderRadius: "8px",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <span>WhatsApp Enquiry</span>
+                    <span>→</span>
+                  </a>
 
-              <MeetWalkthroughButton
-                label="Book a free walkthrough"
-                location="meet_final_cta"
-                style={{ padding: "16px 28px", fontSize: "1rem" }}
-              />
+                  <MeetWalkthroughButton
+                    label="Book a free walkthrough"
+                    location="meet_final_cta"
+                    style={{ padding: "16px 28px", fontSize: "1rem" }}
+                  />
+                </>
+              ) : (
+                <>
+                  <MeetWalkthroughButton
+                    label="Book a free walkthrough"
+                    location="meet_final_cta"
+                    style={{
+                      background: "var(--accent)",
+                      color: "var(--primary-btn-text)",
+                      border: "none",
+                      padding: "16px 32px",
+                      fontSize: "1.05rem",
+                      fontWeight: 600,
+                      boxShadow: "0 0 32px rgba(245,158,11,0.3)",
+                    }}
+                  />
+
+                  <a
+                    href={SITE.whatsappTutorUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      background: "var(--surface-2)",
+                      color: "var(--text)",
+                      border: "1px solid var(--border)",
+                      padding: "16px 28px",
+                      borderRadius: "8px",
+                      fontFamily: "var(--font-geist-sans)",
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <span>WhatsApp Enquiry</span>
+                    <span>→</span>
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </section>
