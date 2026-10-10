@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MeetFeatureShowcase from "@/components/meet/MeetFeatureShowcase";
+import MeetFeatureCatalogue from "@/components/meet/MeetFeatureCatalogue";
 import MeetComparisonTable from "@/components/meet/MeetComparisonTable";
 import MeetWalkthroughButton from "@/components/meet/MeetWalkthroughButton";
 import MeetOffersStrip from "@/components/meet/MeetOffersStrip";
@@ -175,13 +177,36 @@ export default function MathsyMeetPage() {
                 <span>→</span>
               </a>
             </div>
+
+            {/* Link to all features */}
+            <div style={{ marginTop: "20px" }}>
+              <Link
+                href="#all-features"
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.86rem",
+                  color: "var(--accent)",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "opacity 0.15s ease",
+                }}
+              >
+                <span>See every feature</span>
+                <span>→</span>
+              </Link>
+            </div>
           </div>
         </section>
 
         {/* ─── b) Feature Showcase ────────────────────────────────────────── */}
         <MeetFeatureShowcase />
 
-        {/* ─── c) Comparison Table ────────────────────────────────────────── */}
+        {/* ─── c) Complete Feature Catalogue ──────────────────────────────── */}
+        <MeetFeatureCatalogue />
+
+        {/* ─── d) Comparison Table ────────────────────────────────────────── */}
         <MeetComparisonTable />
 
         {/* ─── d) Pricing & Plans ─────────────────────────────────────────── */}

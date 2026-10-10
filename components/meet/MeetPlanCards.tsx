@@ -419,6 +419,24 @@ export default function MeetPlanCards({
             <span>{primaryCtaLabel}</span>
             <span aria-hidden="true" style={{ marginLeft: "6px" }}>→</span>
           </a>
+
+          <div style={{ textAlign: "center", marginTop: "12px" }}>
+            <a
+              href="#all-features"
+              style={{
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: "0.8rem",
+                color: "var(--muted)",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <span>Compare all features</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
 
         {/* ─── 2. Pro Tutor (Popular) ─── */}
@@ -662,6 +680,24 @@ export default function MeetPlanCards({
             <span>{primaryCtaLabel}</span>
             <span aria-hidden="true" style={{ marginLeft: "6px" }}>→</span>
           </a>
+
+          <div style={{ textAlign: "center", marginTop: "12px" }}>
+            <a
+              href="#all-features"
+              style={{
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: "0.8rem",
+                color: "var(--muted)",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <span>Compare all features</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
 
         {/* ─── 3. Academy ─── */}
@@ -828,6 +864,24 @@ export default function MeetPlanCards({
             <span>Talk to Founder Aditya Chavhan</span>
             <span aria-hidden="true" style={{ marginLeft: "6px" }}>→</span>
           </a>
+
+          <div style={{ textAlign: "center", marginTop: "12px" }}>
+            <a
+              href="#all-features"
+              style={{
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: "0.8rem",
+                color: "var(--muted)",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <span>Compare all features</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

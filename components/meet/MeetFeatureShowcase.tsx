@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { SITE, getMeetDemoUrl } from "@/content/site";
-import { MEET_FEATURES, COMING_SOON_MEET_FEATURES } from "@/content/meetFeatures";
+import { MEET_FEATURES } from "@/content/meetFeatures";
 import MeetWalkthroughButton from "@/components/meet/MeetWalkthroughButton";
 import { trackEvent } from "@/lib/tracking";
 
 export default function MeetFeatureShowcase() {
+  const totalFeatureCount = MEET_FEATURES.length;
+
   // Main showcase blocks from live features
   const showcaseBlocks = [
     {
@@ -15,6 +18,7 @@ export default function MeetFeatureShowcase() {
       title: "Whiteboard with compass, protractor, ruler and set-square",
       summary:
         "True geometric instruments that mimic physical classroom tools right on your whiteboard canvas.",
+      note: "Tutors show the board to students by sharing their screen; live board sync is coming soon.",
       bullets: [
         "Compass with adjustable radius for constructing accurate circles and arcs",
         "180° protractor with rotating pointer and angle degree readouts",
@@ -111,7 +115,7 @@ export default function MeetFeatureShowcase() {
     <section
       id="features"
       style={{
-        padding: "80px 24px 100px",
+        padding: "80px 24px 85px",
         background: "var(--bg)",
         borderBottom: "1px solid var(--border)",
       }}
@@ -209,7 +213,7 @@ export default function MeetFeatureShowcase() {
                     style={{
                       listStyle: "none",
                       padding: 0,
-                      margin: "0 0 24px",
+                      margin: "0 0 20px",
                       display: "flex",
                       flexDirection: "column",
                       gap: "10px",
@@ -233,6 +237,24 @@ export default function MeetFeatureShowcase() {
                       </li>
                     ))}
                   </ul>
+
+                  {f.note && (
+                    <div
+                      style={{
+                        padding: "10px 14px",
+                        background: "rgba(245, 158, 11, 0.08)",
+                        border: "1px solid rgba(245, 158, 11, 0.25)",
+                        borderRadius: "6px",
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: "0.8rem",
+                        color: "var(--accent)",
+                        marginBottom: "20px",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      Note: {f.note}
+                    </div>
+                  )}
 
                   {/* Primary Action Button */}
                   {SITE.meetDemoReady ? (
@@ -338,130 +360,30 @@ export default function MeetFeatureShowcase() {
           })}
         </div>
 
-        {/* ─── Compact "Coming soon" strip (No screenshots, clearly labelled) ─── */}
-        <div
-          style={{
-            marginTop: "90px",
-            background: "var(--surface)",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius-lg)",
-            padding: "36px 32px",
-          }}
-        >
-          <div
+        {/* ─── Link to All Features Catalogue ─── */}
+        <div style={{ textAlign: "center", marginTop: "64px" }}>
+          <Link
+            href="#all-features"
             style={{
-              display: "flex",
+              display: "inline-flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "12px",
-              marginBottom: "20px",
-              paddingBottom: "16px",
-              borderBottom: "1px solid var(--border)",
+              gap: "8px",
+              padding: "14px 28px",
+              borderRadius: "8px",
+              background: "var(--surface)",
+              color: "var(--accent)",
+              border: "1px solid var(--border)",
+              fontFamily: "var(--font-geist-sans)",
+              fontSize: "1rem",
+              fontWeight: 600,
+              textDecoration: "none",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
+              transition: "all 0.15s ease",
             }}
           >
-            <div>
-              <span
-                style={{
-                  fontFamily: "var(--font-geist-mono)",
-                  fontSize: "0.74rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "var(--accent)",
-                  background: "rgba(245, 158, 11, 0.12)",
-                  padding: "4px 10px",
-                  borderRadius: "4px",
-                  display: "inline-block",
-                  marginBottom: "8px",
-                }}
-              >
-                In Active Development
-              </span>
-              <h3
-                style={{
-                  fontFamily: "var(--font-geist-sans)",
-                  fontSize: "1.35rem",
-                  fontWeight: 700,
-                  color: "var(--text)",
-                  margin: 0,
-                }}
-              >
-                Coming soon to Mathsy Meet
-              </h3>
-            </div>
-            <p
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.88rem",
-                color: "var(--muted)",
-                margin: 0,
-                maxWidth: "480px",
-              }}
-            >
-              These features are currently in engineering and will roll out directly to all active tutor accounts.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: "14px",
-            }}
-          >
-            {COMING_SOON_MEET_FEATURES.map((item) => (
-              <div
-                key={item.id}
-                style={{
-                  background: "var(--bg)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "8px",
-                  padding: "16px 18px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "6px",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.95rem",
-                      fontWeight: 600,
-                      color: "var(--text)",
-                    }}
-                  >
-                    {item.title}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.68rem",
-                      fontWeight: 600,
-                      color: "var(--muted)",
-                      background: "var(--surface)",
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    Soon
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: "var(--font-geist-sans)",
-                    fontSize: "0.82rem",
-                    color: "var(--muted)",
-                    lineHeight: 1.45,
-                    margin: 0,
-                  }}
-                >
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
+            <span>See all {totalFeatureCount} features</span>
+            <span>→</span>
+          </Link>
         </div>
       </div>
     </section>
