@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   MEET_FEATURES,
   AVAILABLE_FEATURES,
@@ -19,6 +20,12 @@ type FilterTab = "all" | MeetFeatureStatus;
 
 export default function MeetFeatureCatalogue() {
   const [activeFilter, setActiveFilter] = useState<FilterTab>("all");
+  const [lightboxItem, setLightboxItem] = useState<{
+    src: string;
+    alt: string;
+    title: string;
+    description: string;
+  } | null>(null);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() => {
     // Default all open
     const initial: Record<string, boolean> = {};
@@ -38,6 +45,23 @@ export default function MeetFeatureCatalogue() {
       setExpandedGroups(mobileState);
     }
   }, []);
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightboxItem(null);
+      }
+    };
+    if (lightboxItem) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
+    };
+  }, [lightboxItem]);
 
   const toggleGroup = (group: FeatureGroup) => {
     setExpandedGroups((prev) => ({
@@ -480,39 +504,104 @@ export default function MeetFeatureCatalogue() {
                                   borderBottom: isLast ? "none" : "1px solid var(--border)",
                                 }}
                               >
-                                <div
-                                  style={{
-                                    fontFamily: "var(--font-geist-sans)",
-                                    fontWeight: 600,
-                                    color: "var(--text)",
-                                    fontSize: "0.93rem",
-                                    marginBottom: "4px",
-                                  }}
-                                >
-                                  {f.title}
-                                </div>
-                                <div
-                                  style={{
-                                    fontFamily: "var(--font-geist-sans)",
-                                    fontSize: "0.82rem",
-                                    color: "var(--muted)",
-                                    lineHeight: 1.45,
-                                  }}
-                                >
-                                  {f.description}
-                                </div>
-                                {f.note && (
-                                  <div
-                                    style={{
-                                      fontFamily: "var(--font-geist-mono)",
-                                      fontSize: "0.76rem",
-                                      color: "var(--accent)",
-                                      marginTop: "4px",
-                                    }}
-                                  >
-                                    Note: {f.note}
+                                <div style={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
+                                  {f.status === "available" && (f.screenshots?.[0] || f.screenshot) && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const shot = f.screenshots?.[0];
+                                        setLightboxItem({
+                                          src: shot?.src || f.screenshot!,
+                                          alt: shot?.alt || f.screenshotAlt || f.title,
+                                          title: f.title,
+                                          description: f.description,
+                                        });
+                                      }}
+                                      title={`View screenshot: ${f.title}`}
+                                      aria-label={`View screenshot for ${f.title}`}
+                                      className="no-print"
+                                      style={{
+                                        position: "relative",
+                                        flexShrink: 0,
+                                        width: "60px",
+                                        height: "38px",
+                                        borderRadius: "6px",
+                                        overflow: "hidden",
+                                        border: "1px solid var(--border)",
+                                        background: "var(--surface-2)",
+                                        cursor: "pointer",
+                                        padding: 0,
+                                        transition: "transform 0.15s ease, border-color 0.15s ease",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.transform = "scale(1.06)";
+                                        e.currentTarget.style.borderColor = "var(--accent)";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.transform = "scale(1)";
+                                        e.currentTarget.style.borderColor = "var(--border)";
+                                      }}
+                                    >
+                                      <Image
+                                        src={f.screenshots?.[0]?.thumb || f.screenshots?.[0]?.src || f.screenshot!}
+                                        alt={f.title}
+                                        fill
+                                        sizes="60px"
+                                        style={{ objectFit: "cover" }}
+                                      />
+                                      <span
+                                        style={{
+                                          position: "absolute",
+                                          bottom: "2px",
+                                          right: "2px",
+                                          background: "rgba(0,0,0,0.75)",
+                                          borderRadius: "3px",
+                                          fontSize: "9px",
+                                          color: "#fff",
+                                          padding: "1px 3px",
+                                          lineHeight: 1,
+                                        }}
+                                      >
+                                        🔍
+                                      </span>
+                                    </button>
+                                  )}
+                                  <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div
+                                      style={{
+                                        fontFamily: "var(--font-geist-sans)",
+                                        fontWeight: 600,
+                                        color: "var(--text)",
+                                        fontSize: "0.93rem",
+                                        marginBottom: "4px",
+                                      }}
+                                    >
+                                      {f.title}
+                                    </div>
+                                    <div
+                                      style={{
+                                        fontFamily: "var(--font-geist-sans)",
+                                        fontSize: "0.82rem",
+                                        color: "var(--muted)",
+                                        lineHeight: 1.45,
+                                      }}
+                                    >
+                                      {f.description}
+                                    </div>
+                                    {f.note && (
+                                      <div
+                                        style={{
+                                          fontFamily: "var(--font-geist-mono)",
+                                          fontSize: "0.76rem",
+                                          color: "var(--accent)",
+                                          marginTop: "4px",
+                                        }}
+                                      >
+                                        Note: {f.note}
+                                      </div>
+                                    )}
                                   </div>
-                                )}
+                                </div>
                               </td>
 
                               {/* Status Badge */}
@@ -721,6 +810,122 @@ export default function MeetFeatureCatalogue() {
           </button>
         </div>
       </div>
+
+      {/* ─── Lightbox Modal ─── */}
+      {lightboxItem && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightboxItem.title}
+          onClick={() => setLightboxItem(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(0, 0, 0, 0.88)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              maxWidth: "1080px",
+              width: "100%",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.6)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* Modal Header */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "16px 20px",
+                borderBottom: "1px solid var(--border)",
+                background: "var(--surface-2)",
+              }}
+            >
+              <div>
+                <h3
+                  style={{
+                    margin: 0,
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    color: "var(--text)",
+                  }}
+                >
+                  {lightboxItem.title}
+                </h3>
+                <p
+                  style={{
+                    margin: "4px 0 0",
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: "0.85rem",
+                    color: "var(--muted)",
+                  }}
+                >
+                  {lightboxItem.description}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightboxItem(null)}
+                style={{
+                  background: "transparent",
+                  border: "1px solid var(--border)",
+                  color: "var(--muted)",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "1.1rem",
+                  lineHeight: 1,
+                  transition: "all 0.15s ease",
+                }}
+                aria-label="Close screenshot preview"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Image */}
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 10",
+                maxHeight: "75vh",
+                background: "#0a0a0a",
+              }}
+            >
+              <Image
+                src={lightboxItem.src}
+                alt={lightboxItem.alt}
+                fill
+                sizes="(max-width: 1080px) 100vw, 1080px"
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

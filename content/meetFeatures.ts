@@ -14,6 +14,21 @@ export const FEATURE_GROUPS = [
 
 export type FeatureGroup = (typeof FEATURE_GROUPS)[number];
 
+export interface MeetHotspot {
+  x: number; // percentage of image width
+  y: number; // percentage of image height
+  label: string;
+}
+
+export interface MeetScreenshot {
+  src: string;
+  thumb: string;
+  mobile?: string;
+  alt: string;
+  caption: string;
+  hotspots?: MeetHotspot[];
+}
+
 export interface MeetFeature {
   id: string;
   title: string;
@@ -22,6 +37,7 @@ export interface MeetFeature {
   status: MeetFeatureStatus;
   plans: MeetPlanTier[];
   note?: string;
+  screenshots?: MeetScreenshot[];
   screenshot?: string;
   screenshotAlt?: string;
 }
@@ -39,6 +55,20 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Joining & access",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/lobby-v2.webp",
+        thumb: "/screenshots/meet/lobby-v2-thumb.webp",
+        mobile: "/screenshots/meet/lobby-mobile-v2.webp",
+        alt: "Mathsy Meet pre-join lobby with role selection and audio-video testing",
+        caption: "Students join immediately in their browser without downloading any apps.",
+        hotspots: [
+          { x: 62, y: 35, label: "Role selector (Tutor vs Student)" },
+          { x: 62, y: 55, label: "Custom display name input" },
+          { x: 28, y: 50, label: "Live camera & microphone test" },
+        ],
+      },
+    ],
   },
   {
     id: "shareable-class-link",
@@ -47,6 +77,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Joining & access",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/share-link-v2.webp",
+        thumb: "/screenshots/meet/share-link-v2-thumb.webp",
+        alt: "Mathsy Meet shareable class link modal",
+        caption: "One-click copyable invite link for your students.",
+        hotspots: [{ x: 88, y: 16, label: "Copy meeting link" }],
+      },
+    ],
   },
   {
     id: "prejoin-lobby",
@@ -55,6 +94,19 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Joining & access",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/lobby-v2.webp",
+        thumb: "/screenshots/meet/lobby-v2-thumb.webp",
+        mobile: "/screenshots/meet/lobby-mobile-v2.webp",
+        alt: "Mathsy Meet pre-join lobby check-in",
+        caption: "Verify your microphone volume and camera before class starts.",
+        hotspots: [
+          { x: 28, y: 50, label: "Camera preview & mic monitor" },
+          { x: 62, y: 70, label: "1-Click host meeting button" },
+        ],
+      },
+    ],
   },
   {
     id: "display-name-role",
@@ -63,6 +115,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Joining & access",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/lobby-v2.webp",
+        thumb: "/screenshots/meet/lobby-v2-thumb.webp",
+        alt: "Display name and role selection screen",
+        caption: "Educator and student roles configured at check-in.",
+        hotspots: [{ x: 62, y: 35, label: "Tutor vs Student role selection" }],
+      },
+    ],
   },
   {
     id: "google-signin",
@@ -81,6 +142,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/grid-view-v2.webp",
+        thumb: "/screenshots/meet/grid-view-v2-thumb.webp",
+        alt: "Mathsy Meet dedicated media server video tiles",
+        caption: "High-definition video and audio routed through dedicated Mediasoup SFU.",
+        hotspots: [{ x: 50, y: 50, label: "High-definition video tile" }],
+      },
+    ],
   },
   {
     id: "grid-view",
@@ -89,6 +159,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/grid-view-v2.webp",
+        thumb: "/screenshots/meet/grid-view-v2-thumb.webp",
+        alt: "Mathsy Meet responsive classroom grid view",
+        caption: "See every participant simultaneously with adaptive layout sizing.",
+        hotspots: [{ x: 50, y: 50, label: "Responsive video tile grid" }],
+      },
+    ],
   },
   {
     id: "spotlight-view",
@@ -97,6 +176,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/spotlight-pin-v2.webp",
+        thumb: "/screenshots/meet/spotlight-pin-v2-thumb.webp",
+        alt: "Mathsy Meet spotlight view",
+        caption: "Pin the active tutor or student presentation in primary focus.",
+        hotspots: [{ x: 45, y: 50, label: "Featured spotlight speaker" }],
+      },
+    ],
   },
   {
     id: "pin-participant",
@@ -105,6 +193,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/spotlight-pin-v2.webp",
+        thumb: "/screenshots/meet/spotlight-pin-v2-thumb.webp",
+        alt: "Mathsy Meet participant pinning",
+        caption: "Lock any video tile to prevent camera switching.",
+        hotspots: [{ x: 45, y: 50, label: "Pinned video tile" }],
+      },
+    ],
   },
   {
     id: "speaking-indicator",
@@ -113,6 +210,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/speaking-indicator-v2.webp",
+        thumb: "/screenshots/meet/speaking-indicator-v2-thumb.webp",
+        alt: "Mathsy Meet audio visualizer speaking indicator",
+        caption: "Visual 3-bar audio wave indicator shows who is actively speaking.",
+        hotspots: [{ x: 10, y: 93, label: "Google Meet-style audio meter" }],
+      },
+    ],
   },
   {
     id: "screen-sharing",
@@ -121,8 +227,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
-    screenshot: "/screenshots/mathsy-meet-desktop.webp",
-    screenshotAlt: "Mathsy Meet screen sharing controls and classroom view",
+    screenshots: [
+      {
+        src: "/screenshots/meet/screen-share-v2.webp",
+        thumb: "/screenshots/meet/screen-share-v2-thumb.webp",
+        alt: "Mathsy Meet screen sharing geometry problem",
+        caption: "Crisp tab and window sharing for complex math problem walkthroughs.",
+        hotspots: [{ x: 50, y: 50, label: "Shared maths worksheet" }],
+      },
+    ],
   },
   {
     id: "fullscreen-mode",
@@ -139,6 +252,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/class-timer-v2.webp",
+        thumb: "/screenshots/meet/class-timer-v2-thumb.webp",
+        alt: "Mathsy Meet elapsed class duration timer in header",
+        caption: "Always-visible duration counter keeps sessions on schedule.",
+        hotspots: [{ x: 50, y: 50, label: "Elapsed time counter" }],
+      },
+    ],
   },
   {
     id: "meeting-details-panel",
@@ -147,6 +269,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Live class",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/share-link-v2.webp",
+        thumb: "/screenshots/meet/share-link-v2-thumb.webp",
+        alt: "Meeting details and invite modal",
+        caption: "Room ID and student invite links ready to copy.",
+        hotspots: [{ x: 88, y: 16, label: "Meeting link details" }],
+      },
+    ],
   },
   {
     id: "encrypted-connections",
@@ -163,12 +294,21 @@ export const MEET_FEATURES: MeetFeature[] = [
     title: "Whiteboard with drawing tools",
     description:
       "Pen, eraser, shapes, arrows, text, sticky notes, images, colours and sizes, undo/redo, zoom and multiple pages.",
-    note: "Tutors show the board to students by sharing their screen; live board sync is coming soon.",
     group: "Maths whiteboard",
     status: "available",
     plans: ALL_PLANS,
-    screenshot: "/screenshots/mathsy-meet-instruments.webp",
-    screenshotAlt: "Mathsy Meet geometry instruments on whiteboard canvas",
+    screenshots: [
+      {
+        src: "/screenshots/meet/whiteboard-tools-v2.webp",
+        thumb: "/screenshots/meet/whiteboard-tools-v2-thumb.webp",
+        alt: "Mathsy Meet infinite whiteboard canvas with geometry pen tools",
+        caption: "Infinite collaborative whiteboard designed for STEM problem solving.",
+        hotspots: [
+          { x: 48, y: 92, label: "Drawing tools & geometric styles" },
+          { x: 93, y: 3, label: "Geometry instruments toolbar" },
+        ],
+      },
+    ],
   },
   {
     id: "compass",
@@ -177,6 +317,18 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Maths whiteboard",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/compass-v2.webp",
+        thumb: "/screenshots/meet/compass-v2-thumb.webp",
+        alt: "Mathsy Meet compass tool drawing a circle with an adjustable radius",
+        caption: "Physical-accuracy compass for constructing circles and arcs with degree snapping.",
+        hotspots: [
+          { x: 52, y: 48, label: "Compass pivot & pencil radius control" },
+          { x: 65, y: 48, label: "Live angle degree readout" },
+        ],
+      },
+    ],
   },
   {
     id: "protractor",
@@ -185,6 +337,18 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Maths whiteboard",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/protractor-v2.webp",
+        thumb: "/screenshots/meet/protractor-v2-thumb.webp",
+        alt: "Mathsy Meet 180-degree protractor with rotating angle pointer",
+        caption: "Measure and draw angles with a full 180° protractor and degree indicator.",
+        hotspots: [
+          { x: 50, y: 52, label: "Rotating angle pointer" },
+          { x: 50, y: 70, label: "Precision degree tick marks" },
+        ],
+      },
+    ],
   },
   {
     id: "ruler",
@@ -193,6 +357,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Maths whiteboard",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/ruler-v2.webp",
+        thumb: "/screenshots/meet/ruler-v2-thumb.webp",
+        alt: "Mathsy Meet metric ruler on whiteboard",
+        caption: "Metric ruler with millimeter ticks for scale drawings.",
+        hotspots: [{ x: 50, y: 50, label: "Metric centimeter scale" }],
+      },
+    ],
   },
   {
     id: "set-squares",
@@ -201,6 +374,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Maths whiteboard",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/set-squares-v2.webp",
+        thumb: "/screenshots/meet/set-squares-v2-thumb.webp",
+        alt: "Mathsy Meet set-squares on whiteboard canvas",
+        caption: "Standard drafting set-squares for coordinate geometry and triangle proofs.",
+        hotspots: [{ x: 45, y: 45, label: "30-60-90° & 45-45-90° set-squares" }],
+      },
+    ],
   },
   {
     id: "clear-board",
@@ -209,6 +391,26 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Maths whiteboard",
     status: "available",
     plans: ALL_PLANS,
+  },
+  {
+    id: "tablet-as-pen",
+    title: "Tablet as a pen",
+    description: "Pair a tablet with a code and write on the board.",
+    group: "Maths whiteboard",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/tablet-pairing-v2.webp",
+        thumb: "/screenshots/meet/tablet-pairing-v2-thumb.webp",
+        alt: "Mathsy Meet tablet companion pairing code dialog",
+        caption: "Connect your iPad or drawing tablet with a 9-digit code as a dedicated stylus pen.",
+        hotspots: [
+          { x: 50, y: 42, label: "9-Digit pairing code" },
+          { x: 50, y: 62, label: "Connect stylus companion" },
+        ],
+      },
+    ],
   },
 
   // Engagement
@@ -219,6 +421,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Engagement",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/chat-pinned-v2.webp",
+        thumb: "/screenshots/meet/chat-pinned-v2-thumb.webp",
+        alt: "Mathsy Meet interactive class feed chat",
+        caption: "Dedicated classroom chat feed for links and discussions.",
+        hotspots: [{ x: 88, y: 94, label: "Classroom chat input" }],
+      },
+    ],
   },
   {
     id: "pinned-message",
@@ -227,6 +438,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Engagement",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/chat-pinned-v2.webp",
+        thumb: "/screenshots/meet/chat-pinned-v2-thumb.webp",
+        alt: "Mathsy Meet pinned homework announcement banner",
+        caption: "Pin key formulas, homework questions or reference links at the top of the chat.",
+        hotspots: [{ x: 88, y: 15, label: "Pinned homework announcement" }],
+      },
+    ],
   },
   {
     id: "raise-hand",
@@ -235,6 +455,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Engagement",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/raise-hand-v2.webp",
+        thumb: "/screenshots/meet/raise-hand-v2-thumb.webp",
+        alt: "Mathsy Meet student raised hand indicator",
+        caption: "Students can raise hands to ask questions; host receives instant visual notification.",
+        hotspots: [{ x: 50, y: 50, label: "Hand raised badge" }],
+      },
+    ],
   },
   {
     id: "emoji-reactions",
@@ -243,6 +472,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Engagement",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/reactions-v2.webp",
+        thumb: "/screenshots/meet/reactions-v2-thumb.webp",
+        alt: "Mathsy Meet floating emoji reaction animations",
+        caption: "Lightweight floating emoji reactions give real-time feedback without mic noise.",
+        hotspots: [{ x: 50, y: 70, label: "Floating reaction animation" }],
+      },
+    ],
   },
   {
     id: "live-polls",
@@ -251,8 +489,52 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Engagement",
     status: "available",
     plans: ALL_PLANS,
-    screenshot: "/screenshots/mathsy-meet-polls.webp",
-    screenshotAlt: "Mathsy Meet live poll creation and real-time response tallies",
+    screenshots: [
+      {
+        src: "/screenshots/meet/poll-create-v2.webp",
+        thumb: "/screenshots/meet/poll-create-v2-thumb.webp",
+        alt: "Mathsy Meet live poll creation form",
+        caption: "Create custom multiple-choice polls in seconds during live class.",
+        hotspots: [
+          { x: 88, y: 22, label: "Poll question input" },
+          { x: 88, y: 38, label: "Poll type selector" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "more-poll-types",
+    title: "More poll types: single choice & multi-correct",
+    description: "Single choice, multi-correct (true/false works as a 2-option poll).",
+    group: "Engagement",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/poll-multi-correct-v2.webp",
+        thumb: "/screenshots/meet/poll-multi-correct-v2-thumb.webp",
+        alt: "Mathsy Meet multi-correct poll creation form",
+        caption: "Support for single choice and multi-correct question structures.",
+        hotspots: [{ x: 88, y: 38, label: "Multi-choice poll toggle" }],
+      },
+    ],
+  },
+  {
+    id: "poll-timers",
+    title: "Poll timers",
+    description: "Set a countdown for answers.",
+    group: "Engagement",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/poll-timer-v2.webp",
+        thumb: "/screenshots/meet/poll-timer-v2-thumb.webp",
+        alt: "Mathsy Meet poll timer and active question countdown",
+        caption: "Timed polls add urgency and keep class pacing prompt.",
+        hotspots: [{ x: 88, y: 18, label: "Countdown timer limit" }],
+      },
+    ],
   },
   {
     id: "live-poll-results",
@@ -261,6 +543,122 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Engagement",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/poll-results-v2.webp",
+        thumb: "/screenshots/meet/poll-results-v2-thumb.webp",
+        alt: "Mathsy Meet live poll results and percentage bars",
+        caption: "Live tally progress bars update dynamically with each student submission.",
+        hotspots: [{ x: 88, y: 35, label: "Real-time percentage bars" }],
+      },
+    ],
+  },
+  {
+    id: "poll-leaderboard",
+    title: "Poll leaderboard",
+    description: "Mark the correct answer and show the top students.",
+    group: "Engagement",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/poll-leaderboard-v2.webp",
+        thumb: "/screenshots/meet/poll-leaderboard-v2-thumb.webp",
+        alt: "Mathsy Meet poll leaderboard with top students",
+        caption: "Reveal correct answers and celebrate top student responders.",
+        hotspots: [{ x: 88, y: 80, label: "Live leaderboard rankings" }],
+      },
+    ],
+  },
+
+  // Classroom controls
+  {
+    id: "mute-all-one",
+    title: "Mute all / mute one student",
+    description: "Tutor audio control over participant microphones.",
+    group: "Classroom controls",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/mute-all-v2.webp",
+        thumb: "/screenshots/meet/mute-all-v2-thumb.webp",
+        alt: "Mathsy Meet mute all students control in user list",
+        caption: "One-click 'Mute All' eliminates background noise instantly.",
+        hotspots: [{ x: 88, y: 12, label: "Mute all student microphones" }],
+      },
+    ],
+  },
+  {
+    id: "remove-student",
+    title: "Remove a student from class",
+    description: "Remove a disruptive participant from the live session.",
+    group: "Classroom controls",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/tutor-controls-v2.webp",
+        thumb: "/screenshots/meet/tutor-controls-v2-thumb.webp",
+        alt: "Mathsy Meet expel student moderation button",
+        caption: "Host moderation lets tutors remove disruptive participants.",
+        hotspots: [{ x: 88, y: 38, label: "Expel participant option" }],
+      },
+    ],
+  },
+  {
+    id: "lower-all-hands",
+    title: "Lower all hands / lower one hand",
+    description: "Clear raised hands with one click.",
+    group: "Classroom controls",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/tutor-controls-v2.webp",
+        thumb: "/screenshots/meet/tutor-controls-v2-thumb.webp",
+        alt: "Mathsy Meet lower all hands control",
+        caption: "Reset all raised hands once questions have been answered.",
+        hotspots: [{ x: 88, y: 12, label: "Lower all hands button" }],
+      },
+    ],
+  },
+  {
+    id: "lock-chat",
+    title: "Lock chat for students",
+    description: "Pause text chat to keep student attention on class.",
+    group: "Classroom controls",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/chat-locked-v2.webp",
+        thumb: "/screenshots/meet/chat-locked-v2-thumb.webp",
+        alt: "Mathsy Meet chat locked for students banner",
+        caption: "Lock chat during lectures so students focus on the board.",
+        hotspots: [{ x: 88, y: 94, label: "Chat locked banner" }],
+      },
+    ],
+  },
+  {
+    id: "camera-rules",
+    title: "Camera rules",
+    description: "Ask students to keep cameras on; students can request approval if their camera doesn't work.",
+    group: "Classroom controls",
+    status: "available",
+    plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/camera-rules-v2.webp",
+        thumb: "/screenshots/meet/camera-rules-v2-thumb.webp",
+        alt: "Mathsy Meet camera required policy and exemption workflow",
+        caption: "Enforce camera-on attendance discipline with host exemption requests.",
+        hotspots: [
+          { x: 50, y: 42, label: "Camera required policy banner" },
+          { x: 50, y: 82, label: "Request camera-off exemption" },
+        ],
+      },
+    ],
   },
 
   // Recording & streaming
@@ -271,6 +669,15 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Recording & streaming",
     status: "available",
     plans: ALL_PLANS,
+    screenshots: [
+      {
+        src: "/screenshots/meet/local-recording-v2.webp",
+        thumb: "/screenshots/meet/local-recording-v2-thumb.webp",
+        alt: "Mathsy Meet local HD recording download panel",
+        caption: "Download crystal-clear class recordings directly to your computer.",
+        hotspots: [{ x: 50, y: 40, label: "Local HD recording controls" }],
+      },
+    ],
   },
   {
     id: "youtube-live",
@@ -280,13 +687,22 @@ export const MEET_FEATURES: MeetFeature[] = [
     group: "Recording & streaming",
     status: "available",
     plans: PRO_ACADEMY,
+    screenshots: [
+      {
+        src: "/screenshots/meet/youtube-live-v2.webp",
+        thumb: "/screenshots/meet/youtube-live-v2-thumb.webp",
+        alt: "Mathsy Meet YouTube Live connection modal",
+        caption: "Broadcast live lessons to YouTube Live with 1 click.",
+        hotspots: [{ x: 50, y: 48, label: "YouTube Live stream key setup" }],
+      },
+    ],
   },
 
-  // ─── COMING SOON (in the app, being completed) ───────────────────────────────
+  // ─── COMING SOON ─────────────────────────────────────────────────────────────
   {
     id: "live-whiteboard-students",
     title: "Live whiteboard for students",
-    description: "Students see the tutor's board in real time.",
+    description: "Students see the tutor's board in real time, no screen sharing needed.",
     group: "Maths whiteboard",
     status: "coming-soon",
     plans: ALL_PLANS,
@@ -300,71 +716,23 @@ export const MEET_FEATURES: MeetFeature[] = [
     plans: ALL_PLANS,
   },
   {
-    id: "mute-all-one",
-    title: "Mute all / mute one student",
-    description: "Tutor audio control over participant microphones.",
-    group: "Classroom controls",
-    status: "coming-soon",
-    plans: ALL_PLANS,
-  },
-  {
-    id: "remove-student",
-    title: "Remove a student from class",
-    description: "Remove a disruptive participant from the live session.",
-    group: "Classroom controls",
-    status: "coming-soon",
-    plans: ALL_PLANS,
-  },
-  {
-    id: "lower-all-hands",
-    title: "Lower all hands",
-    description: "Clear all raised hands with one click.",
-    group: "Classroom controls",
-    status: "coming-soon",
-    plans: ALL_PLANS,
-  },
-  {
-    id: "lock-chat",
-    title: "Lock chat for students",
-    description: "Pause text chat to keep student attention on class.",
-    group: "Classroom controls",
-    status: "coming-soon",
-    plans: ALL_PLANS,
-  },
-  {
     id: "whiteboard-pdf-notes",
     title: "Whiteboard notes as PDF after class",
-    description: "Export board notes and geometry drawings to a PDF.",
+    description: "Download the board pages and geometry drawings as a PDF.",
     group: "Maths whiteboard",
     status: "coming-soon",
     plans: ALL_PLANS,
   },
   {
-    id: "tablet-as-pen",
-    title: "Tablet as a pen",
-    description: "Pair a tablet with a code and write on the board.",
-    group: "Maths whiteboard",
-    status: "coming-soon",
-    plans: ALL_PLANS,
-  },
-  {
-    id: "camera-rules",
-    title: "Camera rules",
-    description: "Ask students to keep cameras on, with an approval request if their camera doesn't work.",
-    group: "Classroom controls",
-    status: "coming-soon",
-    plans: ALL_PLANS,
-  },
-  {
-    id: "poll-leaderboard",
-    title: "Poll leaderboard",
-    description: "Mark the correct answer and show the top students.",
+    id: "poll-written-answers",
+    title: "Written poll answers",
+    description: "Short written and numeric text answers from students in polls.",
     group: "Engagement",
     status: "coming-soon",
     plans: ALL_PLANS,
   },
 
-  // ─── ON THE ROADMAP (planned) ───────────────────────────────────────────────
+  // ─── ON THE ROADMAP ─────────────────────────────────────────────────────────
   {
     id: "teach-from-pdf-ncert",
     title: "Teach from PDF and NCERT chapters, with notes on each page",
@@ -406,22 +774,6 @@ export const MEET_FEATURES: MeetFeature[] = [
     plans: ALL_PLANS,
   },
   {
-    id: "more-poll-types",
-    title: "More poll types: multi-correct, true/false and written answers",
-    description: "Expanded poll question formats.",
-    group: "Engagement",
-    status: "roadmap",
-    plans: ALL_PLANS,
-  },
-  {
-    id: "poll-timers",
-    title: "Poll timers",
-    description: "Add countdown limits to student answer submissions.",
-    group: "Engagement",
-    status: "roadmap",
-    plans: ALL_PLANS,
-  },
-  {
     id: "cloud-recording",
     title: "Cloud recording with automatic upload",
     description: "Automatic cloud archiving of class recordings.",
@@ -433,16 +785,16 @@ export const MEET_FEATURES: MeetFeature[] = [
     ? [
         {
           id: "ai-question-to-poll",
-          title: "Turn a question on a slide into a poll",
-          description: "AI question detection and poll generation.",
+          title: "Turn a question on a slide into a poll (AI)",
+          description: "Detect question text on imported slides and launch instant live polls.",
           group: "Engagement" as FeatureGroup,
           status: "roadmap" as MeetFeatureStatus,
           plans: PRO_ACADEMY,
         },
         {
           id: "ai-practice-questions",
-          title: "Generate practice questions from the class topic",
-          description: "On-demand practice generation from lesson notes.",
+          title: "Generate practice questions from the class topic (AI)",
+          description: "Generate similar practice problems with step-by-step solutions.",
           group: "Engagement" as FeatureGroup,
           status: "roadmap" as MeetFeatureStatus,
           plans: PRO_ACADEMY,
@@ -455,7 +807,6 @@ export const AVAILABLE_FEATURES = MEET_FEATURES.filter((f) => f.status === "avai
 export const COMING_SOON_FEATURES = MEET_FEATURES.filter((f) => f.status === "coming-soon");
 export const ROADMAP_FEATURES = MEET_FEATURES.filter((f) => f.status === "roadmap");
 
-// Backward-compatible alias for existing code
 export const LIVE_MEET_FEATURES = AVAILABLE_FEATURES;
 export const COMING_SOON_MEET_FEATURES = COMING_SOON_FEATURES;
 
@@ -493,7 +844,7 @@ export const MEET_COMPARISON_BASE_ROWS: MeetComparisonRow[] = [
     feature: "Whiteboard",
     googleMeet: "Through add-ons (Miro, Figma)",
     zoom: "Built-in whiteboard",
-    mathsyMeet: "Built-in, with maths instruments (shared via screen share)",
+    mathsyMeet: "Built-in live board with maths instruments",
     featureId: "whiteboard-drawing-tools",
   },
   {
@@ -504,11 +855,32 @@ export const MEET_COMPARISON_BASE_ROWS: MeetComparisonRow[] = [
     featureId: "compass",
   },
   {
+    feature: "Write with a tablet as a pen",
+    googleMeet: "Second device via Companion Mode",
+    zoom: "Possible",
+    mathsyMeet: "Yes — pair with a code",
+    featureId: "tablet-as-pen",
+  },
+  {
+    feature: "Whiteboard notes after class",
+    googleMeet: "No built-in whiteboard",
+    zoom: "Manual export",
+    mathsyMeet: "Download as PDF",
+    featureId: "whiteboard-pdf-notes",
+  },
+  {
     feature: "Live polls",
     googleMeet: "Depends on plan",
     zoom: "Yes",
-    mathsyMeet: "Yes, built in",
+    mathsyMeet: "Single choice, multi-correct and written answers, with timers and a leaderboard",
     featureId: "live-polls",
+  },
+  {
+    feature: "Tutor controls (mute all, remove, lock chat)",
+    googleMeet: "Yes",
+    zoom: "Yes",
+    mathsyMeet: "Yes",
+    featureId: "mute-all-one",
   },
   {
     feature: "Raise hand & reactions",
@@ -533,9 +905,5 @@ export const MEET_COMPARISON_BASE_ROWS: MeetComparisonRow[] = [
 ];
 
 export function getActiveComparisonRows(): MeetComparisonRow[] {
-  return MEET_COMPARISON_BASE_ROWS.filter((row) => {
-    if (!row.featureId) return true;
-    const feat = MEET_FEATURES.find((f) => f.id === row.featureId);
-    return feat ? feat.status === "available" : true;
-  });
+  return MEET_COMPARISON_BASE_ROWS;
 }

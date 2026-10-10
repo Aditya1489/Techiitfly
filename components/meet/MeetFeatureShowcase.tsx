@@ -10,22 +10,20 @@ import { trackEvent } from "@/lib/tracking";
 export default function MeetFeatureShowcase() {
   const totalFeatureCount = MEET_FEATURES.length;
 
-  // Main showcase blocks from live features
   const showcaseBlocks = [
     {
       id: "maths-whiteboard",
       number: "01",
       title: "Whiteboard with compass, protractor, ruler and set-square",
       summary:
-        "True geometric instruments that mimic physical classroom tools right on your whiteboard canvas.",
-      note: "Tutors show the board to students by sharing their screen; live board sync is coming soon.",
+        "True geometric instruments that mimic physical classroom tools right on your digital whiteboard.",
       bullets: [
         "Compass with adjustable radius for constructing accurate circles and arcs",
         "180° protractor with rotating pointer and angle degree readouts",
         "Ruler with clear metric markings for drawing straight lines to scale",
         "30-60-90° and 45-45-90° set-squares for coordinate geometry and triangles",
       ],
-      image: "/screenshots/mathsy-meet-instruments.webp",
+      image: "/screenshots/meet/whiteboard-tools-v2.webp",
       imageAlt: "Mathsy Meet geometry instruments on whiteboard canvas",
     },
     {
@@ -39,51 +37,85 @@ export default function MeetFeatureShowcase() {
         "Share entire monitor, a single software window, or a specific browser tab",
         "Full-bleed fullscreen display maximizing canvas and video visibility",
       ],
-      image: "/screenshots/mathsy-meet-desktop.webp",
+      image: "/screenshots/meet/screen-share-v2.webp",
       imageAlt: "Mathsy Meet screen sharing controls and classroom view",
     },
     {
       id: "live-polls",
       number: "03",
-      title: "Live polls (up to 6 options) with live results",
+      title: "Live polls (single & multi-choice) with live results and leaderboard",
       summary:
-        "Run multiple-choice polls during live class and track student comprehension with instant tally feedback.",
+        "Run quick polls during live class and track student comprehension with instant tally feedback.",
       bullets: [
-        "Create quick polls with 2 to 6 custom answer choices",
+        "Create quick polls with 2 to 6 custom answer choices and timed countdowns",
         "Real-time live vote counts and response percentages as students submit",
-        "Instant answer reveal to discuss solutions and review core concepts together",
+        "Instant leaderboard reveal to reward top student answers and review core concepts",
       ],
-      image: "/screenshots/mathsy-meet-polls.webp",
+      image: "/screenshots/meet/poll-results-v2.webp",
       imageAlt: "Mathsy Meet live poll creation and real-time response tallies",
     },
     {
-      id: "video-classes",
+      id: "tablet-companion",
       number: "04",
+      title: "Write with your tablet like paper",
+      summary:
+        "Pair your iPad, Android tablet, or drawing screen as a dedicated digital pen without audio feedback.",
+      bullets: [
+        "Pair in seconds using a 9-digit companion code generated in your classroom",
+        "Draw naturally on the infinite whiteboard using your tablet stylus",
+        "Zero audio echo: tablet runs silently while laptop handles camera and mic",
+      ],
+      image: "/screenshots/meet/tablet-pairing-v2.webp",
+      imageAlt: "Mathsy Meet tablet companion pairing modal",
+    },
+    {
+      id: "classroom-controls",
+      number: "05",
+      title: "Classroom controls that actually control the class",
+      summary:
+        "Tutor moderation tools designed specifically for teaching discipline and focused attention.",
+      bullets: [
+        "One-click 'Mute All' to eliminate student background noise immediately",
+        "Lock chat for students during lectures to prevent distractions",
+        "Lower all raised hands at once or lower individual questions",
+        "Camera rules: ask students to keep cameras on with approval-gated exemptions",
+        "Remove disruptive participants from class with no-rejoin protection",
+      ],
+      image: "/screenshots/meet/tutor-controls-v2.webp",
+      imageAlt: "Mathsy Meet tutor classroom moderation controls and user panel",
+    },
+    {
+      id: "video-classes",
+      number: "06",
       title: "Video classes on our own media server",
       summary:
         "High-performance WebRTC video routing hosted on our dedicated media server for low-latency tutoring.",
       bullets: [
         "Grid and spotlight views with active participant pinning",
-        "Visual speaking indicator highlighting whoever is currently speaking",
+        "Visual 3-bar speaking indicator highlighting whoever is currently speaking",
         "Consistent video quality optimized for two-way tutoring interactions",
       ],
+      image: "/screenshots/meet/grid-view-v2.webp",
+      imageAlt: "Mathsy Meet responsive video grid layout",
     },
     {
       id: "lobby-and-access",
-      number: "05",
+      number: "07",
       title: "Pre-join lobby and shareable class link",
       summary:
         "Frictionless browser-based onboarding for students with full pre-flight audio and camera testing.",
       bullets: [
         "Students join directly from a shared browser link with zero app downloads",
-        "Pre-join lobby with live microphone and camera testing before entering",
+        "Pre-join lobby with live microphone volume meter and camera testing",
         "Clear tutor and student role selection upon entering the room",
         "Fast Google sign-in for secure educator authentication",
       ],
+      image: "/screenshots/meet/lobby-v2.webp",
+      imageAlt: "Mathsy Meet pre-join check-in lobby",
     },
     {
       id: "chat-and-reactions",
-      number: "06",
+      number: "08",
       title: "Chat with a pinned message, raise hand and emoji reactions",
       summary:
         "Structured classroom participation tools designed to keep every student focused and engaged.",
@@ -92,10 +124,12 @@ export default function MeetFeatureShowcase() {
         "Structured raise-hand queue so tutors can address questions systematically",
         "Emoji reactions for immediate pulse checks without interrupting audio",
       ],
+      image: "/screenshots/meet/chat-pinned-v2.webp",
+      imageAlt: "Mathsy Meet chat with pinned homework announcement",
     },
     {
       id: "recording-and-streaming",
-      number: "07",
+      number: "09",
       title: "Local HD recording download and YouTube Live streaming",
       summary:
         "Preserve every class for revision and archive lectures or broadcast live sessions to YouTube.",
@@ -104,6 +138,8 @@ export default function MeetFeatureShowcase() {
         "YouTube Live streaming for public, private, or unlisted broadcasts",
         "Zero cloud storage fees or third-party download expirations",
       ],
+      image: "/screenshots/meet/local-recording-v2.webp",
+      imageAlt: "Mathsy Meet local HD recording options panel",
     },
   ];
 
@@ -120,22 +156,22 @@ export default function MeetFeatureShowcase() {
         borderBottom: "1px solid var(--border)",
       }}
     >
-      <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <span className="section-label">BUILT FOR MATHS EDUCATORS</span>
+      <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
+        {/* Section Header */}
+        <div style={{ textAlign: "center", marginBottom: "56px" }}>
+          <span className="section-label">BUILT FOR MATHS INSTRUCTION</span>
           <h2
             style={{
               fontFamily: "var(--font-instrument-serif)",
-              fontSize: "clamp(2.3rem, 4.8vw, 3.8rem)",
+              fontSize: "clamp(2.3rem, 4.5vw, 3.6rem)",
               fontWeight: 400,
               lineHeight: 1.15,
               color: "var(--text)",
               marginTop: "8px",
-              marginBottom: "14px",
+              marginBottom: "12px",
             }}
           >
-            Live features built for online maths classes.
+            Features that actually help you teach maths
           </h2>
           <p
             style={{
@@ -147,212 +183,162 @@ export default function MeetFeatureShowcase() {
               margin: "0 auto",
             }}
           >
-            Purpose-built tools that work directly in the app today: real geometry instruments, screen sharing, live polls, and local HD recording.
+            Everything you need for engaging, interactive live classes with your students.
           </p>
         </div>
 
-        {/* Live Feature Showcase Blocks */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
-          {showcaseBlocks.map((f, idx) => {
-            const hasImage = Boolean(f.image && f.imageAlt);
-            const isEven = idx % 2 === 1;
+        {/* Feature Blocks Stack */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
+          {showcaseBlocks.map((block, index) => {
+            const isReversed = index % 2 === 1;
 
             return (
               <div
-                key={f.id}
+                key={block.id}
+                id={`feature-${block.id}`}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: hasImage ? "repeat(auto-fit, minmax(310px, 1fr))" : "1fr",
-                  gap: "44px",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                  gap: "40px",
                   alignItems: "center",
-                  maxWidth: hasImage ? "100%" : "780px",
-                  margin: hasImage ? "0" : "0 auto",
+                  padding: "36px",
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius-lg)",
+                  boxShadow: "var(--card-shadow)",
                 }}
               >
-                {/* Content Block */}
-                <div style={{ order: hasImage && isEven ? 2 : 1 }}>
+                {/* Content Side */}
+                <div style={{ order: isReversed ? 2 : 1 }}>
                   <div
                     style={{
                       fontFamily: "var(--font-geist-mono)",
-                      fontSize: "0.8rem",
+                      fontSize: "0.85rem",
                       fontWeight: 700,
                       color: "var(--accent)",
-                      letterSpacing: "0.08em",
-                      marginBottom: "10px",
+                      marginBottom: "12px",
+                      letterSpacing: "0.05em",
                     }}
                   >
-                    FEATURE {f.number} · LIVE IN APP
+                    FEATURE {block.number}
                   </div>
 
                   <h3
                     style={{
                       fontFamily: "var(--font-instrument-serif)",
-                      fontSize: "clamp(1.9rem, 3vw, 2.5rem)",
+                      fontSize: "clamp(1.7rem, 2.8vw, 2.2rem)",
                       fontWeight: 400,
-                      lineHeight: 1.2,
+                      lineHeight: 1.25,
                       color: "var(--text)",
                       marginBottom: "14px",
                     }}
                   >
-                    {f.title}
+                    {block.title}
                   </h3>
 
                   <p
                     style={{
                       fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1rem",
+                      fontSize: "0.98rem",
                       lineHeight: 1.6,
                       color: "var(--muted)",
                       marginBottom: "20px",
                     }}
                   >
-                    {f.summary}
+                    {block.summary}
                   </p>
 
+                  {/* Bullet points */}
                   <ul
                     style={{
                       listStyle: "none",
                       padding: 0,
-                      margin: "0 0 20px",
+                      margin: "0 0 28px 0",
                       display: "flex",
                       flexDirection: "column",
                       gap: "10px",
                     }}
                   >
-                    {f.bullets.map((b, bIdx) => (
+                    {block.bullets.map((bullet, idx) => (
                       <li
-                        key={bIdx}
+                        key={idx}
                         style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "10px",
                           fontFamily: "var(--font-geist-sans)",
                           fontSize: "0.92rem",
                           lineHeight: 1.5,
                           color: "var(--text)",
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "10px",
                         }}
                       >
-                        <span style={{ color: "var(--accent)", fontWeight: 700 }}>✓</span>
-                        <span>{b}</span>
+                        <span style={{ color: "var(--accent)", fontSize: "1.1rem", lineHeight: 1 }}>•</span>
+                        <span>{bullet}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {f.note && (
-                    <div
-                      style={{
-                        padding: "10px 14px",
-                        background: "rgba(245, 158, 11, 0.08)",
-                        border: "1px solid rgba(245, 158, 11, 0.25)",
-                        borderRadius: "6px",
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "0.8rem",
-                        color: "var(--accent)",
-                        marginBottom: "20px",
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      Note: {f.note}
-                    </div>
-                  )}
-
-                  {/* Primary Action Button */}
-                  {SITE.meetDemoReady ? (
-                    <a
-                      href={getMeetDemoUrl()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleDemoClick(f.id)}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        padding: "11px 20px",
-                        borderRadius: "8px",
-                        background: "var(--surface)",
-                        color: "var(--accent)",
-                        border: "1px solid var(--border)",
-                        fontFamily: "var(--font-geist-sans)",
-                        fontSize: "0.92rem",
-                        fontWeight: 600,
-                        textDecoration: "none",
-                        transition: "all 0.15s ease",
-                      }}
-                    >
-                      <span>Try it in the demo class</span>
-                      <span>→</span>
-                    </a>
-                  ) : (
+                  {/* Feature action */}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}>
                     <MeetWalkthroughButton
-                      label="Book a free walkthrough"
-                      location={`meet_feature_${f.id}`}
+                      label="See in a live walkthrough"
+                      location={`showcase_${block.id}`}
                       style={{
-                        padding: "11px 20px",
-                        fontSize: "0.92rem",
+                        padding: "10px 18px",
+                        fontSize: "0.88rem",
                       }}
                     />
-                  )}
-                </div>
 
-                {/* Screenshot Frame Block (Only rendered if image exists) */}
-                {hasImage && f.image && f.imageAlt && (
-                  <div
-                    style={{
-                      order: isEven ? 1 : 2,
-                      background: "var(--surface)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "var(--radius-lg)",
-                      overflow: "hidden",
-                      boxShadow: "var(--card-shadow)",
-                    }}
-                  >
-                    {/* Browser Bar */}
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "10px 14px",
-                        background: "#16130F",
-                        borderBottom: "1px solid rgba(255,255,255,0.06)",
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444" }} />
-                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#f59e0b" }} />
-                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
-                        <span
-                          style={{
-                            fontFamily: "var(--font-geist-mono)",
-                            fontSize: "0.7rem",
-                            color: "var(--muted)",
-                            marginLeft: "6px",
-                          }}
-                        >
-                          Mathsy Meet Classroom
-                        </span>
-                      </div>
-                      <span
+                    {SITE.meetDemoReady && (
+                      <a
+                        href={getMeetDemoUrl()}
+                        onClick={() => handleDemoClick(block.id)}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
-                          fontFamily: "var(--font-geist-mono)",
-                          fontSize: "0.68rem",
+                          background: "transparent",
                           color: "var(--accent)",
+                          border: "1px solid var(--accent)",
+                          padding: "10px 18px",
+                          borderRadius: "8px",
+                          fontFamily: "var(--font-geist-sans)",
+                          fontSize: "0.88rem",
+                          fontWeight: 500,
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          transition: "background 0.15s ease",
                         }}
                       >
-                        Live Room
-                      </span>
-                    </div>
+                        <span>Try demo room</span>
+                        <span>→</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
 
-                    {/* Image View */}
-                    <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 10", background: "#0e0d0b" }}>
-                      <Image
-                        src={f.image}
-                        alt={f.imageAlt}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 540px"
-                        style={{ objectFit: "cover", objectPosition: "top" }}
-                      />
-                    </div>
+                {/* Screenshot Side */}
+                {block.image && (
+                  <div
+                    style={{
+                      order: isReversed ? 1 : 2,
+                      position: "relative",
+                      borderRadius: "var(--radius-md)",
+                      overflow: "hidden",
+                      border: "1px solid var(--border)",
+                      background: "#0e0d0b",
+                      boxShadow: "0 8px 30px rgba(0, 0, 0, 0.4)",
+                      aspectRatio: "16 / 10",
+                    }}
+                  >
+                    <Image
+                      src={block.image}
+                      alt={block.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 540px"
+                      style={{ objectFit: "cover", objectPosition: "center" }}
+                    />
                   </div>
                 )}
               </div>
@@ -360,29 +346,26 @@ export default function MeetFeatureShowcase() {
           })}
         </div>
 
-        {/* ─── Link to All Features Catalogue ─── */}
-        <div style={{ textAlign: "center", marginTop: "64px" }}>
+        {/* Link down to complete catalogue */}
+        <div style={{ textAlign: "center", marginTop: "56px" }}>
           <Link
             href="#all-features"
             style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.92rem",
+              color: "var(--accent)",
+              textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              padding: "14px 28px",
+              padding: "12px 24px",
               borderRadius: "8px",
-              background: "var(--surface)",
-              color: "var(--accent)",
-              border: "1px solid var(--border)",
-              fontFamily: "var(--font-geist-sans)",
-              fontSize: "1rem",
-              fontWeight: 600,
-              textDecoration: "none",
-              boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
-              transition: "all 0.15s ease",
+              border: "1px solid var(--accent)",
+              background: "rgba(245, 158, 11, 0.08)",
             }}
           >
-            <span>See all {totalFeatureCount} features</span>
-            <span>→</span>
+            <span>See every feature ({totalFeatureCount} total) in the complete catalogue</span>
+            <span>↓</span>
           </Link>
         </div>
       </div>

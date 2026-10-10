@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MeetFeatureTour from "@/components/meet/MeetFeatureTour";
 import MeetFeatureShowcase from "@/components/meet/MeetFeatureShowcase";
 import MeetFeatureCatalogue from "@/components/meet/MeetFeatureCatalogue";
 import MeetComparisonTable from "@/components/meet/MeetComparisonTable";
@@ -178,10 +179,19 @@ export default function MathsyMeetPage() {
               </a>
             </div>
 
-            {/* Link to all features */}
-            <div style={{ marginTop: "20px" }}>
+            {/* Quick Navigation Links */}
+            <div
+              style={{
+                marginTop: "22px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "24px",
+                flexWrap: "wrap",
+              }}
+            >
               <Link
-                href="#all-features"
+                href="#tour"
                 style={{
                   fontFamily: "var(--font-geist-mono)",
                   fontSize: "0.86rem",
@@ -193,6 +203,22 @@ export default function MathsyMeetPage() {
                   transition: "opacity 0.15s ease",
                 }}
               >
+                <span>Take the tour</span>
+                <span>→</span>
+              </Link>
+              <Link
+                href="#all-features"
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: "0.86rem",
+                  color: "var(--muted)",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "color 0.15s ease",
+                }}
+              >
                 <span>See every feature</span>
                 <span>→</span>
               </Link>
@@ -200,7 +226,10 @@ export default function MathsyMeetPage() {
           </div>
         </section>
 
-        {/* ─── b) Feature Showcase ────────────────────────────────────────── */}
+        {/* ─── b) Interactive Feature Tour ─────────────────────────────────── */}
+        <MeetFeatureTour />
+
+        {/* ─── c) Feature Showcase ────────────────────────────────────────── */}
         <MeetFeatureShowcase />
 
         {/* ─── c) Complete Feature Catalogue ──────────────────────────────── */}

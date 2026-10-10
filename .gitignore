@@ -43,4 +43,6 @@ next-env.d.ts
 # raw unredacted / captured screenshots
 /screenshots-raw/
 /scratch/
+*.y4m
+*.wav
 

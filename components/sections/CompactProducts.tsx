@@ -79,7 +79,7 @@ export default function CompactProducts() {
               }}
             >
               <Image
-                src="/screenshots/mathsy-meet-desktop.webp"
+                src="/screenshots/meet/whiteboard-tools-v2.webp"
                 alt="Mathsy Meet live math classroom whiteboard interface preview"
                 fill
                 sizes="(max-width: 768px) 100vw, 680px"

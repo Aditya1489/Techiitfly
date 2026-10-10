@@ -19,6 +19,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "gifenc": "^1.0.3",
+    "playwright": "^1.64.0",
     "puppeteer-core": "^25.12.0",
     "tailwindcss": "^4",
     "typescript": "^5"
