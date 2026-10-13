@@ -1,8 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
 interface FaqItem {
   q: string;
   a: string;
@@ -40,10 +35,9 @@ const FAQS: FaqItem[] = [
 ];
 
 function FaqAccordionItem({ item }: { item: FaqItem }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div
+    <details
+      className="faq-item group"
       style={{
         background: "var(--surface)",
         border: "1px solid var(--border)",
@@ -53,10 +47,7 @@ function FaqAccordionItem({ item }: { item: FaqItem }) {
         transition: "border-color 0.2s ease",
       }}
     >
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
+      <summary
         style={{
           width: "100%",
           padding: "20px 24px",
@@ -65,13 +56,15 @@ function FaqAccordionItem({ item }: { item: FaqItem }) {
           justifyContent: "space-between",
           gap: "16px",
           background: "transparent",
-          border: "none",
           textAlign: "left",
           cursor: "pointer",
+          listStyle: "none",
+          userSelect: "none",
         }}
       >
-        <span
+        <h3
           style={{
+            margin: 0,
             fontFamily: "var(--font-geist-sans)",
             fontSize: "1.02rem",
             fontWeight: 600,
@@ -79,46 +72,36 @@ function FaqAccordionItem({ item }: { item: FaqItem }) {
           }}
         >
           {item.q}
-        </span>
-        <motion.span
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          transition={{ duration: 0.2 }}
+        </h3>
+        <span
+          className="faq-icon"
+          aria-hidden="true"
           style={{
             color: "var(--accent)",
             fontSize: "1.3rem",
             lineHeight: 1,
             flexShrink: 0,
+            transition: "transform 0.2s ease",
           }}
         >
           +
-        </motion.span>
-      </button>
+        </span>
+      </summary>
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            style={{ overflow: "hidden" }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.92rem",
-                color: "var(--muted)",
-                lineHeight: 1.6,
-                padding: "0 24px 20px",
-                margin: 0,
-              }}
-            >
-              {item.a}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+      <div style={{ padding: "0 24px 20px" }}>
+        <p
+          style={{
+            fontFamily: "var(--font-geist-sans)",
+            fontSize: "0.92rem",
+            color: "var(--muted)",
+            lineHeight: 1.6,
+            margin: 0,
+          }}
+        >
+          {item.a}
+        </p>
+      </div>
+    </details>
   );
 }
 

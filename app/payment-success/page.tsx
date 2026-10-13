@@ -4,12 +4,19 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PaymentSuccessClient from "./PaymentSuccessClient";
 
+import { SITE } from "@/content/site";
+
 export const metadata: Metadata = {
   title: "Payment Received",
   description: "Payment confirmed. Your website project slot is booked with techiitfly.",
   robots: {
     index: false,
     follow: false,
+  },
+  openGraph: {
+    title: "Payment Received | techiitfly",
+    description: "Payment confirmed. Your website project slot is booked with techiitfly.",
+    url: `${SITE.siteUrl}/payment-success`,
   },
 };
 

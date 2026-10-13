@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import ReceiptsClient from "@/components/receipts/ReceiptsClient";
 import Link from "next/link";
 
+import { SITE } from "@/content/site";
+
 export const metadata: Metadata = {
   title: "Live Receipts — Automated Core Web Vitals & Audits",
   description:
@@ -11,6 +13,12 @@ export const metadata: Metadata = {
   robots: {
     index: false,
     follow: false,
+  },
+  openGraph: {
+    title: "Live Receipts — Automated Core Web Vitals & Audits | techiitfly",
+    description:
+      "Daily automated PageSpeed and Core Web Vitals audit receipts for live production platforms engineered by techiitfly.",
+    url: `${SITE.siteUrl}/receipts`,
   },
 };
 

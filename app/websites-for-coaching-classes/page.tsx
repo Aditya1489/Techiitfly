@@ -7,17 +7,28 @@ import Guarantee from "@/components/sections/Guarantee";
 import ConsultationBand from "@/components/sections/ConsultationBand";
 import FinalCta from "@/components/sections/FinalCta";
 import { SITE, getConsultUrl, getWhatsAppUrl } from "@/content/site";
+import { getPageDate } from "@/content/dates";
 
 export const metadata: Metadata = {
-  title: "Websites for Coaching Classes & Tutors — techiitfly",
+  title: "Websites for Coaching Classes & Tutors",
   description:
-    "Fast, professional websites for coaching institutes, tuition classes, and independent tutors. Convert student enquiries with clear batch schedules and WhatsApp integration.",
+    "Websites for coaching institutes and tutors. Turn parent enquiries into admissions with batch timings, fee tables and WhatsApp booking. Live in 7 days.",
+  alternates: {
+    canonical: "/websites-for-coaching-classes",
+  },
   openGraph: {
     title: "Websites for Coaching Classes & Tutors | techiitfly",
     description:
       "Website design for coaching institutes and educators. Batch timings, teacher profiles, syllabus downloads, and direct admission inquiries.",
     url: `${SITE.siteUrl}/websites-for-coaching-classes`,
     images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Websites for Coaching Classes" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Websites for Coaching Classes & Tutors | techiitfly",
+    description:
+      "Website design for coaching institutes and educators. Batch timings, teacher profiles, syllabus downloads, and direct admission inquiries.",
+    images: ["/og/home.png"],
   },
 };
 
@@ -41,6 +52,8 @@ const COACHING_FAQS = [
 ];
 
 export default function CoachingClassesPage() {
+  const pageDate = getPageDate("/websites-for-coaching-classes");
+
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -48,12 +61,32 @@ export default function CoachingClassesPage() {
     provider: {
       "@type": "ProfessionalService",
       name: SITE.name,
-      telephone: SITE.phone,
+      telephone: SITE.structuredPhone,
       email: SITE.contactEmail,
       url: SITE.siteUrl,
     },
     description:
       "Specialized website development for coaching classes, tutoring academies, and independent educators.",
+    dateModified: pageDate.iso,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Websites for Coaching Classes & Tutors",
+        item: `${SITE.siteUrl}/websites-for-coaching-classes`,
+      },
+    ],
   };
 
   const faqJsonLd = {
@@ -74,6 +107,10 @@ export default function CoachingClassesPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
         type="application/ld+json"
@@ -111,11 +148,21 @@ export default function CoachingClassesPage() {
               lineHeight: 1.6,
               color: "var(--muted)",
               maxWidth: "680px",
-              margin: "0 auto 32px",
+              margin: "0 auto 20px",
             }}
           >
             Help parents and students find your courses, understand your curriculum, and enquire instantly.
             Fast, mobile-friendly websites with guaranteed 7-day delivery.
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.78rem",
+              color: "var(--muted)",
+              marginBottom: "28px",
+            }}
+          >
+            Last updated: {pageDate.display}
           </p>
 
           <div style={{ display: "flex", justifyContent: "center", gap: "14px", flexWrap: "wrap", marginBottom: "20px" }}>
@@ -291,40 +338,70 @@ export default function CoachingClassesPage() {
                 Frequently Asked Questions
               </h2>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {COACHING_FAQS.map((faq) => (
-                <div
+                <details
                   key={faq.q}
+                  className="faq-item group"
                   style={{
                     background: "var(--bg)",
                     border: "1px solid var(--border)",
                     borderRadius: "10px",
-                    padding: "22px 24px",
+                    overflow: "hidden",
+                    transition: "border-color 0.2s ease",
                   }}
                 >
-                  <h3
+                  <summary
                     style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1.05rem",
-                      fontWeight: 600,
-                      color: "var(--text)",
-                      margin: "0 0 8px",
+                      padding: "20px 24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "14px",
+                      cursor: "pointer",
+                      listStyle: "none",
+                      userSelect: "none",
                     }}
                   >
-                    {faq.q}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.92rem",
-                      lineHeight: 1.6,
-                      color: "var(--muted)",
-                      margin: 0,
-                    }}
-                  >
-                    {faq.a}
-                  </p>
-                </div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "1.05rem",
+                        fontWeight: 600,
+                        color: "var(--text)",
+                        margin: 0,
+                      }}
+                    >
+                      {faq.q}
+                    </h3>
+                    <span
+                      className="faq-icon"
+                      aria-hidden="true"
+                      style={{
+                        color: "var(--accent)",
+                        fontSize: "1.3rem",
+                        lineHeight: 1,
+                        transition: "transform 0.2s ease",
+                        flexShrink: 0,
+                      }}
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <div style={{ padding: "0 24px 20px" }}>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.92rem",
+                        lineHeight: 1.6,
+                        color: "var(--muted)",
+                        margin: 0,
+                      }}
+                    >
+                      {faq.a}
+                    </p>
+                  </div>
+                </details>
               ))}
             </div>
           </div>

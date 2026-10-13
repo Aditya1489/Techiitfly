@@ -185,3 +185,19 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* FAQ Accordions: Native <details>/<summary> for SSG indexability + smooth collapsible UI */
+details.faq-item summary::-webkit-details-marker,
+details.faq-item summary::marker {
+  display: none;
+}
+details.faq-item summary {
+  list-style: none;
+}
+details.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+}
+details.faq-item[open] {
+  border-color: var(--accent) !important;
+}
+

@@ -46,6 +46,7 @@ import {
   getWebPlans,
 } from "@/content/pricing";
 import { trackEvent } from "@/lib/tracking";
+import { getPageDate } from "@/content/dates";
 
 import MeetPlanCards from "@/components/meet/MeetPlanCards";
 
@@ -502,77 +503,73 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
   );
 }
 
-// ─── Animated FAQ ─────────────────────────────────────────────────────────────
+// ─── FAQ Accordion ────────────────────────────────────────────────────────────
 function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
   return (
-    <div
+    <details
+      className="faq-item group"
       style={{
         background: "var(--surface)",
-        border: `1px solid ${open ? "var(--accent)" : "var(--border)"}`,
+        border: "1px solid var(--border)",
         borderRadius: "var(--radius)",
         overflow: "hidden",
         transition: "border-color 0.2s",
       }}
     >
-      <button
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
+      <summary
         style={{
           width: "100%",
           textAlign: "left",
           background: "transparent",
-          border: "none",
           padding: "18px 20px",
           cursor: "pointer",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           gap: "12px",
-          fontFamily: "var(--font-geist-sans)",
-          fontSize: "0.95rem",
-          fontWeight: 600,
-          color: "var(--text)",
+          listStyle: "none",
+          userSelect: "none",
         }}
       >
-        <span>{q}</span>
-        <motion.span
-          animate={{ rotate: open ? 45 : 0 }}
-          transition={{ duration: 0.2 }}
+        <h3
+          style={{
+            margin: 0,
+            fontFamily: "var(--font-geist-sans)",
+            fontSize: "0.95rem",
+            fontWeight: 600,
+            color: "var(--text)",
+          }}
+        >
+          {q}
+        </h3>
+        <span
+          className="faq-icon"
+          aria-hidden="true"
           style={{
             color: "var(--accent)",
             fontSize: "1.3rem",
             lineHeight: 1,
             flexShrink: 0,
+            transition: "transform 0.2s",
           }}
         >
           +
-        </motion.span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            style={{ overflow: "hidden" }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "0.9rem",
-                color: "var(--muted)",
-                lineHeight: 1.65,
-                padding: "0 20px 18px",
-              }}
-            >
-              {a}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        </span>
+      </summary>
+      <div style={{ padding: "0 20px 18px" }}>
+        <p
+          style={{
+            margin: 0,
+            fontFamily: "var(--font-geist-sans)",
+            fontSize: "0.9rem",
+            color: "var(--muted)",
+            lineHeight: 1.65,
+          }}
+        >
+          {a}
+        </p>
+      </div>
+    </details>
   );
 }
 
@@ -718,6 +715,17 @@ export default function PricingClient() {
           >
             Prices in INR, excluding GST. Fixed-price quotes and guaranteed delivery with no hidden fees.
           </motion.p>
+
+          <p
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.78rem",
+              color: "var(--muted)",
+              marginTop: "8px",
+            }}
+          >
+            Last updated: {getPageDate("/pricing").display}
+          </p>
 
           {/* Trust signals */}
           <motion.ul

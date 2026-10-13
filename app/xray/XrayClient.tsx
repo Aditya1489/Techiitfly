@@ -716,7 +716,6 @@ export default function XrayClient() {
 
   return (
     <>
-      <Header />
       <style>{`
         @media print {
           body {
@@ -769,12 +768,10 @@ export default function XrayClient() {
         }
       `}</style>
 
-      <main
+      <div
+        className="xray-tool-wrapper"
         style={{
-          minHeight: "100vh",
-          paddingTop: "90px",
-          paddingBottom: "90px",
-          background: "var(--bg)",
+          paddingBottom: "40px",
           color: "var(--text)",
         }}
       >
@@ -782,9 +779,9 @@ export default function XrayClient() {
           {/* Print-only dossier header */}
           <div className="print-header">
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h1 style={{ fontSize: "1.8rem", margin: 0, fontWeight: 700 }}>
+              <div style={{ fontSize: "1.8rem", margin: 0, fontWeight: 700 }}>
                 techiitfly · Site X-Ray Benchmark Dossier
-              </h1>
+              </div>
               <span style={{ fontSize: "0.9rem", color: "#666" }}>
                 Audited: {new Date().toLocaleDateString()}
               </span>
@@ -792,37 +789,6 @@ export default function XrayClient() {
             <p style={{ margin: "6px 0 0", fontSize: "0.85rem", color: "#444" }}>
               Multi-Competitor Performance, Core Web Vitals &amp; SEO Audit. Data source: Google PageSpeed
               Insights API.
-            </p>
-          </div>
-
-          {/* Header Hero */}
-          <div className="no-print" style={{ textAlign: "center", marginBottom: "40px" }}>
-            <span className="section-label">COMPETITOR BENCHMARK &amp; SEO ANALYZER</span>
-            <h1
-              style={{
-                fontFamily: "var(--font-instrument-serif)",
-                fontSize: "clamp(2.4rem, 5vw, 4.2rem)",
-                fontWeight: 400,
-                color: "var(--text)",
-                marginTop: "12px",
-                marginBottom: "16px",
-                lineHeight: 1.1,
-              }}
-            >
-              Compare Your Website vs. Up to 4 Competitors
-            </h1>
-            <p
-              style={{
-                fontFamily: "var(--font-geist-sans)",
-                fontSize: "clamp(1.05rem, 2vw, 1.2rem)",
-                color: "var(--muted)",
-                maxWidth: "760px",
-                margin: "0 auto",
-                lineHeight: 1.6,
-              }}
-            >
-              Run live, side-by-side PageSpeed audits to rank your mobile speed, Core Web Vitals, and SEO
-              visibility against competitors with an automated executive leaderboard.
             </p>
           </div>
 
@@ -2581,8 +2547,7 @@ export default function XrayClient() {
             </div>
           )}
         </div>
-      </main>
-      <Footer />
+      </div>
     </>
   );
 }

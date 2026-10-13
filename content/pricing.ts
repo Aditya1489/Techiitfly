@@ -1,3 +1,5 @@
+import { SITE } from "./site";
+
 export type FeatureItem = { text: string; included: boolean };
 
 export interface LaunchOfferConfig {
@@ -611,7 +613,7 @@ export function getPricingJsonLdOffers() {
     priceCurrency: "INR",
     priceValidUntil: "2027-12-31",
     availability: "https://schema.org/InStock",
-    url: `https://techiitfly.com/checkout/${plan.id}`,
+    url: `${SITE.siteUrl}/checkout/${plan.id}`,
     description: `${plan.name} website package: ${plan.timeline}, ${plan.revisions}, ${plan.support}. Starting at ${plan.price}.`,
   }));
 
@@ -623,7 +625,7 @@ export function getPricingJsonLdOffers() {
       priceCurrency: "INR",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
-      url: `https://techiitfly.com/pricing#apps`,
+      url: `${SITE.siteUrl}/pricing#apps`,
       description: `${app.name} mobile app package: ${app.timeline}, ${app.support}. ${app.price}.`,
     });
   });
@@ -636,7 +638,7 @@ export function getPricingJsonLdOffers() {
       priceCurrency: "INR",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
-      url: `https://techiitfly.com/pricing#seo`,
+      url: `${SITE.siteUrl}/pricing#seo`,
       description: `${seo.name}: ${seo.features.join(". ")}.`,
     });
   });
@@ -656,7 +658,7 @@ export function getPricingJsonLdOffers() {
       },
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
-      url: `https://techiitfly.com/pricing#seo`,
+      url: `${SITE.siteUrl}/pricing#seo`,
       description: `${seo.name}: ${seo.features.join(". ")}. Minimum term ${seo.minMonths} months.`,
     });
   });

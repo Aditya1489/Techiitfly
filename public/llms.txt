@@ -1,0 +1,20 @@
+# techiitfly
+> Website and app development studio in Pune, India. Websites live in 7 days with a delivery guarantee and fixed prices.
+
+## Services
+- Websites (Starter / Business / Premium) — https://techiitfly.vercel.app/pricing
+- Mobile apps — https://techiitfly.vercel.app/pricing#apps
+- Mathsy Meet (our product: live maths classroom for tutors) — https://techiitfly.vercel.app/mathsy-meet
+
+## Work
+- YogaGarhi — https://techiitfly.vercel.app/work/yogagarhi
+- Yogic Path — https://techiitfly.vercel.app/work/yogicpath
+- Mathsy — https://techiitfly.vercel.app/work/mathsy
+
+## Contact
+- contact@techiitfly.com · +91 93739 17738 · Pune, India
+
+## Key pages
+- Pricing: https://techiitfly.vercel.app/pricing
+- Terms: https://techiitfly.vercel.app/terms
+- Free website audit: https://techiitfly.vercel.app/xray

@@ -8,12 +8,23 @@ import { getLegalText } from "@/content/legal";
 export const metadata: Metadata = {
   title: "Refund & Cancellation Policy",
   description:
-    "Plain-language refund and cancellation policy for techiitfly project advances, milestone approvals, and payments.",
+    "Plain-language refund and cancellation policy for techiitfly project advances, scope approvals, 7-day delivery commitments, and client support.",
+  alternates: {
+    canonical: "/refund-policy",
+  },
   openGraph: {
     title: "Refund & Cancellation Policy | techiitfly",
     description:
-      "Details on how advance refunds and cancellations are handled before and after project kickoff at techiitfly.",
+      "Plain-language refund and cancellation policy for techiitfly project advances, scope approvals, 7-day delivery commitments, and client support.",
     url: `${SITE.siteUrl}/refund-policy`,
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Refund & Cancellation Policy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Refund & Cancellation Policy | techiitfly",
+    description:
+      "Plain-language refund and cancellation policy for techiitfly project advances, scope approvals, 7-day delivery commitments, and client support.",
+    images: ["/og/home.png"],
   },
 };
 

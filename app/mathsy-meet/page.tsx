@@ -13,11 +13,15 @@ import MeetFaqSection from "@/components/meet/MeetFaqSection";
 import { SITE, getMeetDemoUrl } from "@/content/site";
 import { PRICING_CONFIG } from "@/content/pricing";
 import MeetDemoHeroButton from "@/components/meet/MeetDemoHeroButton";
+import { MEET_FAQS } from "@/components/meet/MeetFaqSection";
 
 export const metadata: Metadata = {
-  title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
+  title: "Mathsy Meet — Live Maths Classroom for Tutors",
   description:
     "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
+  alternates: {
+    canonical: "/mathsy-meet",
+  },
   keywords: [
     "online whiteboard for math teaching",
     "online class platform for tutors India",
@@ -26,7 +30,7 @@ export const metadata: Metadata = {
     "live teaching tools for educators",
   ],
   openGraph: {
-    title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
+    title: "Mathsy Meet — Live Maths Classroom for Tutors | techiitfly",
     description:
       "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
     url: `${SITE.siteUrl}/mathsy-meet`,
@@ -34,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mathsy Meet — Online Live Math Classroom & Whiteboard for Tutors",
+    title: "Mathsy Meet — Live Maths Classroom for Tutors | techiitfly",
     description:
       "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
     images: ["/og/mathsy-meet.png"],
@@ -45,27 +49,84 @@ export default function MathsyMeetPage() {
   const metaDescription =
     "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.";
 
-  const jsonLd = {
+  const softwareAppJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "Mathsy Meet",
+    url: `${SITE.siteUrl}/mathsy-meet`,
     operatingSystem: "Web",
     applicationCategory: "EducationalApplication",
-    offers: {
-      "@type": "Offer",
-      price: PRICING_CONFIG.meet.meetMonthly.toString(),
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-      description: `Mathsy Meet: ${PRICING_CONFIG.meet.priceText}`,
+    publisher: {
+      "@type": "Organization",
+      name: "techiitfly",
+      url: SITE.siteUrl,
     },
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Solo Tutor",
+        price: "999",
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+        description: "Mathsy Meet Solo plan — ₹999/month for up to 30 students",
+      },
+      {
+        "@type": "Offer",
+        name: "Pro Tutor",
+        price: "1999",
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+        description: "Mathsy Meet Pro plan — ₹1,999/month for up to 100 students",
+      },
+    ],
     description: metaDescription,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Mathsy Meet",
+        item: `${SITE.siteUrl}/mathsy-meet`,
+      },
+    ],
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: MEET_FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.aText,
+      },
+    })),
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <Header />
 

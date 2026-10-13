@@ -27,6 +27,9 @@ export async function generateMetadata({
   return {
     title: `${project.title} — Case Study`,
     description: project.summary,
+    alternates: {
+      canonical: `/work/${project.slug}`,
+    },
     openGraph: {
       title: `${project.title} Case Study | techiitfly`,
       description: project.summary,
@@ -58,8 +61,61 @@ export default async function CaseStudyPage({
     notFound();
   }
 
+  const creativeWorkJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: `${project.title} — Case Study`,
+    description: project.summary,
+    url: `${SITE.siteUrl}/work/${project.slug}`,
+    image: project.featuredScreenshots.desktop
+      ? `${SITE.siteUrl}${project.featuredScreenshots.desktop}`
+      : `${SITE.siteUrl}/og/home.png`,
+    creator: {
+      "@type": "Organization",
+      name: "techiitfly",
+      url: SITE.siteUrl,
+    },
+    about: {
+      "@type": "Organization",
+      name: project.client,
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Work",
+        item: `${SITE.siteUrl}/#work`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: `${SITE.siteUrl}/work/${project.slug}`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Header />
       <main
         style={{

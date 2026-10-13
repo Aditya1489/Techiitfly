@@ -8,17 +8,28 @@ import Guarantee from "@/components/sections/Guarantee";
 import ConsultationBand from "@/components/sections/ConsultationBand";
 import FinalCta from "@/components/sections/FinalCta";
 import { SITE, getConsultUrl, getWhatsAppUrl } from "@/content/site";
+import { getPageDate } from "@/content/dates";
 
 export const metadata: Metadata = {
-  title: "Websites for Yoga Schools & Retreats — techiitfly",
+  title: "Websites for Yoga Schools & Retreats",
   description:
-    "Custom, high-converting websites for yoga teacher training schools and retreat centers. Live in 7 days. Featuring live client projects YogaGarhi and Yogic Path.",
+    "Websites for yoga schools, TTC academies and retreats. Live in 7 days with clear course schedules, teacher bios and direct WhatsApp enquiry buttons.",
+  alternates: {
+    canonical: "/websites-for-yoga-schools",
+  },
   openGraph: {
     title: "Websites for Yoga Schools & Retreats | techiitfly",
     description:
       "Website design for yoga schools and retreats with curriculum showcases, WhatsApp lead capture, and international enquiry forms.",
     url: `${SITE.siteUrl}/websites-for-yoga-schools`,
     images: [{ url: "/screenshots/yogagarhi-desktop.webp", width: 1200, height: 750, alt: "YogaGarhi website preview" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Websites for Yoga Schools & Retreats | techiitfly",
+    description:
+      "Website design for yoga schools and retreats with curriculum showcases, WhatsApp lead capture, and international enquiry forms.",
+    images: ["/screenshots/yogagarhi-desktop.webp"],
   },
 };
 
@@ -42,6 +53,8 @@ const YOGA_FAQS = [
 ];
 
 export default function YogaSchoolsPage() {
+  const pageDate = getPageDate("/websites-for-yoga-schools");
+
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -49,12 +62,32 @@ export default function YogaSchoolsPage() {
     provider: {
       "@type": "ProfessionalService",
       name: SITE.name,
-      telephone: SITE.phone,
+      telephone: SITE.structuredPhone,
       email: SITE.contactEmail,
       url: SITE.siteUrl,
     },
     description:
       "Specialized website design and development for yoga schools, TTC institutes, and retreat centers.",
+    dateModified: pageDate.iso,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Websites for Yoga Schools & Retreats",
+        item: `${SITE.siteUrl}/websites-for-yoga-schools`,
+      },
+    ],
   };
 
   const faqJsonLd = {
@@ -75,6 +108,10 @@ export default function YogaSchoolsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
         type="application/ld+json"
@@ -112,11 +149,21 @@ export default function YogaSchoolsPage() {
               lineHeight: 1.6,
               color: "var(--muted)",
               maxWidth: "680px",
-              margin: "0 auto 32px",
+              margin: "0 auto 20px",
             }}
           >
             Turn website visitors into booked students. Clean, serene aesthetics with clear course dates, teacher
             credentials, and instant WhatsApp enquiry paths. Live in 7 days, guaranteed.
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.78rem",
+              color: "var(--muted)",
+              marginBottom: "28px",
+            }}
+          >
+            Last updated: {pageDate.display}
           </p>
 
           <div style={{ display: "flex", justifyContent: "center", gap: "14px", flexWrap: "wrap", marginBottom: "20px" }}>
@@ -327,40 +374,70 @@ export default function YogaSchoolsPage() {
                 Frequently Asked Questions
               </h2>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {YOGA_FAQS.map((faq) => (
-                <div
+                <details
                   key={faq.q}
+                  className="faq-item group"
                   style={{
                     background: "var(--bg)",
                     border: "1px solid var(--border)",
                     borderRadius: "10px",
-                    padding: "22px 24px",
+                    overflow: "hidden",
+                    transition: "border-color 0.2s ease",
                   }}
                 >
-                  <h3
+                  <summary
                     style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1.05rem",
-                      fontWeight: 600,
-                      color: "var(--text)",
-                      margin: "0 0 8px",
+                      padding: "20px 24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "14px",
+                      cursor: "pointer",
+                      listStyle: "none",
+                      userSelect: "none",
                     }}
                   >
-                    {faq.q}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.92rem",
-                      lineHeight: 1.6,
-                      color: "var(--muted)",
-                      margin: 0,
-                    }}
-                  >
-                    {faq.a}
-                  </p>
-                </div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "1.05rem",
+                        fontWeight: 600,
+                        color: "var(--text)",
+                        margin: 0,
+                      }}
+                    >
+                      {faq.q}
+                    </h3>
+                    <span
+                      className="faq-icon"
+                      aria-hidden="true"
+                      style={{
+                        color: "var(--accent)",
+                        fontSize: "1.3rem",
+                        lineHeight: 1,
+                        transition: "transform 0.2s ease",
+                        flexShrink: 0,
+                      }}
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <div style={{ padding: "0 24px 20px" }}>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.92rem",
+                        lineHeight: 1.6,
+                        color: "var(--muted)",
+                        margin: 0,
+                      }}
+                    >
+                      {faq.a}
+                    </p>
+                  </div>
+                </details>
               ))}
             </div>
           </div>

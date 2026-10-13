@@ -7,11 +7,23 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Plain-language privacy policy for techiitfly. Details on contact methods, analytics, cookies, and data protection.",
+    "Plain-language privacy policy for techiitfly. Details on how we collect, handle, and protect client contact information and website analytics.",
+  alternates: {
+    canonical: "/privacy",
+  },
   openGraph: {
     title: "Privacy Policy | techiitfly",
-    description: "Plain-language privacy policy for techiitfly. No sale of personal data.",
+    description:
+      "Plain-language privacy policy for techiitfly. Details on how we collect, handle, and protect client contact information and website analytics.",
     url: `${SITE.siteUrl}/privacy`,
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Privacy Policy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | techiitfly",
+    description:
+      "Plain-language privacy policy for techiitfly. Details on how we collect, handle, and protect client contact information and website analytics.",
+    images: ["/og/home.png"],
   },
 };
 

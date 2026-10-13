@@ -159,15 +159,15 @@ export default function MeetFeatureCatalogue() {
       <div className="print-header">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
           <div>
-            <h1 style={{ fontSize: "1.8rem", margin: 0, color: "#111827" }}>
+            <div style={{ fontSize: "1.8rem", fontWeight: 700, margin: 0, color: "#111827" }}>
               techiitfly · Mathsy Meet
-            </h1>
+            </div>
             <p style={{ margin: "4px 0 0", color: "#4b5563", fontSize: "0.95rem" }}>
               Complete Feature Catalogue &amp; Roadmap
             </p>
           </div>
           <div style={{ textAlign: "right", fontSize: "0.85rem", color: "#6b7280" }}>
-            Published October 2026 · techiitfly.com/mathsy-meet
+            Published October 2026 · {SITE.siteUrl}/mathsy-meet
           </div>
         </div>
       </div>

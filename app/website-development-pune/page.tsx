@@ -8,17 +8,28 @@ import SelectedWork from "@/components/sections/SelectedWork";
 import ConsultationBand from "@/components/sections/ConsultationBand";
 import FinalCta from "@/components/sections/FinalCta";
 import { SITE, getConsultUrl, getWhatsAppUrl } from "@/content/site";
+import { getPageDate } from "@/content/dates";
 
 export const metadata: Metadata = {
-  title: "Website Development in Pune — Fast, Fixed-Price Web Studio",
+  title: "Website Development in Pune — Fast Web Studio",
   description:
-    "Fast, mobile-friendly website development in Pune, built by Aditya Chavhan. Live on your domain in 7 days, guaranteed. Fixed prices and full code ownership.",
+    "Fast, mobile-friendly website development in Pune, built by Aditya Chavhan. Live on your domain in 7 days, guaranteed. Fixed prices and full ownership.",
+  alternates: {
+    canonical: "/website-development-pune",
+  },
   openGraph: {
     title: "Website Development in Pune | techiitfly",
     description:
       "Website design and development studio in Pune. 7-day delivery guarantee, fixed-price quotes, and personal engineering.",
     url: `${SITE.siteUrl}/website-development-pune`,
     images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Website Development in Pune" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Website Development in Pune | techiitfly",
+    description:
+      "Website design and development studio in Pune. 7-day delivery guarantee, fixed-price quotes, and personal engineering.",
+    images: ["/og/home.png"],
   },
 };
 
@@ -46,6 +57,8 @@ const PUNE_FAQS = [
 ];
 
 export default function PuneWebDevPage() {
+  const pageDate = getPageDate("/website-development-pune");
+
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -59,7 +72,7 @@ export default function PuneWebDevPage() {
         addressRegion: "Maharashtra",
         addressCountry: "IN",
       },
-      telephone: SITE.phone,
+      telephone: SITE.structuredPhone,
       email: SITE.contactEmail,
       url: SITE.siteUrl,
     },
@@ -69,6 +82,26 @@ export default function PuneWebDevPage() {
     },
     description:
       "Fast, mobile-friendly website development for businesses in Pune. Fixed-price quotes and 7-day delivery guarantee.",
+    dateModified: pageDate.iso,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Website Development in Pune",
+        item: `${SITE.siteUrl}/website-development-pune`,
+      },
+    ],
   };
 
   const faqJsonLd = {
@@ -89,6 +122,10 @@ export default function PuneWebDevPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
         type="application/ld+json"
@@ -126,11 +163,21 @@ export default function PuneWebDevPage() {
               lineHeight: 1.6,
               color: "var(--muted)",
               maxWidth: "680px",
-              margin: "0 auto 32px",
+              margin: "0 auto 20px",
             }}
           >
             High-performance, mobile-first websites for local businesses, clinics, institutions, and startups in Pune.
             Built by founder Aditya Chavhan with fixed-price quotes and a 7-day delivery guarantee.
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: "0.78rem",
+              color: "var(--muted)",
+              marginBottom: "28px",
+            }}
+          >
+            Last updated: {pageDate.display}
           </p>
 
           <div style={{ display: "flex", justifyContent: "center", gap: "14px", flexWrap: "wrap", marginBottom: "20px" }}>
@@ -282,40 +329,70 @@ export default function PuneWebDevPage() {
                 Questions from Pune Clients
               </h2>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {PUNE_FAQS.map((faq) => (
-                <div
+                <details
                   key={faq.q}
+                  className="faq-item group"
                   style={{
                     background: "var(--bg)",
                     border: "1px solid var(--border)",
                     borderRadius: "10px",
-                    padding: "22px 24px",
+                    overflow: "hidden",
+                    transition: "border-color 0.2s ease",
                   }}
                 >
-                  <h3
+                  <summary
                     style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "1.05rem",
-                      fontWeight: 600,
-                      color: "var(--text)",
-                      margin: "0 0 8px",
+                      padding: "20px 24px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "14px",
+                      cursor: "pointer",
+                      listStyle: "none",
+                      userSelect: "none",
                     }}
                   >
-                    {faq.q}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.92rem",
-                      lineHeight: 1.6,
-                      color: "var(--muted)",
-                      margin: 0,
-                    }}
-                  >
-                    {faq.a}
-                  </p>
-                </div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "1.05rem",
+                        fontWeight: 600,
+                        color: "var(--text)",
+                        margin: 0,
+                      }}
+                    >
+                      {faq.q}
+                    </h3>
+                    <span
+                      className="faq-icon"
+                      aria-hidden="true"
+                      style={{
+                        color: "var(--accent)",
+                        fontSize: "1.3rem",
+                        lineHeight: 1,
+                        transition: "transform 0.2s ease",
+                        flexShrink: 0,
+                      }}
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <div style={{ padding: "0 24px 20px" }}>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-geist-sans)",
+                        fontSize: "0.92rem",
+                        lineHeight: 1.6,
+                        color: "var(--muted)",
+                        margin: 0,
+                      }}
+                    >
+                      {faq.a}
+                    </p>
+                  </div>
+                </details>
               ))}
             </div>
           </div>

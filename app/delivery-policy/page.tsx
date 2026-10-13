@@ -9,11 +9,22 @@ export const metadata: Metadata = {
   title: "Service Delivery Policy",
   description:
     "Plain-language Service Delivery Policy for techiitfly. We provide digital website and app services with fixed-timeline delivery.",
+  alternates: {
+    canonical: "/delivery-policy",
+  },
   openGraph: {
     title: "Service Delivery Policy | techiitfly",
     description:
-      "Digital delivery timelines, kickoff requirements, and handover processes for techiitfly projects.",
+      "Plain-language Service Delivery Policy for techiitfly. We provide digital website and app services with fixed-timeline delivery.",
     url: `${SITE.siteUrl}/delivery-policy`,
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Service Delivery Policy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Service Delivery Policy | techiitfly",
+    description:
+      "Plain-language Service Delivery Policy for techiitfly. We provide digital website and app services with fixed-timeline delivery.",
+    images: ["/og/home.png"],
   },
 };
 

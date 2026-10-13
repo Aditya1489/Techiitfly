@@ -3,6 +3,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PayClient from "./PayClient";
 
+import { SITE } from "@/content/site";
+
 export const metadata: Metadata = {
   title: "Pay Your Quote",
   description:
@@ -10,6 +12,11 @@ export const metadata: Metadata = {
   robots: {
     index: false,
     follow: false,
+  },
+  openGraph: {
+    title: "Pay Your Quote | techiitfly",
+    description: "Securely pay your project advance or milestone invoice for written quotes from techiitfly.",
+    url: `${SITE.siteUrl}/pay`,
   },
 };
 

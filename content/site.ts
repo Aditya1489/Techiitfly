@@ -6,6 +6,13 @@ export interface SiteConfig {
   location: string;
   email: string;
   contactEmail: string;
+  socialProfiles: string[];
+  structuredPhone: string;
+  openingHours: {
+    dayOfWeek: string[];
+    opens: string;
+    closes: string;
+  };
   phone: string;
   phoneRaw: string;
   address: string;
@@ -49,6 +56,13 @@ export const SITE: SiteConfig = {
   location: "Pune, India",
   email: "contact@techiitfly.com",
   contactEmail: "contact@techiitfly.com",
+  socialProfiles: [],
+  structuredPhone: "+91-93739-17738",
+  openingHours: {
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens: "10:00",
+    closes: "20:00",
+  },
   phone: "+91 93739 17738",
   phoneRaw: "+919373917738",
   address: "",

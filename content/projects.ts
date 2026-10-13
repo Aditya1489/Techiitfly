@@ -111,7 +111,7 @@ export const PROJECTS: CaseStudy[] = [
       },
     ],
     summary:
-      "A conversion-focused site for a Yoga Alliance school in Bali and Rishikesh, featuring an Ayurveda Prakriti quiz, sale countdown, and WhatsApp direct bookings.",
+      "A conversion-focused site for a Yoga Alliance school in Bali and Rishikesh, featuring curriculum details, countdowns, and WhatsApp direct bookings.",
     challenge:
       "Retreat seekers need clear cohort dates, campus clarity across Bali and Rishikesh, and frictionless booking channels.",
     solution:

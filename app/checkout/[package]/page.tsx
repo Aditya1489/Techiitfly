@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CheckoutClient from "./CheckoutClient";
 import { WEB_PLANS } from "@/content/pricing";
+import { SITE } from "@/content/site";
 
 interface PageProps {
   params: Promise<{ package: string }>;
@@ -28,6 +29,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     robots: {
       index: false,
       follow: false,
+    },
+    openGraph: {
+      title: `Book ${name} Website Package | techiitfly`,
+      description: `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`,
+      url: `${SITE.siteUrl}/checkout/${slug}`,
     },
   };
 }

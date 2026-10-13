@@ -77,11 +77,11 @@ export default function RootLayout({
     url: SITE.siteUrl,
     logo: `${SITE.siteUrl}/favicon.svg`,
     email: SITE.contactEmail,
-    telephone: SITE.phoneRaw,
+    telephone: SITE.structuredPhone,
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: SITE.phoneRaw,
+        telephone: SITE.structuredPhone,
         contactType: "customer service",
         email: SITE.contactEmail,
         areaServed: "IN",

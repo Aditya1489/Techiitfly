@@ -1,54 +1,54 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import { PRICING_CONFIG } from "@/content/pricing";
 
+const customFeatureFrom = PRICING_CONFIG.meet.customFeatureFrom;
+const customStartingText = customFeatureFrom
+  ? `starting from ₹${customFeatureFrom.toLocaleString("en-IN")}`
+  : "quoted per request";
+
+export const MEET_FAQS = [
+  {
+    q: "Can I get features made for my teaching?",
+    aText: `Yes. On Solo and Pro, custom features are quoted separately, ${customStartingText}. On the Academy plan they're included, planned with you during onboarding.`,
+    a: (
+      <span>
+        Yes. On Solo and Pro, custom features are quoted separately, {customStartingText}. On the Academy plan they&apos;re included, planned with you during onboarding.
+      </span>
+    ),
+  },
+  {
+    q: "Do students need to install anything?",
+    aText: "No. Students join from a link in their browser.",
+    a: "No. Students join from a link in their browser.",
+  },
+  {
+    q: "Can I switch plans later?",
+    aText: "Yes. You can move between plans when your next billing period starts.",
+    a: "Yes. You can move between plans when your next billing period starts.",
+  },
+  {
+    q: "Who owns custom features?",
+    aText: "Custom features become part of Mathsy Meet. See our Terms for details.",
+    a: (
+      <span>
+        Custom features become part of Mathsy Meet. See our{" "}
+        <Link
+          href="/terms#products"
+          style={{
+            color: "var(--accent)",
+            textDecoration: "underline",
+            textUnderlineOffset: "3px",
+          }}
+        >
+          Terms for details
+        </Link>
+        .
+      </span>
+    ),
+  },
+];
+
 export default function MeetFaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const customFeatureFrom = PRICING_CONFIG.meet.customFeatureFrom;
-  const customStartingText = customFeatureFrom
-    ? `starting from ₹${customFeatureFrom.toLocaleString("en-IN")}`
-    : "quoted per request";
-
-  const faqs = [
-    {
-      q: "Can I get features made for my teaching?",
-      a: (
-        <span>
-          Yes. On Solo and Pro, custom features are quoted separately, {customStartingText}. On the Academy plan they&apos;re included, planned with you during onboarding.
-        </span>
-      ),
-    },
-    {
-      q: "Do students need to install anything?",
-      a: "No. Students join from a link in their browser.",
-    },
-    {
-      q: "Can I switch plans later?",
-      a: "Yes. You can move between plans when your next billing period starts.",
-    },
-    {
-      q: "Who owns custom features?",
-      a: (
-        <span>
-          Custom features become part of Mathsy Meet. See our{" "}
-          <Link
-            href="/terms#products"
-            style={{
-              color: "var(--accent)",
-              textDecoration: "underline",
-              textUnderlineOffset: "3px",
-            }}
-          >
-            Terms for details
-          </Link>
-          .
-        </span>
-      ),
-    },
-  ];
-
   return (
     <section
       id="faq"
@@ -86,71 +86,72 @@ export default function MeetFaqSection() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {faqs.map((faq, idx) => {
-            const isOpen = openIndex === idx;
-            return (
-              <div
-                key={idx}
+          {MEET_FAQS.map((faq, idx) => (
+            <details
+              key={idx}
+              className="faq-item group"
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius)",
+                overflow: "hidden",
+                transition: "border-color 0.2s ease",
+              }}
+            >
+              <summary
                 style={{
-                  background: "var(--surface)",
-                  border: `1px solid ${isOpen ? "var(--accent)" : "var(--border)"}`,
-                  borderRadius: "var(--radius)",
-                  overflow: "hidden",
-                  transition: "border-color 0.2s ease",
+                  width: "100%",
+                  textAlign: "left",
+                  background: "transparent",
+                  padding: "18px 22px",
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "14px",
+                  listStyle: "none",
+                  userSelect: "none",
                 }}
               >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  aria-expanded={isOpen}
+                <h3
                   style={{
-                    width: "100%",
-                    textAlign: "left",
-                    background: "transparent",
-                    border: "none",
-                    padding: "18px 22px",
-                    cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "14px",
+                    margin: 0,
                     fontFamily: "var(--font-geist-sans)",
                     fontSize: "1rem",
                     fontWeight: 600,
                     color: "var(--text)",
                   }}
                 >
-                  <span>{faq.q}</span>
-                  <span
-                    style={{
-                      color: "var(--accent)",
-                      fontSize: "1.3rem",
-                      lineHeight: 1,
-                      transform: isOpen ? "rotate(45deg)" : "none",
-                      transition: "transform 0.2s ease",
-                      flexShrink: 0,
-                    }}
-                  >
-                    +
-                  </span>
-                </button>
+                  {faq.q}
+                </h3>
+                <span
+                  className="faq-icon"
+                  aria-hidden="true"
+                  style={{
+                    color: "var(--accent)",
+                    fontSize: "1.3rem",
+                    lineHeight: 1,
+                    transition: "transform 0.2s ease",
+                    flexShrink: 0,
+                  }}
+                >
+                  +
+                </span>
+              </summary>
 
-                {isOpen && (
-                  <div
-                    style={{
-                      padding: "0 22px 20px",
-                      fontFamily: "var(--font-geist-sans)",
-                      fontSize: "0.92rem",
-                      color: "var(--muted)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {faq.a}
-                  </div>
-                )}
+              <div
+                style={{
+                  padding: "0 22px 20px",
+                  fontFamily: "var(--font-geist-sans)",
+                  fontSize: "0.92rem",
+                  color: "var(--muted)",
+                  lineHeight: 1.6,
+                }}
+              >
+                {faq.a}
               </div>
-            );
-          })}
+            </details>
+          ))}
         </div>
       </div>
     </section>

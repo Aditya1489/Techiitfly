@@ -8,12 +8,23 @@ import { SITE, getConsultUrl } from "@/content/site";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Phone, WhatsApp, and email support.",
+    "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Direct phone, WhatsApp, and email consultation.",
+  alternates: {
+    canonical: "/contact",
+  },
   openGraph: {
     title: "Contact Us | techiitfly",
     description:
-      "Reach techiitfly for new website projects, consultation calls, or secure quote payments.",
+      "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Direct phone, WhatsApp, and email consultation.",
     url: `${SITE.siteUrl}/contact`,
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Contact techiitfly" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us | techiitfly",
+    description:
+      "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Direct phone, WhatsApp, and email consultation.",
+    images: ["/og/home.png"],
   },
 };
 

@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     absolute: "techiitfly — Website Development in Pune | Live in 7 Days",
   },
   description: SITE.metaDescription,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description: SITE.metaDescription,
@@ -42,10 +45,24 @@ export default function Home() {
     "@type": "ProfessionalService",
     name: SITE.name,
     image: `${SITE.siteUrl}/og/home.png`,
+    logo: `${SITE.siteUrl}/favicon.svg`,
     url: SITE.siteUrl,
-    telephone: SITE.phone,
+    telephone: SITE.structuredPhone,
     email: SITE.contactEmail,
     priceRange: "₹₹",
+    founder: {
+      "@type": "Person",
+      name: "Aditya Chavhan",
+    },
+    areaServed: ["Pune", "Maharashtra", "India"],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: SITE.openingHours.dayOfWeek,
+        opens: SITE.openingHours.opens,
+        closes: SITE.openingHours.closes,
+      },
+    ],
     address: {
       "@type": "PostalAddress",
       addressLocality: "Pune",
@@ -53,6 +70,10 @@ export default function Home() {
       addressCountry: "IN",
     },
   };
+
+  if (SITE.socialProfiles && SITE.socialProfiles.length > 0) {
+    localBusinessJsonLd.sameAs = SITE.socialProfiles;
+  }
 
   if (SITE.googleRating && SITE.googleReviewCount) {
     localBusinessJsonLd.aggregateRating = {
