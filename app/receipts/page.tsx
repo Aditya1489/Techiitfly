@@ -5,6 +5,7 @@ import ReceiptsClient from "@/components/receipts/ReceiptsClient";
 import Link from "next/link";
 
 import { SITE } from "@/content/site";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Live Receipts — Automated Core Web Vitals & Audits",
@@ -17,12 +18,20 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Live Receipts — Automated Core Web Vitals & Audits | techiitfly",
     description:
       "Daily automated PageSpeed and Core Web Vitals audit receipts for live production platforms engineered by techiitfly.",
-    url: `${SITE.siteUrl}/receipts`,
-  },
+    path: "/receipts",
+    image: "/og/checkout.png",
+    alt: "Live Receipts — Automated Core Web Vitals & Audits | techiitfly",
+  }),
+  twitter: buildTwitter({
+    title: "Live Receipts — Automated Core Web Vitals & Audits | techiitfly",
+    description:
+      "Daily automated PageSpeed and Core Web Vitals audit receipts for live production platforms engineered by techiitfly.",
+    image: "/og/checkout.png",
+  }),
 };
 
 export default function ReceiptsPage() {

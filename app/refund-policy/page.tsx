@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import { SITE } from "@/content/site";
 import { getLegalText } from "@/content/legal";
 
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
+
 export const metadata: Metadata = {
   title: "Refund & Cancellation Policy",
   description:
@@ -12,20 +14,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/refund-policy",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Refund & Cancellation Policy | techiitfly",
     description:
       "Plain-language refund and cancellation policy for techiitfly project advances, scope approvals, 7-day delivery commitments, and client support.",
-    url: `${SITE.siteUrl}/refund-policy`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Refund & Cancellation Policy" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/refund-policy",
+    image: "/og/legal.png",
+    alt: "techiitfly Refund & Cancellation Policy",
+  }),
+  twitter: buildTwitter({
     title: "Refund & Cancellation Policy | techiitfly",
     description:
       "Plain-language refund and cancellation policy for techiitfly project advances, scope approvals, 7-day delivery commitments, and client support.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/legal.png",
+  }),
 };
 
 export default function RefundPolicyPage() {

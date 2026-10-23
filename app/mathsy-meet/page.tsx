@@ -14,6 +14,7 @@ import { SITE, getMeetDemoUrl } from "@/content/site";
 import { PRICING_CONFIG } from "@/content/pricing";
 import MeetDemoHeroButton from "@/components/meet/MeetDemoHeroButton";
 import { MEET_FAQS } from "@/components/meet/MeetFaqSection";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Mathsy Meet — Live Maths Classroom for Tutors",
@@ -29,20 +30,20 @@ export const metadata: Metadata = {
     "virtual math classroom software",
     "live teaching tools for educators",
   ],
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Mathsy Meet — Live Maths Classroom for Tutors | techiitfly",
     description:
       "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
-    url: `${SITE.siteUrl}/mathsy-meet`,
-    images: [{ url: "/og/mathsy-meet.png", width: 1200, height: 630, alt: "Mathsy Meet" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/mathsy-meet",
+    image: "/og/mathsy-meet.png",
+    alt: "Mathsy Meet — Live Maths Classroom for Tutors",
+  }),
+  twitter: buildTwitter({
     title: "Mathsy Meet — Live Maths Classroom for Tutors | techiitfly",
     description:
       "Teach maths online with a built-in compass, protractor and ruler, screen sharing and live polls. Students join from a link. Try a free demo class.",
-    images: ["/og/mathsy-meet.png"],
-  },
+    image: "/og/mathsy-meet.png",
+  }),
 };
 
 export default function MathsyMeetPage() {

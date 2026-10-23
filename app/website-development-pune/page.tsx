@@ -9,6 +9,7 @@ import ConsultationBand from "@/components/sections/ConsultationBand";
 import FinalCta from "@/components/sections/FinalCta";
 import { SITE, getConsultUrl, getWhatsAppUrl } from "@/content/site";
 import { getPageDate } from "@/content/dates";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Website Development in Pune — Fast Web Studio",
@@ -17,20 +18,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/website-development-pune",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Website Development in Pune | techiitfly",
     description:
       "Website design and development studio in Pune. 7-day delivery guarantee, fixed-price quotes, and personal engineering.",
-    url: `${SITE.siteUrl}/website-development-pune`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Website Development in Pune" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/website-development-pune",
+    image: "/og/industry-pune.png",
+    alt: "Website Development in Pune | techiitfly",
+  }),
+  twitter: buildTwitter({
     title: "Website Development in Pune | techiitfly",
     description:
       "Website design and development studio in Pune. 7-day delivery guarantee, fixed-price quotes, and personal engineering.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/industry-pune.png",
+  }),
 };
 
 const PUNE_FAQS = [

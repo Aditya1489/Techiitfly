@@ -5,6 +5,8 @@ import TermsClient from "./TermsClient";
 import { SITE } from "@/content/site";
 import { getPageDate } from "@/content/dates";
 
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
+
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description:
@@ -12,20 +14,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/terms",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Terms & Conditions | techiitfly",
     description:
       "Plain-language Terms & Conditions for techiitfly website and app development services, project timelines, deliverables, and payment policies.",
-    url: `${SITE.siteUrl}/terms`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Terms & Conditions" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/terms",
+    image: "/og/legal.png",
+    alt: "techiitfly Terms & Conditions",
+  }),
+  twitter: buildTwitter({
     title: "Terms & Conditions | techiitfly",
     description:
       "Plain-language Terms & Conditions for techiitfly website and app development services, project timelines, deliverables, and payment policies.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/legal.png",
+  }),
 };
 
 export default function TermsPage() {

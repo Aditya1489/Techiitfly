@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import { SITE } from "@/content/site";
 import { getLegalText } from "@/content/legal";
 
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
+
 export const metadata: Metadata = {
   title: "Service Delivery Policy",
   description:
@@ -12,20 +14,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/delivery-policy",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Service Delivery Policy | techiitfly",
     description:
       "Plain-language Service Delivery Policy for techiitfly. We provide digital website and app services with fixed-timeline delivery.",
-    url: `${SITE.siteUrl}/delivery-policy`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Service Delivery Policy" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/delivery-policy",
+    image: "/og/legal.png",
+    alt: "techiitfly Service Delivery Policy",
+  }),
+  twitter: buildTwitter({
     title: "Service Delivery Policy | techiitfly",
     description:
       "Plain-language Service Delivery Policy for techiitfly. We provide digital website and app services with fixed-timeline delivery.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/legal.png",
+  }),
 };
 
 export default function DeliveryPolicyPage() {

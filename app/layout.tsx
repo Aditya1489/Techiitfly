@@ -27,6 +27,7 @@ const geistMono = Geist_Mono({
 
 import { SITE } from "@/content/site";
 import Analytics from "@/components/analytics/Analytics";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.techiitfly.com"),
@@ -41,21 +42,18 @@ export const metadata: Metadata = {
   keywords: ["website development", "Pune", "web design", "business websites", "techiitfly", "7 day website"],
   authors: [{ name: "Aditya Chavhan", url: SITE.siteUrl }],
   creator: "Aditya Chavhan",
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    url: SITE.siteUrl,
-    siteName: "techiitfly",
+  openGraph: buildOpenGraph({
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description: SITE.metaDescription,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/",
+    image: "/og/home.png",
+    alt: "techiitfly — Website Development in Pune",
+  }),
+  twitter: buildTwitter({
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description: SITE.metaDescription,
-    images: ["/og/home.png"],
-  },
+    image: "/og/home.png",
+  }),
   robots: { index: true, follow: true },
   icons: {
     icon: [

@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import { SITE } from "@/content/site";
 import Link from "next/link";
 
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
+
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
@@ -11,20 +13,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/privacy",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Privacy Policy | techiitfly",
     description:
       "Plain-language privacy policy for techiitfly. Details on how we collect, handle, and protect client contact information and website analytics.",
-    url: `${SITE.siteUrl}/privacy`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly Privacy Policy" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/privacy",
+    image: "/og/legal.png",
+    alt: "techiitfly Privacy Policy",
+  }),
+  twitter: buildTwitter({
     title: "Privacy Policy | techiitfly",
     description:
       "Plain-language privacy policy for techiitfly. Details on how we collect, handle, and protect client contact information and website analytics.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/legal.png",
+  }),
 };
 
 export default function PrivacyPage() {

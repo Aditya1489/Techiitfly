@@ -16,6 +16,7 @@ import FaqSection from "@/components/sections/FaqSection";
 import FinalCta from "@/components/sections/FinalCta";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
 import { SITE } from "@/content/site";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: {
@@ -25,18 +26,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description: SITE.metaDescription,
-    url: SITE.siteUrl,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "techiitfly" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/",
+    image: "/og/home.png",
+    alt: "techiitfly — Website Development in Pune | Live in 7 Days",
+  }),
+  twitter: buildTwitter({
     title: "techiitfly — Website Development in Pune | Live in 7 Days",
     description: SITE.metaDescription,
-    images: ["/og/home.png"],
-  },
+    image: "/og/home.png",
+  }),
 };
 
 export default function Home() {

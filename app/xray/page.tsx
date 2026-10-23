@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import XrayClient from "./XrayClient";
 import { SITE } from "@/content/site";
 
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
+
 export const metadata: Metadata = {
   title: "Compare Your Website With Competitors",
   description:
@@ -12,20 +14,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/xray",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Compare Your Website With Competitors | techiitfly",
     description:
       "Compare your website speed, Core Web Vitals, SEO and AI-readiness against competitors using Google PageSpeed data. Free instant benchmark tool.",
-    url: `${SITE.siteUrl}/xray`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Compare Your Website With Competitors" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/xray",
+    image: "/og/xray.png",
+    alt: "Compare Your Website With Competitors | techiitfly",
+  }),
+  twitter: buildTwitter({
     title: "Compare Your Website With Competitors | techiitfly",
     description:
       "Compare your website speed, Core Web Vitals, SEO and AI-readiness against competitors using Google PageSpeed data. Free instant benchmark tool.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/xray.png",
+  }),
 };
 
 const XRAY_FAQS = [

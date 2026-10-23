@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import PaymentSuccessClient from "./PaymentSuccessClient";
 
 import { SITE } from "@/content/site";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Payment Received",
@@ -16,11 +17,18 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Payment Received | techiitfly",
     description: "Payment confirmed. Your website project slot is booked with techiitfly.",
-    url: `${SITE.siteUrl}/payment-success`,
-  },
+    path: "/payment-success",
+    image: "/og/checkout.png",
+    alt: "Payment Received | techiitfly",
+  }),
+  twitter: buildTwitter({
+    title: "Payment Received | techiitfly",
+    description: "Payment confirmed. Your website project slot is booked with techiitfly.",
+    image: "/og/checkout.png",
+  }),
 };
 
 export default function PaymentSuccessPage() {

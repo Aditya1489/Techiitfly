@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { SITE } from "@/content/site";
 import { getPricingJsonLdOffers, PRICING_FAQS } from "@/content/pricing";
 import { getPageDate } from "@/content/dates";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Pricing — Websites & Mobile Apps at Fixed Prices",
@@ -13,20 +14,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/pricing",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Pricing — Websites & Mobile Apps at Fixed Prices | techiitfly",
     description:
       "Websites & mobile apps. Delivered on time, at fixed prices. Websites from ₹12,999 and mobile apps from ₹99,999.",
-    url: `${SITE.siteUrl}/pricing`,
-    images: [{ url: "/og/pricing.png", width: 1200, height: 630, alt: "techiitfly Pricing" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/pricing",
+    image: "/og/pricing.png",
+    alt: "techiitfly Pricing — Websites & Mobile Apps at Fixed Prices",
+  }),
+  twitter: buildTwitter({
     title: "Pricing — Websites & Mobile Apps at Fixed Prices | techiitfly",
     description:
       "Websites & mobile apps. Delivered on time, at fixed prices. Websites from ₹12,999 and mobile apps from ₹99,999.",
-    images: ["/og/pricing.png"],
-  },
+    image: "/og/pricing.png",
+  }),
 };
 
 export default function PricingPage() {

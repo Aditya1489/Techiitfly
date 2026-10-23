@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import Contact from "@/components/sections/Contact";
 import { SITE, getConsultUrl } from "@/content/site";
 
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
+
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
@@ -12,20 +14,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/contact",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Contact Us | techiitfly",
     description:
       "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Direct phone, WhatsApp, and email consultation.",
-    url: `${SITE.siteUrl}/contact`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Contact techiitfly" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/contact",
+    image: "/og/contact.png",
+    alt: "Contact techiitfly",
+  }),
+  twitter: buildTwitter({
     title: "Contact Us | techiitfly",
     description:
       "Get in touch with techiitfly. Fixed-price website and mobile app development in Pune, India. Direct phone, WhatsApp, and email consultation.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/contact.png",
+  }),
 };
 
 export default function StandaloneContactPage() {

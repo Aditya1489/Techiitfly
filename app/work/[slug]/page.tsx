@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import ProjectGallery from "@/components/work/ProjectGallery";
 import { PROJECTS, getProjectBySlug } from "@/content/projects";
 import { SITE, getConsultUrl } from "@/content/site";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 // Generate static params for all case studies (static export required)
 export function generateStaticParams() {
@@ -24,28 +25,28 @@ export async function generateMetadata({
   if (!project) {
     return { title: "Project Not Found" };
   }
+  const ogImage = `/og/work-${project.slug}.png`;
+  const ogTitle = `${project.title} Case Study | techiitfly`;
+
   return {
     title: `${project.title} — Case Study`,
     description: project.summary,
     alternates: {
       canonical: `/work/${project.slug}`,
     },
-    openGraph: {
-      title: `${project.title} Case Study | techiitfly`,
+    openGraph: buildOpenGraph({
+      title: ogTitle,
       description: project.summary,
-      url: `${SITE.siteUrl}/work/${project.slug}`,
-      images: project.featuredScreenshots.desktop
-        ? [{ url: project.featuredScreenshots.desktop, width: 1200, height: 750, alt: project.title }]
-        : [{ url: "/og/home.png", width: 1200, height: 630, alt: project.title }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${project.title} Case Study | techiitfly`,
+      path: `/work/${project.slug}`,
+      image: ogImage,
+      alt: `${project.title} — Case Study | techiitfly`,
+      type: "article",
+    }),
+    twitter: buildTwitter({
+      title: ogTitle,
       description: project.summary,
-      images: project.featuredScreenshots.desktop
-        ? [project.featuredScreenshots.desktop]
-        : ["/og/home.png"],
-    },
+      image: ogImage,
+    }),
   };
 }
 

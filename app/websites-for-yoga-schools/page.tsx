@@ -9,6 +9,7 @@ import ConsultationBand from "@/components/sections/ConsultationBand";
 import FinalCta from "@/components/sections/FinalCta";
 import { SITE, getConsultUrl, getWhatsAppUrl } from "@/content/site";
 import { getPageDate } from "@/content/dates";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Websites for Yoga Schools & Retreats",
@@ -17,20 +18,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/websites-for-yoga-schools",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Websites for Yoga Schools & Retreats | techiitfly",
     description:
       "Website design for yoga schools and retreats with curriculum showcases, WhatsApp lead capture, and international enquiry forms.",
-    url: `${SITE.siteUrl}/websites-for-yoga-schools`,
-    images: [{ url: "/screenshots/yogagarhi-desktop.webp", width: 1200, height: 750, alt: "YogaGarhi website preview" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/websites-for-yoga-schools",
+    image: "/og/industry-yoga.png",
+    alt: "Websites for Yoga Schools & Retreats | techiitfly",
+  }),
+  twitter: buildTwitter({
     title: "Websites for Yoga Schools & Retreats | techiitfly",
     description:
       "Website design for yoga schools and retreats with curriculum showcases, WhatsApp lead capture, and international enquiry forms.",
-    images: ["/screenshots/yogagarhi-desktop.webp"],
-  },
+    image: "/og/industry-yoga.png",
+  }),
 };
 
 const YOGA_FAQS = [

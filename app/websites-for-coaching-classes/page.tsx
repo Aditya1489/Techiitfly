@@ -8,6 +8,7 @@ import ConsultationBand from "@/components/sections/ConsultationBand";
 import FinalCta from "@/components/sections/FinalCta";
 import { SITE, getConsultUrl, getWhatsAppUrl } from "@/content/site";
 import { getPageDate } from "@/content/dates";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Websites for Coaching Classes & Tutors",
@@ -16,20 +17,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/websites-for-coaching-classes",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Websites for Coaching Classes & Tutors | techiitfly",
     description:
       "Website design for coaching institutes and educators. Batch timings, teacher profiles, syllabus downloads, and direct admission inquiries.",
-    url: `${SITE.siteUrl}/websites-for-coaching-classes`,
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Websites for Coaching Classes" }],
-  },
-  twitter: {
-    card: "summary_large_image",
+    path: "/websites-for-coaching-classes",
+    image: "/og/industry-coaching.png",
+    alt: "Websites for Coaching Classes & Tutors | techiitfly",
+  }),
+  twitter: buildTwitter({
     title: "Websites for Coaching Classes & Tutors | techiitfly",
     description:
       "Website design for coaching institutes and educators. Batch timings, teacher profiles, syllabus downloads, and direct admission inquiries.",
-    images: ["/og/home.png"],
-  },
+    image: "/og/industry-coaching.png",
+  }),
 };
 
 const COACHING_FAQS = [

@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import CheckoutClient from "./CheckoutClient";
 import { WEB_PLANS } from "@/content/pricing";
 import { SITE } from "@/content/site";
+import { buildOpenGraph, buildTwitter } from "@/lib/metadata";
 
 interface PageProps {
   params: Promise<{ package: string }>;
@@ -22,10 +23,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { package: slug } = await params;
   const name =
     slug === "starter" ? "Starter" : slug === "business" ? "Business" : slug === "premium" ? "Premium" : "Website";
+  const title = `Book ${name} Website Package | techiitfly`;
+  const description = `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`;
 
   return {
     title: `Book ${name} Website Package`,
-    description: `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`,
+    description,
     alternates: {
       canonical: `/checkout/${slug}`,
     },
@@ -33,11 +36,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       index: false,
       follow: false,
     },
-    openGraph: {
-      title: `Book ${name} Website Package | techiitfly`,
-      description: `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`,
-      url: `${SITE.siteUrl}/checkout/${slug}`,
-    },
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      path: `/checkout/${slug}`,
+      image: "/og/checkout.png",
+      alt: title,
+    }),
+    twitter: buildTwitter({
+      title,
+      description,
+      image: "/og/checkout.png",
+    }),
   };
 }
 
