@@ -4,7 +4,7 @@ import { SITE } from "@/content/site";
 export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = SITE.siteUrl;
+  const baseUrl = "https://www.techiitfly.com";
 
   const crawlers = [
     "*",

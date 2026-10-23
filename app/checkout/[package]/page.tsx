@@ -26,6 +26,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Book ${name} Website Package`,
     description: `Book your ${name} website project with techiitfly. Fixed price, 7-day turnaround, and transparent terms.`,
+    alternates: {
+      canonical: `/checkout/${slug}`,
+    },
     robots: {
       index: false,
       follow: false,

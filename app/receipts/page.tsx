@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Live Receipts — Automated Core Web Vitals & Audits",
   description:
     "Daily automated PageSpeed and Core Web Vitals audit receipts for live production platforms engineered by techiitfly.",
+  alternates: {
+    canonical: "/receipts",
+  },
   robots: {
     index: false,
     follow: false,

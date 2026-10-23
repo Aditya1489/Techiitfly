@@ -77,7 +77,7 @@ export const SITE: SiteConfig = {
   googleReviewsUrl: "", // Optional Google Reviews link; hidden if empty
   googleRating: undefined, // empty = hide rating everywhere
   googleReviewCount: undefined,
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://techiitfly.vercel.app",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.techiitfly.com",
   metaDescription:
     "Fast, mobile-friendly websites for growing businesses. 7-day delivery guarantee, fixed-price quotes and a free 15-minute consultation.",
   showIitClaim: false,

@@ -6,7 +6,7 @@ import { getPageDate } from "@/content/dates";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = SITE.siteUrl;
+  const baseUrl = "https://www.techiitfly.com";
 
   const routes = [
     "",

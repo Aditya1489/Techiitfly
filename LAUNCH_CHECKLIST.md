@@ -5,7 +5,7 @@ Pre-launch verification checklist, credentials registry, and production settings
 ---
 
 ## 1. Google PageSpeed Insights & Site X-Ray
-- [ ] `NEXT_PUBLIC_PAGESPEED_KEY`: Production Google Cloud API key with PageSpeed Insights API enabled and restricted to `techiitfly.vercel.app/*`. When empty, Site X-Ray gracefully indicates the free tester is busy and offers WhatsApp manual audit.
+- [ ] `NEXT_PUBLIC_PAGESPEED_KEY`: Production Google Cloud API key with PageSpeed Insights API enabled and restricted to `www.techiitfly.com/*`. When empty, Site X-Ray gracefully indicates the free tester is busy and offers WhatsApp manual audit.
 - [ ] `PAGESPEED_API_KEY` (GitHub Actions Secret): Configured under **GitHub Repository → Settings → Secrets and variables → Actions** to run `.github/workflows/receipts.yml`.
 
 ### How to Add GitHub Secret & Trigger Receipts Workflow:
@@ -19,7 +19,7 @@ Pre-launch verification checklist, credentials registry, and production settings
 
 ## 2. Payments (Razorpay Integration)
 - [ ] `NEXT_PUBLIC_RAZORPAY_KEY_ID`: Live Razorpay Key ID (`rzp_live_...`).
-- [ ] Webhook URL registered on Razorpay dashboard: `https://techiitfly.vercel.app/api/razorpay/webhook`.
+- [ ] Webhook URL registered on Razorpay dashboard: `https://www.techiitfly.com/api/razorpay/webhook`.
 - [ ] Checkout fixed amounts aligned with `content/pricing.ts` (Starter ₹12,999, Business ₹24,999, Premium ₹44,999).
 
 ---

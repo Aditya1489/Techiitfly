@@ -29,7 +29,10 @@ import { SITE } from "@/content/site";
 import Analytics from "@/components/analytics/Analytics";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE.siteUrl),
+  metadataBase: new URL("https://www.techiitfly.com"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "techiitfly — Website Development in Pune | Live in 7 Days",
     template: "%s | techiitfly",

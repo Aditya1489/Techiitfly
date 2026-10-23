@@ -6,6 +6,9 @@ import { STARTER_PRICE_FORMATTED } from "@/content/pricing";
 export const metadata: Metadata = {
   title: "Fast, High-Performance Websites for Businesses",
   description: `Your website live in 7 days. Guaranteed. Fixed prices from ${STARTER_PRICE_FORMATTED}. Mobile-friendly, WhatsApp-ready, launched on your domain.`,
+  alternates: {
+    canonical: "/websites",
+  },
   robots: {
     index: false,
     follow: false,

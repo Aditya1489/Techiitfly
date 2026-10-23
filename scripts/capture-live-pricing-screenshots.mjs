@@ -4,7 +4,7 @@ import path from "path";
 
 const CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const OUTPUT_DIR = process.env.OUTPUT_DIR || "/Users/adityachavhan/.gemini/antigravity-ide/brain/7663bb88-5c8b-419e-8ba9-bdf624122ae1/pricing_screenshots";
-const BASE_URL = "https://techiitfly.vercel.app";
+const BASE_URL = "https://www.techiitfly.com";
 
 const viewports = [
   { name: "1440px", width: 1440, height: 900 },

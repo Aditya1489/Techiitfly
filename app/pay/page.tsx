@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Pay Your Quote",
   description:
     "Securely pay your project advance or milestone invoice for written quotes from techiitfly.",
+  alternates: {
+    canonical: "/pay",
+  },
   robots: {
     index: false,
     follow: false,
